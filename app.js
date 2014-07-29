@@ -36,5 +36,4 @@ Ext.application({
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Info'));
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Specific'));
     }
-
 });

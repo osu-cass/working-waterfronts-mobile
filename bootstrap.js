@@ -46,7 +46,6 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSetRowList": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "touch/src/draw/engine/SvgContext.js",
-  "Ext.ux.DropDownButton": "app/view/DropDownButton.js",
   "SeaGrant_Proto": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
@@ -749,7 +748,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.ActionOverFlowMenuButton": [],
   "Ext.ux.ApplicationMenu": [],
   "Ext.ux.ContextMenu": [],
-  "Ext.ux.DropDownButton": [],
   "Ext.ux.MenuButton": [],
   "Ext.ux.TabMenuButton": [],
   "Ext.ux.device.Analytics": [],
