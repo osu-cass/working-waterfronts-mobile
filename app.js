@@ -21,6 +21,7 @@ Ext.Loader.setConfig({
 Ext.application({
     name: 'SeaGrant_Proto',
     controllers: ["List"],
+    models: ['City'],
     stores: ["Info"],
     views: ["Home", "Detail", "Location", "Map"],
 
