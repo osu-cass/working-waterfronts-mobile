@@ -1,8 +1,8 @@
 ### External Dependencies ###
-/node_modules/*
+node_modules/*
 
 ### Compiled Files ###
-/build/*
+build/*
 **/.sass-cache/
 
 ### temp and log Files ###
