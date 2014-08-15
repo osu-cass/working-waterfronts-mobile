@@ -14,6 +14,11 @@ Ext.define('SeaGrant_Proto.store.Info', {
 			}
 		}
 
+<<<<<<< HEAD
+=======
+		// autoSync: true,
+
+>>>>>>> Add detail page and access json data updates
 		// storeId: 'stuff',
 		// fields: [
   //          {
