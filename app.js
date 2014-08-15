@@ -26,6 +26,7 @@ Ext.application({
     stores: ["Info", "Education", "CountryStore", "Vendor", "Product", "Location"],
     views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "TestView"],
 
+
     launch: function() {
         // Initialize the main view
         // Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.TestView'));

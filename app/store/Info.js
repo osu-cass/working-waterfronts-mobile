@@ -14,8 +14,6 @@ Ext.define('SeaGrant_Proto.store.Info', {
 			}
 		}
 
-		// autoSync: true,
-
 		// storeId: 'stuff',
 		// fields: [
   //          {
