@@ -11,20 +11,19 @@
 			"long": 49243.1818181818, 
 			"email": "Toddstuna@txx.com", 
 			"website": "http://tunacrazy.com", 
-			"phone": 541-503-6574, 
+			"phone": 5415036574, 
 			"state": "Oregon", 
 			"street": "Gull lane", 
-			"products": {"64": 
+			"products": [ 
 							{
 								"preparation": "fresh", 
 								"name": "tuna"
 							}, 
-						"17": 
 							{
 								"preparation": "grilled", 
 								"name": "tuna,"
 							}
-						}, 
+						], 
 			"lat": -30142.7272727273, 
 			"contact_name": "Todd Sherman", 
 			"story": 80, 
@@ -44,17 +43,16 @@
 			"phone": 541-503-6574, 
 			"state": "Oregon", 
 			"street": "Hwy 101", 
-			"products": {"64": 
+			"products": [ 
 							{
 								"preparation": "fresh", 
 								"name": "clams"
 							}, 
-						"17": 
 							{
 								"preparation": "smoked", 
 								"name": "clams,"
 							}
-						}, 
+						], 
 			"lat": -30142.7272727273, 
 			"contact_name": "Cody Jennings", 
 			"story": 80, 
@@ -74,17 +72,16 @@
 			"phone": 541-503-6574, 
 			"state": "Oregon", 
 			"street": "Pine cone way", 
-			"products": {"64": 
+			"products": [ 
 							{
 								"preparation": "fresh", 
 								"name": "shark"
 							}, 
-						"17": 
 							{
 								"preparation": "frozen", 
 								"name": "shark,"
 							}
-						}, 
+						], 
 			"lat": -30142.7272727273, 
 			"contact_name": "James Renolds", 
 			"story": 80, 
@@ -104,17 +101,16 @@
 			"phone": 541-503-6574, 
 			"state": "Oregon", 
 			"street": "Dock 15", 
-			"products": {"64": 
+			"products": [ 
 							{
 								"preparation": "fresh", 
 								"name": "salmon"
 							}, 
-						"17": 
 							{
 								"preparation": "frozen", 
 								"name": "salmon,"
 							}
-						}, 
+						], 
 			"lat": -30142.7272727273, 
 			"contact_name": "Captain Jones", 
 			"story": 80, 

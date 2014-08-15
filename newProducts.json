@@ -1,6 +1,9 @@
 {
 	"products":	[	
 		{
+			"name": "Please choose a product"
+		},
+		{
 			"origin": "Berring Sea", 
 			"available": null, 
 			"description": "Lorem ipsum dolor sit amet", 

@@ -27,6 +27,9 @@ Ext.define('SeaGrant_Proto.view.Detail', {
 						itemId: 'infoButton'
 					}
 				]
+			},
+			{
+				tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E=mail: {email}</div><div class="list-item-website">Website: {website}</div><pre>'
 			},			
 			{
 				config: {
@@ -36,11 +39,11 @@ Ext.define('SeaGrant_Proto.view.Detail', {
 					}
 				},
 				xtype: 'list',
-				store: 'Info',
+				store: 'Product',
 				itemId: 'Dpagelist',
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="\&quot;notes-list-empty-text\&quot;">No notes found.</div><pre>',
-				itemTpl: '</pre><div class="list-item-title">{products}</div><div class="list-item-Latlng">{Latlng}</div><pre>'
+				itemTpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-Latlng">{Latlng}</div><pre>'
 			}
 		],
 		listeners: [
