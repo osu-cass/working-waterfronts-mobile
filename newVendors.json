@@ -1,0 +1,124 @@
+{
+	"vendors":	[	
+		{
+			"city": "Newport", 
+			"updated": "2014-08-08 23:22:17.495000+00:00", 
+			"description": "A local tuna provider", 
+			"zip": "97408",
+			"created": "2014-08-08 23:22:17.495000+00:00", 
+			"ext": {}, 
+			"location_description": "Off 101 on Gull lane.", 
+			"long": 49243.1818181818, 
+			"email": "Toddstuna@txx.com", 
+			"website": "http://tunacrazy.com", 
+			"phone": 541-503-6574, 
+			"state": "Oregon", 
+			"street": "Gull lane", 
+			"products": {"64": 
+							{
+								"preparation": "fresh", 
+								"name": "tuna"
+							}, 
+						"17": 
+							{
+								"preparation": "grilled", 
+								"name": "tuna,"
+							}
+						}, 
+			"lat": -30142.7272727273, 
+			"contact_name": "Todd Sherman", 
+			"story": 80, 
+			"name": "Todd's Tuna Farm"
+		},
+		{
+			"city": "Florence", 
+			"updated": "2014-08-08 23:22:17.495000+00:00", 
+			"description": "The northwest's clam experts", 
+			"zip": "98508",
+			"created": "2014-08-08 23:22:17.495000+00:00", 
+			"ext": {}, 
+			"location_description": "5 miles south of the noth jetty turn off on 101, with the big blue clam sign", 
+			"long": 49243.1818181818, 
+			"email": "codysclams@txx.com", 
+			"website": "http://clamexperts.com", 
+			"phone": 541-503-6574, 
+			"state": "Oregon", 
+			"street": "Hwy 101", 
+			"products": {"64": 
+							{
+								"preparation": "fresh", 
+								"name": "clams"
+							}, 
+						"17": 
+							{
+								"preparation": "smoked", 
+								"name": "clams,"
+							}
+						}, 
+			"lat": -30142.7272727273, 
+			"contact_name": "Cody Jennings", 
+			"story": 80, 
+			"name": "Cody's Clam Shop"
+		},
+		{
+			"city": "Gold Beach", 
+			"updated": "2014-08-08 23:22:17.495000+00:00", 
+			"description": "Best shark meat in the west", 
+			"zip": "96008",
+			"created": "2014-08-08 23:22:17.495000+00:00", 
+			"ext": {}, 
+			"location_description": "Pine cone way off of main street.", 
+			"long": 49243.1818181818, 
+			"email": "Sharkshop@txx.com", 
+			"website": "http://sharksareus.com", 
+			"phone": 541-503-6574, 
+			"state": "Oregon", 
+			"street": "Pine cone way", 
+			"products": {"64": 
+							{
+								"preparation": "fresh", 
+								"name": "shark"
+							}, 
+						"17": 
+							{
+								"preparation": "frozen", 
+								"name": "shark,"
+							}
+						}, 
+			"lat": -30142.7272727273, 
+			"contact_name": "James Renolds", 
+			"story": 80, 
+			"name": "The Shark Shop"
+		},
+		{
+			"city": "Waldport", 
+			"updated": "2014-08-08 23:22:17.495000+00:00", 
+			"description": "Welcome to salmon country", 
+			"zip": "96008",
+			"created": "2014-08-08 23:22:17.495000+00:00", 
+			"ext": {}, 
+			"location_description": "On dock 15", 
+			"long": 49243.1818181818, 
+			"email": "Ladyluckp@txx.com", 
+			"website": "http://Ladyluck.com", 
+			"phone": 541-503-6574, 
+			"state": "Oregon", 
+			"street": "Dock 15", 
+			"products": {"64": 
+							{
+								"preparation": "fresh", 
+								"name": "salmon"
+							}, 
+						"17": 
+							{
+								"preparation": "frozen", 
+								"name": "salmon,"
+							}
+						}, 
+			"lat": -30142.7272727273, 
+			"contact_name": "Captain Jones", 
+			"story": 80, 
+			"name": "Lady Luck"
+		}
+	]
+}

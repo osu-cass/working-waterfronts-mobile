@@ -87,7 +87,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						label: 'Location',
 						labelWrap: true,
 						displayField: 'title',
-						store: 'Info',
+						store: 'Location',
 						// valueField: 'id'
 					},				
 	                {
@@ -95,8 +95,8 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						itemId: 'selectproduct',
 						label: 'Product',
 						labelWrap: true,
-						displayField: 'products',
-						store: 'Info',
+						displayField: 'name',
+						store: 'Product',
 						// valueField: 'title'
 					}					
 	            ]	                  
@@ -127,15 +127,10 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				itemId: 'goButton'
 			}
 	    ],
-	    listeners: [
-			{
-				delegate: '#goButton',
-				event: 'tap',
-				fn: 'onGoButtonTap'
-			},
+	    listeners: [			
 			{
 				delegate: '#userlocation',
-				event: 'tap',
+				event: 'change',
 				fn: 'onUseLocaion'
 			},
 			{
@@ -150,33 +145,38 @@ Ext.define('SeaGrant_Proto.view.Home', {
 			},
 			{
 				delegate: '#vendor',
-				event: 'tap',
+				event: 'change',
 				fn: 'onVendorSelect'
 			},
 			{
 				delegate: '#product',
-				event: 'tap',
+				event: 'change',
 				fn: 'onProductSelect'
+			},
+			{
+				delegate: '#goButton',
+				event: 'tap',
+				fn: 'onGoButtonTap'
 			}
 		]	      
 	},
-	onUseLocaion: function(){
+	onUseLocaion: function(record){
 		console.log('setUseLocation');
 		this.fireEvent('setUseLocation', this, record);
 	},
-	onSelectLocation: function(){
+	onSelectLocation: function(record){
 		console.log('chosenLocation');
 		this.fireEvent('chosenLocation', this, record);
 	},
-	onSelectProduct: function(){
+	onSelectProduct: function(record){
 		console.log('chosenProduct');
 		this.fireEvent('chosenProduct', this, record);
 	},
-	onVendorSelect: function(){
+	onVendorSelect: function(record){
 		console.log('sortByVendorCommand');
 		this.fireEvent('sortByVendorCommand', this, record);
 	},
-	onProductSelect: function(){
+	onProductSelect: function(record){
 		console.log('sortByProductCommand');
 		this.fireEvent('sortByProductCommand', this, record);
 	},

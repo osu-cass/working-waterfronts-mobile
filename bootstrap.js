@@ -47,7 +47,6 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "touch/src/draw/engine/SvgContext.js",
   "Ext.ux.DropDownButton": "app/view/DropDownButton.js",
-  "MyApp": "app",
   "SeaGrant_Proto": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
@@ -775,12 +774,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "MyApp.store.CountryStore": [],
-  "MyApp.store.StateStore": [],
   "SeaGrant_Proto.controller.List": [],
   "SeaGrant_Proto.model.City": [],
+  "SeaGrant_Proto.model.Test": [],
+  "SeaGrant_Proto.store.CountryStore": [],
   "SeaGrant_Proto.store.Education": [],
   "SeaGrant_Proto.store.Info": [],
+  "SeaGrant_Proto.store.StateStore": [],
   "SeaGrant_Proto.view.Detail": [],
   "SeaGrant_Proto.view.Home": [],
   "SeaGrant_Proto.view.Info": [],
@@ -788,7 +788,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "SeaGrant_Proto.view.Location": [],
   "SeaGrant_Proto.view.Main": [],
   "SeaGrant_Proto.view.Map": [],
-  "SeaGrant_Proto.view.Specific": []
+  "SeaGrant_Proto.view.Specific": [],
+  "SeaGrant_Proto.view.TestView": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1735,16 +1736,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
-  "MyApp.store.CountryStore": [],
-  "MyApp.store.StateStore": [
-    "store.statestore"
-  ],
   "SeaGrant_Proto.controller.List": [
     "cont"
   ],
   "SeaGrant_Proto.model.City": [],
+  "SeaGrant_Proto.model.Test": [],
+  "SeaGrant_Proto.store.CountryStore": [],
   "SeaGrant_Proto.store.Education": [],
   "SeaGrant_Proto.store.Info": [],
+  "SeaGrant_Proto.store.StateStore": [
+    "store.statestore"
+  ],
   "SeaGrant_Proto.view.Detail": [
     "widget.detail"
   ],
@@ -1772,6 +1774,9 @@ Ext.ClassManager.addNameAliasMappings({
   "SeaGrant_Proto.view.Specific": [
     "widget.Specific",
     "widget.specific"
+  ],
+  "SeaGrant_Proto.view.TestView": [
+    "widget.test"
   ]
 });
 
