@@ -5,34 +5,29 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	config: {
 		refs: {
 			homeView: 'home',
-			detailView: 'detail',
-			locationView: 'location',
 			listView: 'listview',
+			detailView: 'detail',			
 			infoView: 'info',
 			specificView: 'specific'
 		},
 		control: {
-			homeView: {
-				viewGoCommand: 'onViewGoCommand',
+			homeView: {				
 				setUseLocation: 'onSetUseLocation',
 				chosenLocation: 'onChooseLocation',
 				chosenProduct: 'onChooseProduct',
 				sortByVendorCommand: 'onSortByVendorCommand',
-				sortByProductCommand: 'onSortByProductCommand'
-				
+				sortByProductCommand: 'onSortByProductCommand',
+				viewGoCommand: 'onViewGoCommand'				
 			},
 			listView: {
 				viewBackHomeCommand: 'onViewBackHomeCommand',
-				viewInfoCommand: 'onViewInfoCommand',
+				viewDetailCommand: 'onViewDetailCommand',
 				viewLpageListItemCommand: 'onViewLpageListItemCommand'
 			},
 			detailView: {
-				viewHomeCommand: 'onViewHomeCommand',
-				viewLocationCommand: 'onViewLocationCommand'
-			},
-			locationView: {
-				viewDetailCommand: 'onViewDetailCommand',
-				viewHomeCommand: 'onViewHomeCommand'
+				viewBackListCommand: 'onViewBackListCommand',
+				viewInfoCommand: 'onViewInfoCommand',
+				viewDpageListItemCommand: 'onViewDpageListItemCommand'
 			},
 			infoView: {
 				viewBackDetailCommand: 'onViewBackDetailCommand',
@@ -52,101 +47,87 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		type: 'slide',
 		direction: 'right'
 	},
-	// Functions dealing with home page stuff
-	onViewGoCommand: function(){
-		console.log('In controller: onViewGoCommand');
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
-		console.log('go to list page');
-	},
+	// Functions dealing with 
+	// HOME
+	// stuff
+	onSetUseLocation: function(){
+		console.log('In controller(home): User Location toggle');
+	},	
 	onChooseLocation: function(){
-		console.log('In controller: onChooseLocation');
+		console.log('In controller(home): Drop Down list Location');
 	},
 	onChooseProduct: function(){
-		console.log('In controller: onChooseProduct');
-	},
-	onSetUseLocation: function(){
-		console.log('In controller: onSetUseLocation');
-	},
+		console.log('In controller(home): Drop Down list Products');
+	},	
 	onSortByVendorCommand: function(){
-		console.log('In controller: onSortByVendorCommand');
+		console.log('In controller(home): Vendor checkbox');
 	},
 	onSortByProductCommand: function(){
-		console.log('In controller: onSortByProductCommand');
+		console.log('In controller(home): Product checkbox');
 	},
-	// Functions dealing with list page stuff
-	onViewInfoCommand: function(){
-		console.log('In controller: onViewInfoCommand');
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
-		console.log('go to Info page');
+	onViewGoCommand: function(){
+		console.log('In controller(home): Go to List Page Button');
+		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
+	// Functions dealing with 
+	// LIST
+	// stuff
 	onViewBackHomeCommand: function(){
-		console.log('In controller: onViewBackHomeCommand');
-		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
-		console.log('back to home page');
-	},
-	onViewLpageListItemCommand: function(record, list, index){
-		console.log('onViewLpageListItemCommand');
-		Ext.Msg.alert(index.data.title, 'This is the selected list item.');
-	},
-	// Functions dealing with info page stuff
-	onViewSpecificCommand: function(){
-		console.log('In controller: onViewSpecificCommand');
-		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
-		console.log('go to Specific page');
-	},
-	onViewBackDetailCommand: function(){
-		console.log('In controller: onViewBackDetailCommand');
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
-		console.log('back to detail page');
-	},
-	onViewIpageListItemCommand: function(record, list, index){
-		console.log('onViewIpageListItemCommand');
-		Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
-		// var tool =Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0];
-		// console.log(tool);
-		// var tool2 =Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.listItem);
-		// console.log(tool2);
-		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
-		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
-	},
-	// Functions dealing with specific page stuff
-	onViewBackInfoCommand: function(){
-		console.log('In controller: onViewBackInfoCommand');
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideRightTransition);
-		console.log('back to info page');
-	},
-	// Functions dealing with OLD stuff
-	onViewLocationCommand: function(){
-		console.log('onViewLocationCommand');
-		Ext.Viewport.animateActiveItem(this.getLocationView(), this.slideLeftTransition);
-		console.log('in location');
-	},
-	onViewHomeCommand: function(){
-		console.log('onViewHomeCommand');
+		console.log('In controller(list): Back to Home Page Button');
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
 	},
 	onViewDetailCommand: function(){
-		console.log("onViewListItemCommand");
+		console.log('In controller(list): View Detail Page Button');
+		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
+	},	
+	onViewLpageListItemCommand: function(record, list, index){
+		console.log('In controller(list): Select list item');
+		Ext.Msg.alert(index.data.title, 'This is the selected list item.');
+		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.title);
+		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
+	},
+	// Functions dealing with 
+	// DETAIL
+	// stuff
+	onViewBackListCommand: function(){
+		console.log('In controller(detail): Back to List Page Button');
+		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
+	},
+	onViewInfoCommand: function(){
+		console.log('In controller(detail): View Info Page Button');
+		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
+	},	
+	onViewDpageListItemCommand: function(record, list, index){
+		console.log('In controller(detail): Select list item');
+		Ext.Msg.alert(index.data.products, 'This is the selected list item.');
+		Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.products);
+		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
+	},
+	// Functions dealing with 
+	// INFO 
+	// stuff
+	onViewBackDetailCommand: function(){
+		console.log('In controller(info): Back to Detail Page Button');
 		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
-		console.log("in detail view");
 	},
-	onViewListItemCommand: function(record, list, index){
-		console.log("Controller index");
-		console.log(index);
-		// Set title to list item title
-		var newTitle = index.data.title;
-		Ext.ComponentQuery.query('titlebar')[0].setTitle(newTitle);
-		console.log("onViewListItemCommand");
-		// Set data for each item in carousel
-		var detailView = this.getDetailView();
-		console.log('length: ', detailView.carouselItems.length);
-        for(var i = 1; i <= detailView.carouselItems.length; i++){
-        	detailView.getAt(i).setData(index.getData());
-      	}
-      	// Setting the active viewport
-		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
-		console.log("in detail view");
+	onViewSpecificCommand: function(){
+		console.log('In controller(info): View Specific Page Button');
+		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
+	},	
+	onViewIpageListItemCommand: function(record, list, index){
+		console.log('In controller(info): Selected');
+		Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
+		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
+		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
 	},
+	// Functions dealing with
+	// SPECIFIC
+	// stuff
+	onViewBackInfoCommand: function(){
+		console.log('In controller(specific): Back to Info Page Button');
+		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideRightTransition);
+	},
+	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
 		// console.log("launch");

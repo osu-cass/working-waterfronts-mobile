@@ -1,6 +1,6 @@
 Ext.define('SeaGrant_Proto.store.Info', {
 	extend: 'Ext.data.Store',
-	// requires: 'Ext.data.proxy.LocalStorage',
+	// requires: ['SeaGrant_Proto.model.City'],
 	// id: 'thisStuff',
 	config: {
 		model: 'SeaGrant_Proto.model.City',
@@ -13,6 +13,9 @@ Ext.define('SeaGrant_Proto.store.Info', {
 				rootProperty: 'vendors'
 			}
 		}
+
+		// autoSync: true,
+
 		// storeId: 'stuff',
 		// fields: [
   //          {
@@ -137,9 +140,13 @@ Ext.define('SeaGrant_Proto.store.Info', {
 		// ]
 		// model: 'SeaGrant_Proto.model.ListForm',
 		// proxy: {
-		// 	type: 'localstorage',
-		// 	id: 'info-app-store'
-		// },
+		// 	type: 'ajax',
+		// 	url: 'vendors.json',
+		// 	reader: {
+		// 		type: 'json'
+		// 		// rootProperty: 'data'
+		// 	}
+		// }
 		// sorters: [
 		// 	{
 		// 		property: '',

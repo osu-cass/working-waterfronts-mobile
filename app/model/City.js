@@ -1,5 +1,6 @@
 Ext.define('SeaGrant_Proto.model.City', {
     extend: 'Ext.data.Model',
+    requires: ['Ext.data.Field'],
     config: {
         fields:[
         	'city',
