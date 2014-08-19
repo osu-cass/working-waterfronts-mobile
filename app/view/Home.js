@@ -72,15 +72,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 			{
 				delegate: '#userlocation',
 				event: 'change',
-<<<<<<< HEAD
 				fn: 'onUseLocation'
-=======
-<<<<<<< Updated upstream
-				fn: 'onUseLocaion'
-=======
-				fn: 'onUseLocation'
->>>>>>> Stashed changes
->>>>>>> Add detail page and access json data updates
 			},
 			{
 				delegate: '#selectlocation',
@@ -109,15 +101,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 			}
 		]	      
 	},
-<<<<<<< HEAD
 	onUseLocation: function(record){
-=======
-<<<<<<< Updated upstream
-	onUseLocaion: function(record){
-=======
-	onUseLocation: function(record){
->>>>>>> Stashed changes
->>>>>>> Add detail page and access json data updates
 		console.log('setUseLocation');
 		this.fireEvent('setUseLocation', this, record);
 	},

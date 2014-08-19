@@ -53,7 +53,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	onSetUseLocation: function(){
 		console.log('In controller(home): User Location toggle');
 	},	
-<<<<<<< HEAD
 	onChooseLocation: function(index, record){
 		console.log('In controller(home): Drop Down list Location');
 		var loc = this.getHomeView();
@@ -77,13 +76,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
 		console.log('Product is: '+ record._value.data.name);
-=======
-	onChooseLocation: function(){
-		console.log('In controller(home): Drop Down list Location');
-	},
-	onChooseProduct: function(){
-		console.log('In controller(home): Drop Down list Products');
->>>>>>> Add detail page and access json data updates
 	},	
 	onSortByVendorCommand: function(){
 		console.log('In controller(home): Vendor checkbox');
@@ -108,7 +100,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},	
 	onViewLpageListItemCommand: function(record, list, index){
 		console.log('In controller(list): Select list item');
-<<<<<<< HEAD
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
 		var detailView = this.getDetailView();
 		detailView.getAt(1).setData(index.getData());
@@ -148,32 +139,14 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		store.filter(locationfilter);
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 	},
-=======
-		Ext.Msg.alert(index.data.title, 'This is the selected list item.');
-		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.title);
-		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
-	},
-	// Functions dealing with 
-	// DETAIL
-	// stuff
-	onViewBackListCommand: function(){
-		console.log('In controller(detail): Back to List Page Button');
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
-	},
->>>>>>> Add detail page and access json data updates
 	onViewInfoCommand: function(){
 		console.log('In controller(detail): View Info Page Button');
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
 		console.log('In controller(detail): Select list item');
-<<<<<<< HEAD
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
 		Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.name);
-=======
-		Ext.Msg.alert(index.data.products, 'This is the selected list item.');
-		Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.products);
->>>>>>> Add detail page and access json data updates
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 
@@ -189,11 +162,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},	
 	onViewIpageListItemCommand: function(record, list, index){
 		console.log('In controller(info): Selected');
-<<<<<<< HEAD
 		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
-=======
-		Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
->>>>>>> Add detail page and access json data updates
 		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
 		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
 	},

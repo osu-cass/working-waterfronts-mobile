@@ -788,8 +788,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "SeaGrant_Proto.view.Home": [],
   "SeaGrant_Proto.view.Info": [],
   "SeaGrant_Proto.view.ListView": [],
-  "SeaGrant_Proto.view.Location": [],
-  "SeaGrant_Proto.view.Main": [],
   "SeaGrant_Proto.view.Map": [],
   "SeaGrant_Proto.view.Specific": [],
   "SeaGrant_Proto.view.TestView": []
@@ -1769,12 +1767,6 @@ Ext.ClassManager.addNameAliasMappings({
   "SeaGrant_Proto.view.ListView": [
     "widget.ListView",
     "widget.listview"
-  ],
-  "SeaGrant_Proto.view.Location": [
-    "widget.location"
-  ],
-  "SeaGrant_Proto.view.Main": [
-    "widget.main"
   ],
   "SeaGrant_Proto.view.Map": [
     "widget.SeaGrantMap"
