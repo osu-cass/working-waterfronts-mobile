@@ -38,6 +38,9 @@ Ext.define('SeaGrant_Proto.view.Detail', {
 						directionLock: true
 					}
 				},
+				// We want this list to have only products of the vendor selected in
+				// the list screen. Perhaps we will have to deal with the products root
+				// of the vendor selected, and link the vendors products to the product store.
 				xtype: 'list',
 				store: 'Product',
 				itemId: 'Dpagelist',

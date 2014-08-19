@@ -53,11 +53,39 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	onSetUseLocation: function(){
 		console.log('In controller(home): User Location toggle');
 	},	
-	onChooseLocation: function(){
+	onChooseLocation: function(index, record){
 		console.log('In controller(home): Drop Down list Location');
+		var loc = this.getHomeView();
+		// console.log(record);
+		var location = record._value.data.title;
+		console.log('Location is: '+ record._value.data.title);
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		// var locationfilter = new Ext.util.Filter({
+		// 	property: 'city',
+		// 	value: record._value.data.title,
+		// 	anyMatch: true,
+		// 	caseSensitive: false,
+		// 	root: 'data'
+		// });
+		// var locationfilter = new Ext.util.Filter({
+		// 	filterFn: function(item){
+		// 		return item.get('city') == toString(record._value.data.title);
+		// 	},
+		// 	root: 'data'
+		// });
+		// store.filter(locationfilter); //nope doesn't work
+		// store.filter('city', toString(location)); //nope doesn't work
+		// store.filter(record._value.data.title, true); //nope doesn't work
+		// store.filterBy(record._value.data.title, );
+		// console.log(index);
+		// Vendor.filterBy(function(record, id){
+		// 	return record.get('title' == record._value.data.title);
+		// });
 	},
-	onChooseProduct: function(){
+	onChooseProduct: function(index, record){
 		console.log('In controller(home): Drop Down list Products');
+		// console.log(record);
+		console.log('Product is: '+ record._value.data.name);
 	},	
 	onSortByVendorCommand: function(){
 		console.log('In controller(home): Vendor checkbox');
@@ -82,7 +110,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},	
 	onViewLpageListItemCommand: function(record, list, index){
 		console.log('In controller(list): Select list item');
-		Ext.Msg.alert(index.data.name, 'This is the selected list item.');
+		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
 		var detailView = this.getDetailView();
 		detailView.getAt(1).setData(index.getData());
 		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
@@ -101,7 +129,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
 		console.log('In controller(detail): Select list item');
-		Ext.Msg.alert(index.data.name, 'This is the selected list item.');
+		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
 		Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.name);
 		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
 	},
@@ -118,7 +146,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},	
 	onViewIpageListItemCommand: function(record, list, index){
 		console.log('In controller(info): Selected');
-		Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
+		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
 		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
 		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
 	},

@@ -20,6 +20,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 			},
 	        {
 	            xtype: 'fieldset',
+	            itemId: 'dropdown lists',
 	            items: [
 	                {
 						xtype: 'selectfield',			
@@ -104,7 +105,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 		console.log('setUseLocation');
 		this.fireEvent('setUseLocation', this, record);
 	},
-	onSelectLocation: function(record){
+	onSelectLocation: function(record, index){
 		console.log('chosenLocation');
 		this.fireEvent('chosenLocation', this, record);
 	},

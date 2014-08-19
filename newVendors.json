@@ -17,11 +17,11 @@
 			"products": [ 
 							{
 								"preparation": "fresh", 
-								"name": "tuna"
+								"name": "Albacore Tuna"
 							}, 
 							{
 								"preparation": "grilled", 
-								"name": "tuna,"
+								"name": "Albacore Tuna,"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -46,11 +46,11 @@
 			"products": [ 
 							{
 								"preparation": "fresh", 
-								"name": "clams"
+								"name": "Clams"
 							}, 
 							{
 								"preparation": "smoked", 
-								"name": "clams,"
+								"name": "Clams,"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -75,11 +75,11 @@
 			"products": [ 
 							{
 								"preparation": "fresh", 
-								"name": "shark"
+								"name": "Shark"
 							}, 
 							{
 								"preparation": "frozen", 
-								"name": "shark,"
+								"name": "Shark,"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -104,17 +104,76 @@
 			"products": [ 
 							{
 								"preparation": "fresh", 
-								"name": "salmon"
+								"name": "Salmon"
 							}, 
 							{
 								"preparation": "frozen", 
-								"name": "salmon,"
+								"name": "Salmon,"
 							}
 						], 
 			"lat": -30142.7272727273, 
 			"contact_name": "Captain Jones", 
 			"story": 80, 
 			"name": "Lady Luck"
+		},
+		{
+
+			"city": "Newport", 
+			"updated": "2014-08-08 23:22:17.495000+00:00", 
+			"description": "The Best Fish in town", 
+			"zip": "97408",
+			"created": "2014-08-08 23:22:17.495000+00:00", 
+			"ext": {}, 
+			"location_description": "Off 101 on SeaBass way.", 
+			"long": 49243.1818181818, 
+			"email": "FishFact@txx.com", 
+			"website": "http://fishfactory.com", 
+			"phone": 5415036574, 
+			"state": "Oregon", 
+			"street": "SeaBass way", 
+			"products": [ 
+							{
+								"preparation": "fresh", 
+								"name": "Albacore Tuna"
+							}, 
+							{
+								"preparation": "fresh", 
+								"name": "Salmon,"
+							}
+						], 
+			"lat": -30142.7272727273, 
+			"contact_name": "Tim Duncan", 
+			"story": 80, 
+			"name": "Fish Factory"
+		},
+		{
+			"city": "Waldport", 
+			"updated": "2014-08-08 23:22:17.495000+00:00", 
+			"description": "The Freshest Seafood in Waldport.", 
+			"zip": "98508",
+			"created": "2014-08-08 23:22:17.495000+00:00", 
+			"ext": {}, 
+			"location_description": "Off of Baker street", 
+			"long": 49243.1818181818, 
+			"email": "Waterfrontss@txx.com", 
+			"website": "http://Waterfrontss.com", 
+			"phone": 541-503-6574, 
+			"state": "Oregon", 
+			"street": "Hwy 101", 
+			"products": [ 
+							{
+								"preparation": "fresh", 
+								"name": "Clams"
+							}, 
+							{
+								"preparation": "fresh", 
+								"name": "Albacore Tuna,"
+							}
+						], 
+			"lat": -30142.7272727273, 
+			"contact_name": "Carlos Molena", 
+			"story": 80, 
+			"name": "Waterfront Seafood Shop"
 		}
 	]
 }

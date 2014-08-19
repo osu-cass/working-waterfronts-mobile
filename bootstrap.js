@@ -46,7 +46,6 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSetRowList": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "touch/src/draw/engine/SvgContext.js",
-  "Ext.ux.DropDownButton": "app/view/DropDownButton.js",
   "SeaGrant_Proto": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
@@ -749,7 +748,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.ActionOverFlowMenuButton": [],
   "Ext.ux.ApplicationMenu": [],
   "Ext.ux.ContextMenu": [],
-  "Ext.ux.DropDownButton": [],
   "Ext.ux.MenuButton": [],
   "Ext.ux.TabMenuButton": [],
   "Ext.ux.device.Analytics": [],
@@ -776,17 +774,20 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "SeaGrant_Proto.controller.List": [],
   "SeaGrant_Proto.model.City": [],
+  "SeaGrant_Proto.model.Locations": [],
+  "SeaGrant_Proto.model.Products": [],
   "SeaGrant_Proto.model.Test": [],
   "SeaGrant_Proto.store.CountryStore": [],
   "SeaGrant_Proto.store.Education": [],
   "SeaGrant_Proto.store.Info": [],
+  "SeaGrant_Proto.store.Location": [],
+  "SeaGrant_Proto.store.Product": [],
   "SeaGrant_Proto.store.StateStore": [],
+  "SeaGrant_Proto.store.Vendor": [],
   "SeaGrant_Proto.view.Detail": [],
   "SeaGrant_Proto.view.Home": [],
   "SeaGrant_Proto.view.Info": [],
   "SeaGrant_Proto.view.ListView": [],
-  "SeaGrant_Proto.view.Location": [],
-  "SeaGrant_Proto.view.Main": [],
   "SeaGrant_Proto.view.Map": [],
   "SeaGrant_Proto.view.Specific": [],
   "SeaGrant_Proto.view.TestView": []
@@ -1703,9 +1704,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.ActionOverFlowMenuButton": [],
   "Ext.ux.ApplicationMenu": [],
   "Ext.ux.ContextMenu": [],
-  "Ext.ux.DropDownButton": [
-    "widget.dropdownbutton"
-  ],
   "Ext.ux.MenuButton": [],
   "Ext.ux.TabMenuButton": [],
   "Ext.ux.device.Analytics": [],
@@ -1740,13 +1738,18 @@ Ext.ClassManager.addNameAliasMappings({
     "cont"
   ],
   "SeaGrant_Proto.model.City": [],
+  "SeaGrant_Proto.model.Locations": [],
+  "SeaGrant_Proto.model.Products": [],
   "SeaGrant_Proto.model.Test": [],
   "SeaGrant_Proto.store.CountryStore": [],
   "SeaGrant_Proto.store.Education": [],
   "SeaGrant_Proto.store.Info": [],
+  "SeaGrant_Proto.store.Location": [],
+  "SeaGrant_Proto.store.Product": [],
   "SeaGrant_Proto.store.StateStore": [
     "store.statestore"
   ],
+  "SeaGrant_Proto.store.Vendor": [],
   "SeaGrant_Proto.view.Detail": [
     "widget.detail"
   ],
@@ -1761,12 +1764,6 @@ Ext.ClassManager.addNameAliasMappings({
   "SeaGrant_Proto.view.ListView": [
     "widget.ListView",
     "widget.listview"
-  ],
-  "SeaGrant_Proto.view.Location": [
-    "widget.location"
-  ],
-  "SeaGrant_Proto.view.Main": [
-    "widget.main"
   ],
   "SeaGrant_Proto.view.Map": [
     "widget.SeaGrantMap"
