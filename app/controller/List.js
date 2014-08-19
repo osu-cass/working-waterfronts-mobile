@@ -72,10 +72,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// });
 		var locationfilter = new Ext.util.Filter({
 			filterFn: function(item, record){
-				return item.get('city') == toString(record._value.data.title);
+				return item.get('city') == location;
 			},
 			root: 'data'
 		});
+		store.clearFilter(); // this is the fix
 		store.filter(locationfilter); //nope doesn't work
 		// store.filter('city', toString(location)); //nope doesn't work
 		// store.filter(record._value.data.title, true); //nope doesn't work
