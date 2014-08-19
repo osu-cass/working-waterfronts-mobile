@@ -58,28 +58,31 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var loc = this.getHomeView();
 		// console.log(record);
 		var location = record._value.data.title;
-		console.log('Location is: '+ record._value.data.title);
+		console.log('Location is: '+ location);
+		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
+		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
+		// FUNCTION WILL NOT WORK
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		// var locationfilter = new Ext.util.Filter({
 		// 	property: 'city',
-		// 	value: record._value.data.title,
+		// 	value: location,
 		// 	anyMatch: true,
 		// 	caseSensitive: false,
 		// 	root: 'data'
 		// });
-		// var locationfilter = new Ext.util.Filter({
-		// 	filterFn: function(item){
-		// 		return item.get('city') == toString(record._value.data.title);
-		// 	},
-		// 	root: 'data'
-		// });
-		// store.filter(locationfilter); //nope doesn't work
+		var locationfilter = new Ext.util.Filter({
+			filterFn: function(item, record){
+				return item.get('city') == toString(record._value.data.title);
+			},
+			root: 'data'
+		});
+		store.filter(locationfilter); //nope doesn't work
 		// store.filter('city', toString(location)); //nope doesn't work
 		// store.filter(record._value.data.title, true); //nope doesn't work
 		// store.filterBy(record._value.data.title, );
 		// console.log(index);
-		// Vendor.filterBy(function(record, id){
-		// 	return record.get('title' == record._value.data.title);
+		// store.filterBy(function(record, id){
+		// 	return record.get('title') == toString(location);
 		// });
 	},
 	onChooseProduct: function(index, record){
