@@ -21,11 +21,11 @@
 							}, 
 							{
 								"preparation": "grilled", 
-								"name": "Albacore Tuna,"
+								"name": "Albacore Tuna"
 							}
 						], 
 			"lat": -30142.7272727273, 
-			"contact_name": "Todd Sherman", 
+			"contact_name": {"one":"Todd Sherman", "two":"Todd Bogg"},
 			"story": 80, 
 			"name": "Todd's Tuna Farm"
 		},
@@ -50,7 +50,7 @@
 							}, 
 							{
 								"preparation": "smoked", 
-								"name": "Clams,"
+								"name": "Clams"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -79,7 +79,7 @@
 							}, 
 							{
 								"preparation": "frozen", 
-								"name": "Shark,"
+								"name": "Shark"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -108,7 +108,7 @@
 							}, 
 							{
 								"preparation": "frozen", 
-								"name": "Salmon,"
+								"name": "Salmon"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -138,7 +138,7 @@
 							}, 
 							{
 								"preparation": "fresh", 
-								"name": "Salmon,"
+								"name": "Salmon"
 							}
 						], 
 			"lat": -30142.7272727273, 
@@ -167,7 +167,7 @@
 							}, 
 							{
 								"preparation": "fresh", 
-								"name": "Albacore Tuna,"
+								"name": "Albacore Tuna"
 							}
 						], 
 			"lat": -30142.7272727273, 

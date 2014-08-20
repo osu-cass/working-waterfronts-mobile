@@ -58,18 +58,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var loc = this.getHomeView();
 		// console.log(record);
 		var location = record._value.data.title;
-		console.log('Location is: '+ location);
+		// console.log('Location is: '+ location);
 		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
 		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
 		// FUNCTION WILL NOT WORK
 		var store = Ext.data.StoreManager.lookup('Vendor');
-		// var locationfilter = new Ext.util.Filter({
-		// 	property: 'city',
-		// 	value: location,
-		// 	anyMatch: true,
-		// 	caseSensitive: false,
-		// 	root: 'data'
-		// });
 		var locationfilter = new Ext.util.Filter({
 			filterFn: function(item, record){
 				return item.get('city') == location;
@@ -77,14 +70,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			root: 'data'
 		});
 		store.clearFilter(); // this is the fix
-		store.filter(locationfilter); //nope doesn't work
-		// store.filter('city', toString(location)); //nope doesn't work
-		// store.filter(record._value.data.title, true); //nope doesn't work
-		// store.filterBy(record._value.data.title, );
-		// console.log(index);
-		// store.filterBy(function(record, id){
-		// 	return record.get('title') == toString(location);
-		// });
+		store.filter(locationfilter); //now it works
 	},
 	onChooseProduct: function(index, record){
 		console.log('In controller(home): Drop Down list Products');
@@ -118,13 +104,39 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var detailView = this.getDetailView();
 		detailView.getAt(1).setData(index.getData());
 		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
+		// console.log(index.data.name);
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		console.log('This is the store.');
+		console.log(store);
+		var productfilter = new Ext.util.Filter({
+			filterFn: function(item, record){
+				return item.get('name') == index.data.name;
+			},
+			root: 'data'
+		});
+		// console.log(index.data.products[0].name);
+		console.log(index.data.products.name);
+		store.clearFilter();
+		store.filter(productfilter);
 		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 	},
 	// Functions dealing with 
 	// DETAIL
 	// stuff
-	onViewBackListCommand: function(){
+	onViewBackListCommand: function(record, index){
 		console.log('In controller(detail): Back to List Page Button');
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		// console.log(record);
+		// console.log(index);
+		var location = record._activeItem._data.city;
+		var locationfilter = new Ext.util.Filter({
+			filterFn: function(item, record){
+				return item.get('city') == location;
+			},
+			root: 'data'
+		});
+		store.clearFilter();
+		store.filter(locationfilter);
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 	},
 	onViewInfoCommand: function(){
