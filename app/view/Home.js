@@ -75,6 +75,15 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				label: 'Use Current Locaton',
 				itemId: 'userlocation'
 			},
+			{
+				xtype: 'selectfield',			
+				itemId: 'distance',
+				label: 'within',
+				labelWrap: true,
+				displayField: 'distance',
+				store: 'Distance',
+				// valueField: 'id'
+			},
 	        {
 	            xtype: 'fieldset',
 	            itemId: 'dropdown lists',
@@ -99,11 +108,11 @@ Ext.define('SeaGrant_Proto.view.Home', {
 					}					
 	            ]	                  
 	        },
-	        {	
-	        	xtype: 'panel',
-	        	itemId: 'vendnum',
-	        	tpl: '</pre><div class="vendnum">Number of vendors: data-{id}, {_name}, {_label}, {data}, {_data}</div><pre>'
-	        },
+	        // {	
+	        // 	xtype: 'panel',
+	        // 	itemId: 'vendnum',
+	        // 	tpl: '</pre><div class="vendnum">Number of vendors: data-{id}, {_name}, {_label}, {data}, {_data}</div><pre>'
+	        // },
 	        {
 	   			// Checkboxes for sorting data on list page
 	        	items: [
@@ -139,6 +148,11 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				fn: 'onUseLocation'
 			},
 			{
+				delegate: '#distance',
+				event: 'change',
+				fn: 'onDistance'
+			},
+			{
 				delegate: '#selectlocation',
 				event: 'change',
 				fn: 'onSelectLocation'
@@ -168,6 +182,10 @@ Ext.define('SeaGrant_Proto.view.Home', {
 	onUseLocation: function(record){
 		console.log('setUseLocation');
 		this.fireEvent('setUseLocation', this, record);
+	},
+	onDistance: function(record){
+		console.log('setDistance');
+		this.fireEvent('setDistance', this, record);
 	},
 	onSelectLocation: function(record, index){
 		console.log('chosenLocation');

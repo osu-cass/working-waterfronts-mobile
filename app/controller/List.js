@@ -13,6 +13,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		control: {
 			homeView: {				
 				setUseLocation: 'onSetUseLocation',
+				setDistance: 'onSetDistance',
 				chosenLocation: 'onChooseLocation',
 				chosenProduct: 'onChooseProduct',
 				sortByVendorCommand: 'onSortByVendorCommand',
@@ -52,7 +53,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	// stuff	######################################################################################	HOME
 	onSetUseLocation: function(){
 		console.log('In controller(home): User Location toggle');
-	},	
+	},
+	onSetDistance: function(index, record){
+		console.log("In controller(home): Distance from user chosen");
+	},
 	onChooseLocation: function(index, record){
 		console.log('In controller(home): Drop Down list Location');
 		var loc = this.getHomeView();

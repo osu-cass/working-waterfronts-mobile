@@ -23,7 +23,7 @@ Ext.application({
 
     controllers: ["List"],
     models: ['City', "Test", "Products", "Locations"],
-    stores: ["Info", "Education", "CountryStore", "Vendor", "Product", "Location"],
+    stores: ["Info", "Education", "CountryStore", "Vendor", "Product", "Location", "Distance"],
     views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "TestView"],
 
 
