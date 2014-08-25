@@ -131,8 +131,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 	        			itemId: 'product'
 	        		}
 		        ]
-	        },
-	        
+	        },	        
 	        {
 				xtype: 'button',
 				ui: 'action',
