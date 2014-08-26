@@ -1,103 +1,84 @@
 Ext.define('SeaGrant_Proto.view.Detail', {
-	extend: 'Ext.Carousel',
+	extend: 'Ext.Panel',
 	requires: ['Ext.MessageBox', 'Ext.dataview.List'],
 	alias: 'widget.detail',
 	fullscreen: true,
 	config: {
-		defaults: {
-			styleHtmlContent: true
+		layout: {
+			type: 'fit'
 		},
 		items: [
-            {
-                // html: 'Company Details',
-                tpl: ['<div class="name">{title}</div>',
-                '<div class="id">{id}</div>'].join(''),
-                style: 'background-color:#f00;'
-            },
-      //       {
-	     //        config: {
-						// 	scrollable: {
-						// 		direction: 'vertical',
-						// 		directionLock: true	
-						// 	}
-						// },
-						// xtype: 'list',
-						// store: 'Info',
-						// itemId: 'homeList',
-						// loadingText: 'Loading Notes ...',
-						// emptyText: '</pre><div class="\&quot;notes-list-empty-text\&quot;">No notes found.</div><pre>',
-						// itemTpl: '</pre><div class="list-item-title">{title}</div><div class="list-item-Latlng">{Latlng}</div><pre>'
-      //       }, 
-            {
-                html: 'Products',
-                tpl: '<div class="products">{products}</div>',
-                style: 'background-color:#ffb600;'
-            }, {
-                html: 'History',
-                tpl:'<div class="history">{desc}</div>',
-                style: 'background-color:#ff0;'
-            }, {
-                html: 'Awards',
-                style: 'background-color:#80ff4d;'
-            }, {
-                html: 'Fun Facts',
-                style: 'background-color:#009dff;'
-            },
-			// This declairs the title and toolbar as well as navigation buttons
-			{
-				xtype: 'titlebar',
-				docked: 'top'
-			},
 			{
 				xtype: 'toolbar',
-				docked: 'bottom',
+				// title: 'Detail Page',
+				itemId: 'detailPageToolbar',
+				docked: 'top',
 				items: [
 					{
-						xtype: 'spacer'
+						xtype: 'button',
+						ui: 'action',
+						text: 'back',
+						itemId: 'backListButton'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'Home',
-						itemId: 'homeButton'
-					},
-					{
-						xtype: 'spacer'
-					},
-					{
-						xtype: 'button',
-						ui: 'action',
-						text: 'Location View',
-						itemId: 'locationButton'
-					},
-					{
-						xtype: 'spacer'
+						text: 'Info',
+						itemId: 'infoButton'
 					}
 				]
+			},
+			{
+				xtype: 'panel',
+				itemId: 'infoBlock',
+				tpl: '</pre><div class="list-item-title">{name}</div><div class="list-item-description">{description}</div><div class="list-item-phone">Phone #: {phone}</div><div class="list-item-description">Representative: {contact_name}</div><div class="list-item-email">E-mail: {email}</div><div class="list-item-website">Website: {website}</div><pre>'
+			},			
+			{
+				config: {
+					scrollable: {
+						direction: 'verticle',
+						directionLock: true
+					}
+				},
+				// We want this list to have only products of the vendor selected in
+				// the list screen. Perhaps we will have to deal with the products root
+				// of the vendor selected, and link the vendors products to the product store.
+				xtype: 'list',
+				store: 'Vendor',
+				itemId: 'Dpagelist',
+				loadingText: 'Loading Notes ...',
+				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
+				itemTpl: '</pre><tpl for="products"><div class="products"><div>{preparation} {name}</div></tpl><pre>'
 			}
 		],
 		listeners: [
-			// Bottom button listeners
 			{
-				delegate: '#homeButton',
-				event: 'tap', 
-				fn: 'onHomeButtonTap'
+				delegate: '#backListButton',
+				event: 'tap',
+				fn: 'onBackButtonTap'
 			},
 			{
-				delegate: '#locationButton',
+				delegate: '#infoButton',
 				event: 'tap',
-				fn: 'onLocationButtonTap'
+				fn: 'onInfoButtonTap'
+			},
+			{
+				delegate: '#Dpagelist',
+				event: 'itemtap',
+				fn: 'onDpagelistDisclose'
 			}
 		]
 	},
-	onHomeButtonTap: function(list, record, target, index, evt, options){
-		console.log('viewHomeCommand');
-		console.log("home button index");
-		console.log(index);
-		this.fireEvent('viewHomeCommand', this, record, index);
+	onBackButtonTap: function(){
+		console.log('onBackButtonTap');
+		this.fireEvent('viewBackListCommand', this);
 	},
-	onLocationButtonTap: function(list, record, target, index, evt, options){
-		console.log('viewLocationCommand');
-		this.fireEvent('viewLocationCommand', this, record);
+	onInfoButtonTap: function(){
+		console.log('onInfoButtonTap');
+		this.fireEvent('viewInfoCommand', this);
+	},
+	onDpagelistDisclose: function(list, record, target, index, evt, options){
+		console.log('viewDpageListItemCommand');
+		this.fireEvent('viewDpageListItemCommand', this, record, index);
 	}
 });

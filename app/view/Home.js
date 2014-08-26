@@ -1,63 +1,3 @@
-// Ext.define('SeaGrant_Proto.view.Home', {
-// 	extend: 'Ext.Panel',
-// 	requires: ['Ext.form.FieldSet', 'Ext.form.Panel', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'SeaGrant_Proto.view.Map'],
-// 	xtype: 'Home',
-// 	alias: 'widget.home',
-// 	config: {
-// 		// layout: {
-// 		// 	type: 'fit'
-// 		// },
-// 		items: [
-// 			{
-// 				xtype: 'toolbar',
-// 				title: 'Whats Fresh?',
-// 				docked: 'top'
-// 			},
-// 			{
-// 				xtype: 'selectfield',			
-// 				itemId: 'Country',
-// 				label: 'Location',
-// 				labelWrap: true,
-// 				displayField: 'name',
-// 				store: 'Countries',
-// 				valueField: 'id'
-// 			},
-// 			{
-// 				xtype: 'selectfield',			
-// 				itemId: 'id',
-// 				label: 'Product',
-// 				labelWrap: true,
-// 				displayField: 'id',
-// 				store: 'Countries',
-// 				valueField: 'id'
-// 			}		
-// 		],
-// 		listeners: [
-// 			{
-// 				delegate: '#Country',
-// 				event: 'change',
-// 				fn: 'onCountryChange'
-// 			},
-// 			{
-// 				delegate: '#State',
-// 				event: 'change',
-// 				fn: 'onStateChange'
-// 			}
-// 		]
-// 	},
-// 	onHomeListDisclose: function(list, record, target, index, evt, options){
-// 		console.log('viewListItemCommand');
-// 		console.log("list index");
-// 		console.log(index);
-// 		this.fireEvent("viewListItemCommand", this, record, index);
-// 	},
-// 	onSubmitButtonTap: function(){
-// 		console.log('onSubmitButtonTap');
-// 		Ext.Msg.alert('Sorting future list data');
-// 		this.fireEvent("onSubmitButtonTap");
-// 	}
-// }); 
-
 Ext.define('SeaGrant_Proto.view.Home', {
 	extend: 'Ext.form.Panel',
 	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select'],
@@ -78,8 +18,18 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				label: 'Use Current Locaton',
 				itemId: 'userlocation'
 			},
+			{
+				xtype: 'selectfield',			
+				itemId: 'distance',
+				label: 'within',
+				labelWrap: true,
+				displayField: 'distance',
+				store: 'Distance',
+				// valueField: 'id'
+			},
 	        {
 	            xtype: 'fieldset',
+	            itemId: 'dropdown lists',
 	            items: [
 	                {
 						xtype: 'selectfield',			
@@ -87,22 +37,27 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						label: 'Location',
 						labelWrap: true,
 						displayField: 'title',
-						store: 'Info',
+						store: 'Location',
 						// valueField: 'id'
-					},				
+					},
 	                {
 						xtype: 'selectfield',			
 						itemId: 'selectproduct',
 						label: 'Product',
 						labelWrap: true,
-						displayField: 'products',
-						store: 'Info',
+						displayField: 'name',
+						store: 'Product',
 						// valueField: 'title'
 					}					
 	            ]	                  
 	        },
+	        // {	
+	        // 	xtype: 'panel',
+	        // 	itemId: 'vendnum',
+	        // 	tpl: '</pre><div class="vendnum">Number of vendors: data-{id}, {_name}, {_label}, {data}, {_data}</div><pre>'
+	        // },
 	        {
-	        	title: 'SortBy Two:',
+	   			// Checkboxes for sorting data on list page
 	        	items: [
         	        {
         	        	xtype: 'checkboxfield',
@@ -119,7 +74,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 	        			itemId: 'product'
 	        		}
 		        ]
-	        },
+	        },	        
 	        {
 				xtype: 'button',
 				ui: 'action',
@@ -127,16 +82,16 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				itemId: 'goButton'
 			}
 	    ],
-	    listeners: [
-			{
-				delegate: '#goButton',
-				event: 'tap',
-				fn: 'onGoButtonTap'
-			},
+	    listeners: [			
 			{
 				delegate: '#userlocation',
-				event: 'tap',
-				fn: 'onUseLocaion'
+				event: 'change',
+				fn: 'onUseLocation'
+			},
+			{
+				delegate: '#distance',
+				event: 'change',
+				fn: 'onDistance'
 			},
 			{
 				delegate: '#selectlocation',
@@ -150,33 +105,42 @@ Ext.define('SeaGrant_Proto.view.Home', {
 			},
 			{
 				delegate: '#vendor',
-				event: 'tap',
+				event: 'change',
 				fn: 'onVendorSelect'
 			},
 			{
 				delegate: '#product',
-				event: 'tap',
+				event: 'change',
 				fn: 'onProductSelect'
+			},
+			{
+				delegate: '#goButton',
+				event: 'tap',
+				fn: 'onGoButtonTap'
 			}
 		]	      
 	},
-	onUseLocaion: function(){
+	onUseLocation: function(record){
 		console.log('setUseLocation');
 		this.fireEvent('setUseLocation', this, record);
 	},
-	onSelectLocation: function(){
+	onDistance: function(record){
+		console.log('setDistance');
+		this.fireEvent('setDistance', this, record);
+	},
+	onSelectLocation: function(record, index){
 		console.log('chosenLocation');
 		this.fireEvent('chosenLocation', this, record);
 	},
-	onSelectProduct: function(){
+	onSelectProduct: function(record){
 		console.log('chosenProduct');
 		this.fireEvent('chosenProduct', this, record);
 	},
-	onVendorSelect: function(){
+	onVendorSelect: function(record){
 		console.log('sortByVendorCommand');
 		this.fireEvent('sortByVendorCommand', this, record);
 	},
-	onProductSelect: function(){
+	onProductSelect: function(record){
 		console.log('sortByProductCommand');
 		this.fireEvent('sortByProductCommand', this, record);
 	},

@@ -24,8 +24,8 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						text: 'Info',
-						itemId: 'infoButton'
+						text: 'Detail',
+						itemId: 'detailButton'
 					}
 				]
 			},			
@@ -37,11 +37,19 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 					}
 				},
 				xtype: 'list',
-				store: 'Info',
 				itemId: 'Lpagelist',
+				store: 'Vendor',
 				loadingText: 'Loading Notes ...',
-				emptyText: '</pre><div class="\&quot;notes-list-empty-text\&quot;">No notes found.</div><pre>',
-				itemTpl: '</pre><div class="list-item-title">{title}</div><div class="list-item-Latlng">{Latlng}</div><pre>'
+				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
+				itemTpl: '</pre><div class="list-item-name">{name}</div><pre>'
+				// if(((locationFlag = 1) && (productFlag = 0) && (currentFlag = 0)) || ((locationFlag = 1) && (productFlag = 0) && (currentFlag = 1)) || ((locationFlag = 0) && (productFlag = 0) && (currentFlag = 1))){
+				// 	store: 'Vendor',
+				// 	itemTpl: '</pre><div class="list-item-name">{name}</div><pre>'
+				// },
+				// if(((locationFlag = 0) && (productFlag = 1) && (currentFlag = 0)) || ((locationFlag = 0) && (productFlag = 1) && (currentFlag = 1)) || ((locationFlag = 1) && (productFlag = 1) && (currentFlag = 0)) || ((locationFlag = 1) && (productFlag = 1) && (currentFlag = 1))){
+				// 	store: 'Product',
+				// 	itemTpl: '</pre><div class="list-item-name">{name}</div><pre>'
+				// }				
 			},
 			{
 				xtype: 'SeaGrantMap',
@@ -55,9 +63,9 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 				fn: 'onBackButtonTap'
 			},
 			{
-				delegate: '#infoButton',
+				delegate: '#detailButton',
 				event: 'tap',
-				fn: 'onInfoButtonTap'
+				fn: 'onDetailButtonTap'
 			},
 			{
 				delegate: '#Lpagelist',
@@ -70,9 +78,9 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 		console.log('onBackButtonTap');
 		this.fireEvent('viewBackHomeCommand', this);
 	},
-	onInfoButtonTap: function(){
-		console.log('onInfoButtonTap');
-		this.fireEvent('viewInfoCommand', this);
+	onDetailButtonTap: function(){
+		console.log('onDetailButtonTap');
+		this.fireEvent('viewDetailCommand', this);
 	},
 	onLpagelistDisclose: function(list, record, target, index, evt, options){
 		console.log('viewLpageListItemCommand');

@@ -5,34 +5,30 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	config: {
 		refs: {
 			homeView: 'home',
-			detailView: 'detail',
-			locationView: 'location',
 			listView: 'listview',
+			detailView: 'detail',			
 			infoView: 'info',
 			specificView: 'specific'
 		},
 		control: {
-			homeView: {
-				viewGoCommand: 'onViewGoCommand',
+			homeView: {				
 				setUseLocation: 'onSetUseLocation',
+				setDistance: 'onSetDistance',
 				chosenLocation: 'onChooseLocation',
 				chosenProduct: 'onChooseProduct',
 				sortByVendorCommand: 'onSortByVendorCommand',
-				sortByProductCommand: 'onSortByProductCommand'
-				
+				sortByProductCommand: 'onSortByProductCommand',
+				viewGoCommand: 'onViewGoCommand'				
 			},
 			listView: {
 				viewBackHomeCommand: 'onViewBackHomeCommand',
-				viewInfoCommand: 'onViewInfoCommand',
+				viewDetailCommand: 'onViewDetailCommand',
 				viewLpageListItemCommand: 'onViewLpageListItemCommand'
 			},
 			detailView: {
-				viewHomeCommand: 'onViewHomeCommand',
-				viewLocationCommand: 'onViewLocationCommand'
-			},
-			locationView: {
-				viewDetailCommand: 'onViewDetailCommand',
-				viewHomeCommand: 'onViewHomeCommand'
+				viewBackListCommand: 'onViewBackListCommand',
+				viewInfoCommand: 'onViewInfoCommand',
+				viewDpageListItemCommand: 'onViewDpageListItemCommand'
 			},
 			infoView: {
 				viewBackDetailCommand: 'onViewBackDetailCommand',
@@ -52,101 +48,146 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		type: 'slide',
 		direction: 'right'
 	},
-	// Functions dealing with home page stuff
-	onViewGoCommand: function(){
-		console.log('In controller: onViewGoCommand');
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
-		console.log('go to list page');
-	},
-	onChooseLocation: function(){
-		console.log('In controller: onChooseLocation');
-	},
-	onChooseProduct: function(){
-		console.log('In controller: onChooseProduct');
-	},
+	// Functions dealing with 
+	// HOME
+	// stuff	######################################################################################	HOME
 	onSetUseLocation: function(){
-		console.log('In controller: onSetUseLocation');
+		console.log('In controller(home): User Location toggle');
 	},
+	onSetDistance: function(index, record){
+		console.log("In controller(home): Distance from user chosen");
+	},
+	onChooseLocation: function(index, record){
+		console.log('In controller(home): Drop Down list Location');
+		var loc = this.getHomeView();
+		// console.log(record);
+		var location = record._value.data.title;
+		// console.log('Location is: '+ location);
+		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
+		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
+		// FUNCTION WILL NOT WORK
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		var locationfilter = new Ext.util.Filter({
+			filterFn: function(item, record){
+				return item.get('city') === location;
+			},
+			root: 'data'
+		});
+		store.clearFilter(); // this is the fix
+		store.filter(locationfilter); //now it works
+		var vendcount = store.getCount();
+		console.log(vendcount);
+		var homeView = this.getHomeView();
+		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
+		console.log(crud.getData()); // trying to get into _data so I can add vendcount such that we can correctly access it
+		crud.setData(record); // needed to display tpl data on home view
+		console.log(homeView);
+		Ext.Viewport.setActiveItem(homeView);
+		// return vendcount;
+	},
+	onChooseProduct: function(index, record){
+		console.log('In controller(home): Drop Down list Products');
+		// console.log(record);
+		console.log('Product is: '+ record._value.data.name);
+	},	
 	onSortByVendorCommand: function(){
-		console.log('In controller: onSortByVendorCommand');
+		console.log('In controller(home): Vendor checkbox');
 	},
 	onSortByProductCommand: function(){
-		console.log('In controller: onSortByProductCommand');
+		console.log('In controller(home): Product checkbox');
 	},
-	// Functions dealing with list page stuff
-	onViewInfoCommand: function(){
-		console.log('In controller: onViewInfoCommand');
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
-		console.log('go to Info page');
+	onViewGoCommand: function(){
+		console.log('In controller(home): Go to List Page Button');
+		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
+	// Functions dealing with 
+	// LIST
+	// stuff	######################################################################################	LIST
 	onViewBackHomeCommand: function(){
-		console.log('In controller: onViewBackHomeCommand');
-		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
-		console.log('back to home page');
-	},
-	onViewLpageListItemCommand: function(record, list, index){
-		console.log('onViewLpageListItemCommand');
-		Ext.Msg.alert(index.data.title, 'This is the selected list item.');
-	},
-	// Functions dealing with info page stuff
-	onViewSpecificCommand: function(){
-		console.log('In controller: onViewSpecificCommand');
-		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
-		console.log('go to Specific page');
-	},
-	onViewBackDetailCommand: function(){
-		console.log('In controller: onViewBackDetailCommand');
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
-		console.log('back to detail page');
-	},
-	onViewIpageListItemCommand: function(record, list, index){
-		console.log('onViewIpageListItemCommand');
-		Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
-		// var tool =Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0];
-		// console.log(tool);
-		// var tool2 =Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.listItem);
-		// console.log(tool2);
-		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
-		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
-	},
-	// Functions dealing with specific page stuff
-	onViewBackInfoCommand: function(){
-		console.log('In controller: onViewBackInfoCommand');
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideRightTransition);
-		console.log('back to info page');
-	},
-	// Functions dealing with OLD stuff
-	onViewLocationCommand: function(){
-		console.log('onViewLocationCommand');
-		Ext.Viewport.animateActiveItem(this.getLocationView(), this.slideLeftTransition);
-		console.log('in location');
-	},
-	onViewHomeCommand: function(){
-		console.log('onViewHomeCommand');
+		console.log('In controller(list): Back to Home Page Button');
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
 	},
 	onViewDetailCommand: function(){
-		console.log("onViewListItemCommand");
-		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
-		console.log("in detail view");
-	},
-	onViewListItemCommand: function(record, list, index){
-		console.log("Controller index");
-		console.log(index);
-		// Set title to list item title
-		var newTitle = index.data.title;
-		Ext.ComponentQuery.query('titlebar')[0].setTitle(newTitle);
-		console.log("onViewListItemCommand");
-		// Set data for each item in carousel
+		console.log('In controller(list): View Detail Page Button');
+		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
+	},	
+	onViewLpageListItemCommand: function(record, list, index){
+		console.log('In controller(list): Select list item');
+		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
 		var detailView = this.getDetailView();
-		console.log('length: ', detailView.carouselItems.length);
-        for(var i = 1; i <= detailView.carouselItems.length; i++){
-        	detailView.getAt(i).setData(index.getData());
-      	}
-      	// Setting the active viewport
+		detailView.getAt(1).setData(index.getData());
+		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
+		// console.log(index.data.name);
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		console.log('This is the store.');
+		console.log(store);
+		var productfilter = new Ext.util.Filter({
+			filterFn: function(item, record){
+				return item.get('name') === index.data.name;
+			},
+			root: 'data'
+		});
+		// console.log(index.data.products[0].name);
+		console.log(index.data.products.name);
+		store.clearFilter();
+		store.filter(productfilter);
+		console.log(detailView);
 		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
-		console.log("in detail view");
 	},
+	// Functions dealing with 
+	// DETAIL
+	// stuff	######################################################################################	DETAIL
+	onViewBackListCommand: function(record, index){
+		console.log('In controller(detail): Back to List Page Button');
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		// console.log(record);
+		// console.log(index);
+		var location = record._activeItem._data.city;
+		var locationfilter = new Ext.util.Filter({
+			filterFn: function(item, record){
+				return item.get('city') === location;
+			},
+			root: 'data'
+		});
+		store.clearFilter();
+		store.filter(locationfilter);
+		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
+	},
+	onViewInfoCommand: function(){
+		console.log('In controller(detail): View Info Page Button');
+		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
+	},	
+	onViewDpageListItemCommand: function(record, list, index){
+		console.log('In controller(detail): Select list item');
+		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
+		Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.name);
+		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
+	},
+	// Functions dealing with 
+	// INFO 
+	// stuff	######################################################################################	INFO
+	onViewBackDetailCommand: function(){
+		console.log('In controller(info): Back to Detail Page Button');
+		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideRightTransition);
+	},
+	onViewSpecificCommand: function(){
+		console.log('In controller(info): View Specific Page Button');
+		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
+	},	
+	onViewIpageListItemCommand: function(record, list, index){
+		console.log('In controller(info): Selected');
+		// Ext.Msg.alert(index.data.listItem, 'This is the stuff I selected.');
+		Ext.ComponentQuery.query('toolbar[itemId=specificPageToolbar]')[0].setTitle(index.data.listItem);
+		Ext.Viewport.animateActiveItem(this.getSpecificView(), this.slideLeftTransition);
+	},
+	// Functions dealing with
+	// SPECIFIC
+	// stuff	######################################################################################	SPECIFIC
+	onViewBackInfoCommand: function(){
+		console.log('In controller(specific): Back to Info Page Button');
+		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideRightTransition);
+	},
+	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
 		// console.log("launch");

@@ -40,7 +40,7 @@ Ext.define('SeaGrant_Proto.view.Info', {
 				store: 'Education',
 				itemId: 'Ipagelist',
 				loadingText: 'Loading Notes ...',
-				emptyText: '</pre><div class="\&quot;notes-list-empty-text\&quot;">No notes found.</div><pre>',
+				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-listItem">{listItem}</div><pre>'
 			}			
 		],
