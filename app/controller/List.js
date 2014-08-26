@@ -69,7 +69,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var locationfilter = new Ext.util.Filter({
 			filterFn: function(item, record){
-				return item.get('city') == location;
+				return item.get('city') === location;
 			},
 			root: 'data'
 		});
@@ -123,7 +123,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log(store);
 		var productfilter = new Ext.util.Filter({
 			filterFn: function(item, record){
-				return item.get('name') == index.data.name;
+				return item.get('name') === index.data.name;
 			},
 			root: 'data'
 		});
@@ -145,7 +145,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var location = record._activeItem._data.city;
 		var locationfilter = new Ext.util.Filter({
 			filterFn: function(item, record){
-				return item.get('city') == location;
+				return item.get('city') === location;
 			},
 			root: 'data'
 		});

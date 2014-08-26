@@ -28,6 +28,7 @@ Harness.configure({
         '../app/store/Vendor.js',
         '../app/store/CountryStore.js',
         '../app/store/Education.js',
+        '../app/store/Distance.js',
         // Models
         '../app/model/City.js',
         '../app/model/Locations.js',

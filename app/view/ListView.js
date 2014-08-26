@@ -40,7 +40,7 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 				itemId: 'Lpagelist',
 				store: 'Vendor',
 				loadingText: 'Loading Notes ...',
-				emptyText: '</pre><div class="\&quot;notes-list-empty-text\&quot;">No notes found.</div><pre>',
+				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-name">{name}</div><pre>'
 				// if(((locationFlag = 1) && (productFlag = 0) && (currentFlag = 0)) || ((locationFlag = 1) && (productFlag = 0) && (currentFlag = 1)) || ((locationFlag = 0) && (productFlag = 0) && (currentFlag = 1))){
 				// 	store: 'Vendor',

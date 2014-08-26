@@ -47,7 +47,7 @@ Ext.define('SeaGrant_Proto.view.Detail', {
 				store: 'Vendor',
 				itemId: 'Dpagelist',
 				loadingText: 'Loading Notes ...',
-				emptyText: '</pre><div class="\&quot;notes-list-empty-text\&quot;">No notes found.</div><pre>',
+				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><tpl for="products"><div class="products"><div>{preparation} {name}</div></tpl><pre>'
 			}
 		],
