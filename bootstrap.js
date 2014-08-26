@@ -32,6 +32,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSetRowList": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "touch/src/draw/engine/SvgContext.js",
+  "Ext.ux.DropDownButton": "app/view/DropDownButton.js",
   "SeaGrant_Proto": "app"
 });
 
@@ -735,6 +736,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.ActionOverFlowMenuButton": [],
   "Ext.ux.ApplicationMenu": [],
   "Ext.ux.ContextMenu": [],
+  "Ext.ux.DropDownButton": [],
   "Ext.ux.MenuButton": [],
   "Ext.ux.TabMenuButton": [],
   "Ext.ux.device.Analytics": [],
@@ -776,6 +778,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "SeaGrant_Proto.view.Home": [],
   "SeaGrant_Proto.view.Info": [],
   "SeaGrant_Proto.view.ListView": [],
+  "SeaGrant_Proto.view.Location": [],
+  "SeaGrant_Proto.view.Main": [],
   "SeaGrant_Proto.view.Map": [],
   "SeaGrant_Proto.view.Specific": [],
   "SeaGrant_Proto.view.TestView": []
@@ -1757,6 +1761,12 @@ Ext.ClassManager.addNameAliasMappings({
   "SeaGrant_Proto.view.ListView": [
     "widget.ListView",
     "widget.listview"
+  ],
+  "SeaGrant_Proto.view.Location": [
+    "widget.location"
+  ],
+  "SeaGrant_Proto.view.Main": [
+    "widget.main"
   ],
   "SeaGrant_Proto.view.Map": [
     "widget.SeaGrantMap"

@@ -12,63 +12,6 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				itemId: 'homePageToolbar',
 				docked: 'top'
 			},
-<<<<<<< HEAD
-			// {
-			// 	xtype: 'togglefield',
-			// 	name: 'userlocation',
-			// 	label: 'Use Current Locaton',
-			// 	itemId: 'userlocation'
-			// },
-	  //       {
-	  //           xtype: 'fieldset',
-	  //           itemId: 'dropdown lists',
-	  //           items: [
-	  //               {
-			// 			xtype: 'selectfield',			
-			// 			itemId: 'selectlocation',
-			// 			label: 'Location',
-			// 			labelWrap: true,
-			// 			displayField: 'title',
-			// 			store: 'Location',
-			// 			// valueField: 'id'
-			// 		},				
-	  //               {
-			// 			xtype: 'selectfield',			
-			// 			itemId: 'selectproduct',
-			// 			label: 'Product',
-			// 			labelWrap: true,
-			// 			displayField: 'name',
-			// 			store: 'Product',
-			// 			// valueField: 'title'
-			// 		}					
-	  //           ]	                  
-	  //       },
-	  //       {
-	  //  			// Checkboxes for sorting data on list page
-	  //       	items: [
-   //      	        {
-   //      	        	xtype: 'checkboxfield',
-	  //       			label: 'Vendors',
-	  //       			name: 'vendors',
-	  //       			inputValue: '1',
-	  //       			itemId: 'vendor'
-	  //       		},
-	  //       		{
-	  //       			xtype: 'checkboxfield',
-	  //       			label: 'Products',
-	  //       			name: 'products',
-	  //       			inputValue: '2',
-	  //       			itemId: 'product'
-	  //       		}
-		 //        ]
-	  //       },
-	  //       {
-			// 	xtype: 'button',
-			// 	ui: 'action',
-			// 	text: 'Go',
-			// 	itemId: 'goButton'
-			// }
-=======
 			{
 				xtype: 'togglefield',
 				name: 'userlocation',
@@ -138,7 +81,6 @@ Ext.define('SeaGrant_Proto.view.Home', {
 				text: 'Go',
 				itemId: 'goButton'
 			}
->>>>>>> Add framework for homepage vendor number
 	    ],
 	    listeners: [			
 			{
