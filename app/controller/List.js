@@ -61,7 +61,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Location');
 		var loc = this.getHomeView();
 		// console.log(record);
-		var location = record._value.data.title;
+		SeaGrant_Proto.location = record._value.data.title;
 		// console.log('Location is: '+ location);
 		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
 		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
@@ -69,26 +69,116 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var locationfilter = new Ext.util.Filter({
 			filterFn: function(item, record){
-				return item.get('city') === location;
+				return item.get('city') === SeaGrant_Proto.location;
 			},
 			root: 'data'
 		});
 		store.clearFilter(); // this is the fix
 		store.filter(locationfilter); //now it works
-		var vendcount = store.getCount();
+
+		// This correctly sets the form of data necissary for the tpl to read from
+		// var vendcount = {
+		// 	th: 'There are ',
+		// 	numItems: store.getCount(),
+		// 	v: ' vendors ',
+		// 	i: 'in ',
+		// 	loc: SeaGrant_Proto.location,
+		// 	w: 'with '
+		// 	// prod: product			
+		// };
 		console.log(vendcount);
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
-		console.log(crud.getData()); // trying to get into _data so I can add vendcount such that we can correctly access it
-		crud.setData(record); // needed to display tpl data on home view
-		console.log(homeView);
+		// This defines how the tpl data is printed out given the drop down table states
+		if ((SeaGrant_Proto.location != 'Please choose a location') || (SeaGrant_Proto.product != 'Please choose a product')){
+			if(SeaGrant_Proto.location == 'Please choose a location'){
+					var vendcount = {
+						th: 'There are ',
+						numItems: store.getCount(),
+						v: ' vendors ',
+						w: ' with ',
+						prod: SeaGrant_Proto.product,
+						end: '.'			
+					};
+			}else{
+				if (SeaGrant_Proto.product != 'Please choose a product'){
+					console.log('Prod ok');
+					var vendcount = {
+						th: 'There are ',
+						numItems: store.getCount(),
+						v: ' vendors ',
+						i: 'in ',
+						loc: SeaGrant_Proto.location,
+						w: ' with ',
+						prod: SeaGrant_Proto.product,
+						end: '.'			
+					};
+				}else{
+					console.log('Prod is horid');
+					var vendcount = {
+						th: 'There are ',
+						numItems: store.getCount(),
+						v: ' vendors ',
+						i: 'in ',
+						loc: SeaGrant_Proto.location,
+						end: '.'			
+					};
+				};
+			};
+			
+		}
+		crud.setData(vendcount); // needed to display tpl data on home view
 		Ext.Viewport.setActiveItem(homeView);
-		// return vendcount;
 	},
 	onChooseProduct: function(index, record){
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
 		console.log('Product is: '+ record._value.data.name);
+		SeaGrant_Proto.product = record._value.data.name;
+		var store = Ext.data.StoreManager.lookup('Vendor');
+
+		var homeView = this.getHomeView();
+		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
+		// This defines how the tpl data is printed out given the drop down table states
+		if ((SeaGrant_Proto.location != 'Please choose a location') || (SeaGrant_Proto.product != 'Please choose a product')){
+			if(SeaGrant_Proto.product == 'Please choose a product'){
+					var vendcount = {
+						th: 'There are ',
+						numItems: store.getCount(),
+						v: ' vendors ',
+						i: 'in ',
+						loc: SeaGrant_Proto.location,
+						end: '.'			
+					};
+			}else{
+				if(SeaGrant_Proto.location != 'Please choose a location'){
+					console.log('Prod ok');
+					var vendcount = {
+						th: 'There are ',
+						numItems: store.getCount(),
+						v: ' vendors ',
+						i: 'in ',
+						loc: SeaGrant_Proto.location,
+						w: ' with ',
+						prod: SeaGrant_Proto.product,
+						end: '.'			
+					};
+				}else{
+					console.log('Prod is horid');
+					var vendcount = {
+						th: 'There are ',
+						numItems: store.getCount(),
+						v: ' vendors ',
+						w: ' with ',
+						prod: SeaGrant_Proto.product,
+						end: '.'			
+					};
+				};
+			};
+			
+		}
+		crud.setData(vendcount); // needed to display tpl data on home view
+		Ext.Viewport.setActiveItem(homeView);
 	},	
 	onSortByVendorCommand: function(){
 		console.log('In controller(home): Vendor checkbox');
