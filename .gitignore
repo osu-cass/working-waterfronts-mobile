@@ -1,12 +1,12 @@
 ### External Dependencies ###
-node_modules/
+node_modules/*
 bootstrap.*
 
 ### Compiled Files ###
-build/
-**/.sass-cache/
-resources/css/
-phonegap/
+build/*
+**/.sass-cache/*
+resources/css/*
+phonegap/*
 
 ### temp and log Files ###
 **/*.temp*
