@@ -7,6 +7,7 @@ StartTest(function(t) {
     // console.log(tool);
     t.is(tool[0].config.itemId, 'homePageToolbar', "We have a Header");
 
+    t.diag("User Location Tests"); //###############################################################################################
     // User location toggle test
     var tog = Ext.ComponentQuery.query('togglefield[name=userlocation]');
     // console.log("Here is tog[0].config.name: ");
@@ -16,6 +17,17 @@ StartTest(function(t) {
     t.is(tog[0]._component._value[0], '0', 'We have a togglefield for user location');
     // Now check that when the toggle is toggled, an event is fired and recieved by the controller
     t.is(tog[0].eventDispatcher.listenerStacks.component.home.setUseLocation.listeners.current[0].fn.$name, 'onSetUseLocation', 'The user location toggle sends current user location data');
+
+    t.diag("Number of vendors test"); //#############################################################################################
+    var num = Ext.ComponentQuery.query('panel[itemId=vendnum]');
+    console.log('This is the num: ');
+    console.log (num);
+    t.is(num[0]._itemId, 'vendnum', 'Number of Vendors panel exists');
+
+    var print = Ext.ComponentQuery.query('panel[itemId=vendnum]');
+    console.log('This is the print: ');
+    console.log (print);
+    t.is(print[0]._tpl.html, '</pre><div class="vendnum">{th}{numItems}{v}{i}{loc}{w}{prod}{end}</div><pre>', 'Number of Vendors string prints out data in correct order');
 
     t.diag("Drop down list tests"); //###############################################################################################
     // Location drop list test
