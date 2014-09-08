@@ -86,13 +86,14 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// 	w: 'with '
 		// 	// prod: product			
 		// };
+		var vendcount;
 		console.log(vendcount);
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
 		// This defines how the tpl data is printed out given the drop down table states
-		if ((SeaGrant_Proto.location != 'Please choose a location') || (SeaGrant_Proto.product != 'Please choose a product')){
-			if(SeaGrant_Proto.location == 'Please choose a location'){
-					var vendcount = {
+		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
+			if(SeaGrant_Proto.location === 'Please choose a location'){
+					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
 						v: ' vendors ',
@@ -101,9 +102,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						end: '.'			
 					};
 			}else{
-				if (SeaGrant_Proto.product != 'Please choose a product'){
+				if (SeaGrant_Proto.product !== 'Please choose a product'){
 					console.log('Prod ok');
-					var vendcount = {
+					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
 						v: ' vendors ',
@@ -115,7 +116,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					};
 				}else{
 					console.log('Prod is horid');
-					var vendcount = {
+					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
 						v: ' vendors ',
@@ -123,8 +124,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						loc: SeaGrant_Proto.location,
 						end: '.'			
 					};
-				};
-			};
+				}
+			}
 			
 		}
 		crud.setData(vendcount); // needed to display tpl data on home view
@@ -140,9 +141,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
 		// This defines how the tpl data is printed out given the drop down table states
-		if ((SeaGrant_Proto.location != 'Please choose a location') || (SeaGrant_Proto.product != 'Please choose a product')){
-			if(SeaGrant_Proto.product == 'Please choose a product'){
-					var vendcount = {
+		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
+			if(SeaGrant_Proto.product === 'Please choose a product'){
+					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
 						v: ' vendors ',
@@ -151,9 +152,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						end: '.'			
 					};
 			}else{
-				if(SeaGrant_Proto.location != 'Please choose a location'){
+				if(SeaGrant_Proto.location !== 'Please choose a location'){
 					console.log('Prod ok');
-					var vendcount = {
+					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
 						v: ' vendors ',
@@ -165,7 +166,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					};
 				}else{
 					console.log('Prod is horid');
-					var vendcount = {
+					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
 						v: ' vendors ',
@@ -173,8 +174,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						prod: SeaGrant_Proto.product,
 						end: '.'			
 					};
-				};
-			};
+				}
+			}
 			
 		}
 		crud.setData(vendcount); // needed to display tpl data on home view
