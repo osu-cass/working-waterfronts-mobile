@@ -1,36 +1,53 @@
 # SeaGrant_Proto
 
-A mockup of the Sea Grant android/iOS app structure.
+A prototype mobile app implementing features common to multiple OSU Sea Grant projects.
 
-We will be using an MVC framework and Sencha Touch, Phonegap, and the Google Maps API to create the "What's Fresh?" app for Sea Grant. This app will be used to find fresh seafood on the Oregon coast.   
+# Project Requirements
 
-For MVC app structure see the app folder, linting can be found in the syntax folder, testing is taken care of in the siesta folder, and the phonegap folder readme has more information on the splash screen setup. A more in-depth explanation of the file structure is provided below.
-
-## ./.sencha
-This file contains files used by Sencha to build the project
-
-## ./app
-This file contains the MVC format of our project
-
-## ./jasmine-standalone
-Files included for more unit testing if it is desired. (Right now we just use Siesta)
-
-## ./phonegap
-This file contains files used to package the Sencha app for different platforms. (We also use Phonegap for our splash screen.)
-
-## ./resources 
-This contains resources for Sencha such as CSS, icons, and sass.
-
-## ./siesta
-This file contains our Siesta testing files.
-
-## ./syntax
-This file contains our linting resources.
-
-## ./touch
-This file contains necessary Sencha Touch files.
+- [Sencha Touch](http://www.sencha.com/products/touch)
+- [Sencha Cmd](http://www.sencha.com/products/sencha-cmd/)
+- [Phonegap](http://phonegap.com/)
+- Android and/or iOS testing platform
+- [npm](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)
 
 # Contributors
-Michael Freeman
 
+1. Ensure that your environment is able to access the above required resources.
+2. Navigate to your development space and run `git clone` on this repo.
+3. Navigate into the new project directory and run `sencha app build` to compile project resources.
 
+## Linting
+
+1. Navigate to the root of the project directory and run `npm install`.
+2. Navigate to the ./syntax directory and run criticize-me.sh
+
+# Structure
+
+*./.sencha*  
+Sencha configuration and internal resources.
+
+*./app*  
+The MVC components of the SeaGrant_Proto project.
+
+*./jasmine-standalone*  
+Unit testing resources. Unit tests are currently unimplemented.
+
+*./phonegap*  
+Phonegap's app compilation resources. Custom splash screen is configured here instead of ./app.
+
+*./resources*  
+Compiled CSS, visual assets.
+
+*./siesta*  
+Siesta UI tests and resources.
+
+*./syntax*  
+Javascript linting resources.
+
+*./touch*  
+Sencha Touch configuration and internal resources.
+
+# Contributors To Date  
+Michael Freeman  
+Jacob Broderick  
+Justin Carr

@@ -10,10 +10,10 @@
 	The Detail page displays more information on the vendor/product the user has chosen to find out more about, such as what products a specific vendor carries or which vendors carry a specific product. The detail page will also contain more information such as vendor location and hours or product details such as price and availability.
 
 * Info.js  
-	The Info page is an educational page that provides links to information about the products such as how they are caught, packaged, their history, how to prepare them, and when they are in season.
+	The Info page is a menu of educational content options that provides links to information about the products such as how they are caught, packaged, their history, how to prepare them, and when they are in season.
 
 * Specific.js  
-	The Specific page displays one of the specific types of educational information for the user to view.
+	The Specific page displays a menu item selected on the Info page.
 
 * Map.js  
-	The Map page creates a Google map using the Google maps API, this map can then be inserted into any view using the xtype: SeaGranMap.
+	The Map page creates a Google map using the Google maps API, this map can then be inserted into any view using the xtype: SeaGrantMap.
