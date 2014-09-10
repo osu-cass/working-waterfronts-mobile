@@ -42,7 +42,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},
 	slideLeftTransition: {
 		type: 'slide',
-		direction: 'left'
+		direction: 'left' 
 	},
 	slideRightTransition: {
 		type: 'slide',
@@ -209,20 +209,50 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		detailView.getAt(1).setData(index.getData());
 		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 		// console.log(index.data.name);
-		var store = Ext.data.StoreManager.lookup('Vendor');
-		console.log('This is the store.');
-		console.log(store);
-		var productfilter = new Ext.util.Filter({
-			filterFn: function(item, record){
-				return item.get('name') === index.data.name;
-			},
-			root: 'data'
-		});
-		// console.log(index.data.products[0].name);
-		console.log(index.data.products.name);
-		store.clearFilter();
-		store.filter(productfilter);
-		console.log(detailView);
+		// var store = Ext.data.StoreManager.lookup('Vendor');
+		// console.log('This is the store.');
+		// console.log(index.getData());
+		// var productfilter = new Ext.util.Filter({
+		// 	filterFn: function(item, record){
+		// 		return item.get('name') === index.data.name;
+		// 	},
+		// 	root: 'data'
+		// });
+		// // console.log(index.data.products[0].name);
+		// console.log(index.data.products.name);
+		// store.clearFilter();
+		// store.filter(productfilter);
+		// console.log(detailView);
+
+		// Trying to pass product data from selected vendor to new store, so that we
+		// can use the new store to correctly use tpl print to make selectable list 
+		// items of each unique product.
+				
+		// Trying to find store so that we can add data to the new store.
+		var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
+		// console.log(stuff);
+		// console.log('storeStuff Items: ');
+		// console.log(storeStuff.data.items[0]);
+		storeInventory.removeAll();
+		// console.log(storeStuff.data.items);
+
+		// Store is populated with items from selected vendor
+		console.log(index.data.products.length);
+		for(i = 0; i < index.data.products.length; i++){
+			var newpro = {
+				name: index.data.products[i].name, 
+				preparation: index.data.products[i].preparation
+			};
+			// console.log('Name:');
+			// console.log(index.data.products[i].name);
+			// console.log('Prep:');
+			// console.log(index.data.products[i].preparation);
+			storeInventory.add(newpro);
+		}
+		// console.log('Final storeStuff items: ');
+		// console.log(storeStuff.data.items); 
+
+
 		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 	},
 	// Functions dealing with 
