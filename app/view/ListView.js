@@ -1,13 +1,12 @@
 Ext.define('SeaGrant_Proto.view.ListView', {
 	extend: 'Ext.Panel',
-	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox'],
-    fullscreen: true,
+	// requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'SeaGrant_Proto.view.Map'],
+	requires: ['SeaGrant_Proto.view.Map'],
+    // fullscreen: true,
     xtype: 'ListView',
 	alias: 'widget.listview',
 	config: {
-		layout: {
-			type: 'fit'
-		},
+		layout: 'fit',
 		items: [
 			{
 				xtype: 'toolbar',
@@ -28,7 +27,11 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 						itemId: 'detailButton'
 					}
 				]
-			},			
+			},
+			{
+				xtype: 'SeaGrantMap',
+				itemId: 'listmap'
+			},					
 			{
 				config: {
 					scrollable: {

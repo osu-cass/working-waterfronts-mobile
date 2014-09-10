@@ -1,11 +1,12 @@
 Ext.define('SeaGrant_Proto.view.Home', {
-	extend: 'Ext.form.Panel',
-	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select'],
-    fullscreen: true,
+	extend: 'Ext.Panel',
+	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select', 'SeaGrant_Proto.view.Map'],
+    // fullscreen: true,
     xtype: 'Home',
 	alias: 'widget.home',
 	config: {
 		items: [
+<<<<<<< HEAD
 			{
 				xtype: 'toolbar',
 				title: 'Whats Fresh?',
@@ -145,8 +146,16 @@ Ext.define('SeaGrant_Proto.view.Home', {
 		console.log('sortByProductCommand');
 		this.fireEvent('sortByProductCommand', this, record);
 	},
-	onGoButtonTap: function(list, record, target, index, evt, options){
+	onGoButtonTap: function(){
 		console.log('viewGoCommand');
-		this.fireEvent('viewGoCommand', this, record);
+		var map = Ext.getCmp('SeaGrantMap').map;
+        this.on({
+            show: function(){
+                google.maps.event.trigger(map, 'resize');
+                map.panTo(new google.maps.LatLng(44.634115, -124.062796));
+                google.maps.event.trigger(map, 'zoom_changed');
+            }
+        }); 
+		this.fireEvent('viewGoCommand');
 	}
 });
