@@ -44,7 +44,7 @@ Ext.define('SeaGrant_Proto.view.Detail', {
 				// the list screen. Perhaps we will have to deal with the products root
 				// of the vendor selected, and link the vendors products to the product store.
 				xtype: 'list',
-				store: 'SS',
+				store: 'VendorInventory',
 				itemId: 'Dpagelist',
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',

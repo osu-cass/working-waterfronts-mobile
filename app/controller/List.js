@@ -138,11 +138,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// items of each unique product.
 				
 		// Trying to find store so that we can add data to the new store.
-		var storeStuff = Ext.data.StoreManager.lookup('SS');
+		var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
 		// console.log(stuff);
 		// console.log('storeStuff Items: ');
 		// console.log(storeStuff.data.items[0]);
-		storeStuff.removeAll();
+		storeInventory.removeAll();
 		// console.log(storeStuff.data.items);
 
 		// Store is populated with items from selected vendor
@@ -156,7 +156,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			// console.log(index.data.products[i].name);
 			// console.log('Prep:');
 			// console.log(index.data.products[i].preparation);
-			storeStuff.add(newpro);
+			storeInventory.add(newpro);
 		}
 		// console.log('Final storeStuff items: ');
 		// console.log(storeStuff.data.items); 

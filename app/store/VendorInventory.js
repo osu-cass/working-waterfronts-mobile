@@ -1,9 +1,9 @@
-Ext.define('SeaGrant_Proto.store.StateStore', {
+Ext.define('SeaGrant_Proto.store.VendorInventory', {
     extend: 'Ext.data.Store',
-    storeId: 'SS',
+    storeId: 'VendorInventory',
  
     config: {
-        model: 'SeaGrant_Proto.model.States',
+        model: 'SeaGrant_Proto.model.VendorInventories',
         data: [
             {
                 "name": "Michael Fish",
