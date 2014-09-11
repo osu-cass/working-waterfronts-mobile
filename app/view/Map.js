@@ -66,6 +66,7 @@ Ext.define('SeaGrant_Proto.view.Map', {
         //    SeaGrant_Proto.gMap.panTo(new google.maps.LatLng(44.634115, -124.062796));
         // }, 100);
 
+
         // I first of all thought that 
         // "this function correctly reset our center on the first 
         // go button press (but only if you loaded the map and mash the go button real fast), 
