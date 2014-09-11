@@ -130,6 +130,12 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		};
 		
 		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
+
+		console.log(store.data.items[0].data);
+		SeaGrant_Proto.Litem1 = store.data.items[0].data;
+		SeaGrant_Proto.Litem2 = store.data.items[1].data;
+
+m
 		var vendcount;
 		console.log(vendcount);
 		var homeView = this.getHomeView();
@@ -274,11 +280,29 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// I changed it from 100 to 1000.
 		console.log('In Our wonderful Controller Go button function:');
 		console.log(SeaGrant_Proto);
-
-		var cent = new google.maps.LatLng(44.634115, -124.062796);
+		var lat = SeaGrant_Proto.Litem1.lat;
+		var lng = SeaGrant_Proto.Litem1.lng;
+		var lat2 = SeaGrant_Proto.Litem2.lat;
+		var lng2 = SeaGrant_Proto.Litem2.lng;
+		SeaGrant_Proto.cent = new google.maps.LatLng(lat, lng);
+		SeaGrant_Proto.cent2 = new google.maps.LatLng(lat2, lng2);
 		 setTimeout(function() {
-           SeaGrant_Proto.gMap.panTo(cent);
+           SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent);
         }, 1000);
+		var markers = [
+			new google.maps.Marker(
+			{
+	            map: SeaGrant_Proto.gMap,
+	            animation: google.maps.Animation.DROP,
+	            position: SeaGrant_Proto.cent
+	        }),
+	        new google.maps.Marker(
+	        {
+	            map: SeaGrant_Proto.gMap,
+	            animation: google.maps.Animation.DROP,
+	            position: SeaGrant_Proto.cent2
+	        })
+        ];
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 

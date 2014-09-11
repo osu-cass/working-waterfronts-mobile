@@ -14,7 +14,7 @@ Ext.define('SeaGrant_Proto.view.Map', {
                  mapOptions: {
                     center: new google.maps.LatLng(43, -123),
                     // mapTypeId: google.maps.MapTypeId.ROADMAP,    this will keep the app from loading correctly
-                    zoom: 18
+                    zoom: 13
                 }
             }
         ]
@@ -80,10 +80,10 @@ Ext.define('SeaGrant_Proto.view.Map', {
         //    // SeaGrant_Proto.gMap.zoom(14);
         // }, 100);
          
-        var marker = new google.maps.Marker({
-            map: SeaGrant_Proto.gMap,
-            animation: google.maps.Animation.DROP,
-            position: new google.maps.LatLng(44.634115, -124.062796)
-        });
+        // var marker = new google.maps.Marker({
+        //     map: SeaGrant_Proto.gMap,
+        //     animation: google.maps.Animation.DROP,
+        //     position: new google.maps.LatLng(44.634115, -124.062796)
+        // });
     }
 });
