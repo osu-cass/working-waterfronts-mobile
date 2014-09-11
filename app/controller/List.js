@@ -267,10 +267,18 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Go to List Page Button');
 		// TRYING TO RECENTER THE MAP ON LOAD OF LIST PAGE
 		// This WORKS to get a map centered at the correct location!!
-		// var cent = new google.maps.LatLng(44.634115, -124.062796);
-		//  setTimeout(function() {
-  //          SeaGrant_Proto.gMap.panTo(cent);
-  //       }, 100);
+		// NOTE: THIS IS WHAT I FIRST THOUGHT THE APP WAS DOING: 
+		// "Note: that it doesn't work on the first press of the go button because gMap is not defined untill the 
+		// SeaGrantMap xtype is called in the list view."
+		// WHAT I REALLY NEED TO DO TO FIX IT WAS: make the timeout longer, so 
+		// I changed it from 100 to 1000.
+		console.log('In Our wonderful Controller Go button function:');
+		console.log(SeaGrant_Proto);
+
+		var cent = new google.maps.LatLng(44.634115, -124.062796);
+		 setTimeout(function() {
+           SeaGrant_Proto.gMap.panTo(cent);
+        }, 1000);
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 

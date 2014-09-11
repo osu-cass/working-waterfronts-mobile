@@ -11,11 +11,11 @@ Ext.define('SeaGrant_Proto.view.Map', {
                 // What MF added
                 // This Doesn't work: setCenter: new google.maps.LatLng(44.566988, -123.277046)
                 // Now, adding Map options centers the map if the view with the map is loaded before any other view
-                //  mapOptions: {
-                //     center: new google.maps.LatLng(44.634115, -124.062796),
-                //     // mapTypeId: google.maps.MapTypeId.ROADMAP,    this will keep the app from loading correctly
-                //     zoom: 18
-                // }
+                 mapOptions: {
+                    center: new google.maps.LatLng(43, -123),
+                    // mapTypeId: google.maps.MapTypeId.ROADMAP,    this will keep the app from loading correctly
+                    zoom: 18
+                }
             }
         ]
     },
@@ -61,15 +61,24 @@ Ext.define('SeaGrant_Proto.view.Map', {
         var mapPanel = this.down('map');
         SeaGrant_Proto.gMap = mapPanel.getMap();
 
+        console.log('in the initmap function:');
+        console.log(SeaGrant_Proto);
+
         // this should reset our map center, but it doesn't
         //  setTimeout(function() {
         //    SeaGrant_Proto.gMap.panTo(new google.maps.LatLng(44.634115, -124.062796));
         // }, 100);
 
-        var cent = new google.maps.LatLng(44.634115, -124.062796);
-        setTimeout(function() {
-           SeaGrant_Proto.gMap.panTo(cent);
-        }, 100);
+        // I first of all thought that "this function correctly reset our center on the first 
+        // go button press (but only if you loaded the map and mash the go button real fast), \
+        // because the map in the listview is not instantiated before the go button press, so there is no gMap declared yet."
+        // The truth is that I did not set the timeout time for a long enough period. Now calling this function on a go button 
+        // press is enough to recenter the mapp to the correct location.
+        // var cent = new google.maps.LatLng(44.634115, -124.062796);
+        // setTimeout(function() {
+        //    SeaGrant_Proto.gMap.panTo(cent);
+        //    // SeaGrant_Proto.gMap.zoom(14);
+        // }, 100);
          
         var marker = new google.maps.Marker({
             map: SeaGrant_Proto.gMap,
