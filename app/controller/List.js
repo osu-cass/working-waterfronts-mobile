@@ -130,12 +130,16 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		};
 		
 		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
+		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
+		SeaGrant_Proto.Litem = new Array();;
+		SeaGrant_Proto.VstoreLength = store.data.items.length;
+		for (j = 0; j < store.data.items.length; j++){
+			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
+			// console.log(SeaGrant_Proto.Litem[j]);
+		}
+		// SeaGrant_Proto.Litem1 = store.data.items[0].data;
+		// SeaGrant_Proto.Litem2 = store.data.items[1].data;
 
-		console.log(store.data.items[0].data);
-		SeaGrant_Proto.Litem1 = store.data.items[0].data;
-		SeaGrant_Proto.Litem2 = store.data.items[1].data;
-
-m
 		var vendcount;
 		console.log(vendcount);
 		var homeView = this.getHomeView();
@@ -154,7 +158,7 @@ m
 					};
 			}else{
 				if (SeaGrant_Proto.product !== 'Please choose a product'){
-					console.log('Prod ok');
+					// console.log('Prod ok');
 					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
@@ -166,7 +170,7 @@ m
 						end: '.'			
 					};
 				}else{
-					console.log('Prod is horid');
+					// console.log('Prod is horid');
 					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
@@ -278,31 +282,63 @@ m
 		// SeaGrantMap xtype is called in the list view."
 		// WHAT I REALLY NEED TO DO TO FIX IT WAS: make the timeout longer, so 
 		// I changed it from 100 to 1000.
-		console.log('In Our wonderful Controller Go button function:');
-		console.log(SeaGrant_Proto);
-		var lat = SeaGrant_Proto.Litem1.lat;
-		var lng = SeaGrant_Proto.Litem1.lng;
-		var lat2 = SeaGrant_Proto.Litem2.lat;
-		var lng2 = SeaGrant_Proto.Litem2.lng;
-		SeaGrant_Proto.cent = new google.maps.LatLng(lat, lng);
-		SeaGrant_Proto.cent2 = new google.maps.LatLng(lat2, lng2);
-		 setTimeout(function() {
-           SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent);
+		// console.log('In Our wonderful Controller Go button function:');
+		// console.log(SeaGrant_Proto);
+		// THIS DYNAMICLY LOADS THE MAP MARKERS
+		var lat;
+		var lng;
+		var marker = new Array();
+		SeaGrant_Proto.cent = new Array();
+		for (k = 0; k < SeaGrant_Proto.VstoreLength; k++){
+			lat = SeaGrant_Proto.Litem[k].lat;
+			// console.log(lat);
+			lng = SeaGrant_Proto.Litem[k].lng;
+			// console.log(lng);
+			SeaGrant_Proto.cent[k] = new google.maps.LatLng(lat, lng);
+			marker[k] = new google.maps.Marker({
+				map: SeaGrant_Proto.gMap,
+				animation: google.maps.Animation.DROP,
+				position: SeaGrant_Proto.cent[k],
+				clickable: true
+			});
+			// Adding clickable marker info window
+			marker.info = new google.maps.InfoWindow({
+        		content: SeaGrant_Proto.Litem[k].name
+        	});
+        	google.maps.event.addListener(marker, 'click', function(){
+        		marker.info.open(gMap, marker);
+        	});
+		}setTimeout(function() {
+           SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
         }, 1000);
-		var markers = [
-			new google.maps.Marker(
-			{
-	            map: SeaGrant_Proto.gMap,
-	            animation: google.maps.Animation.DROP,
-	            position: SeaGrant_Proto.cent
-	        }),
-	        new google.maps.Marker(
-	        {
-	            map: SeaGrant_Proto.gMap,
-	            animation: google.maps.Animation.DROP,
-	            position: SeaGrant_Proto.cent2
-	        })
-        ];
+
+
+
+        
+        // OLD CODE THAT STATICLY LOADS MAP MARKERS
+		// var lat = SeaGrant_Proto.Litem1.lat;
+		// var lng = SeaGrant_Proto.Litem1.lng;
+		// var lat2 = SeaGrant_Proto.Litem2.lat;
+		// var lng2 = SeaGrant_Proto.Litem2.lng;
+		// SeaGrant_Proto.cent = new google.maps.LatLng(lat, lng);
+		// SeaGrant_Proto.cent2 = new google.maps.LatLng(lat2, lng2);
+		//  setTimeout(function() {
+  //          SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent);
+  //       }, 1000);
+		// var markers = [
+		// 	new google.maps.Marker(
+		// 	{
+	 //            map: SeaGrant_Proto.gMap,
+	 //            animation: google.maps.Animation.DROP,
+	 //            position: SeaGrant_Proto.cent
+	 //        }),
+	 //        new google.maps.Marker(
+	 //        {
+	 //            map: SeaGrant_Proto.gMap,
+	 //            animation: google.maps.Animation.DROP,
+	 //            position: SeaGrant_Proto.cent2
+	 //        })
+  //       ];
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 
