@@ -8,15 +8,14 @@ Ext.define('SeaGrant_Proto.view.Map', {
         items: [
             {
                 xtype: 'map',
-                id: 'SeaGrantMap',
                 // What MF added
                 // This Doesn't work: setCenter: new google.maps.LatLng(44.566988, -123.277046)
                 // Now, adding Map options centers the map if the view with the map is loaded before any other view
-                 mapOptions: {
-                    center: new google.maps.LatLng(44.634115, -124.062796),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    zoom: 18
-                }
+                //  mapOptions: {
+                //     center: new google.maps.LatLng(44.634115, -124.062796),
+                //     // mapTypeId: google.maps.MapTypeId.ROADMAP,    this will keep the app from loading correctly
+                //     zoom: 18
+                // }
             }
         ]
     },
@@ -66,6 +65,11 @@ Ext.define('SeaGrant_Proto.view.Map', {
         //  setTimeout(function() {
         //    SeaGrant_Proto.gMap.panTo(new google.maps.LatLng(44.634115, -124.062796));
         // }, 100);
+
+        var cent = new google.maps.LatLng(44.634115, -124.062796);
+        setTimeout(function() {
+           SeaGrant_Proto.gMap.panTo(cent);
+        }, 100);
          
         var marker = new google.maps.Marker({
             map: SeaGrant_Proto.gMap,

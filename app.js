@@ -34,11 +34,12 @@ Ext.application({
 
          // Ext.defer(function(){ 
             Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Home'));
+             // Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Map'));
             Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ListView'));
             Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Detail')); 
 
         // }, 5000, this);
-        // Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Map'));
+       
          
 
         

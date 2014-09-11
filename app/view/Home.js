@@ -6,7 +6,6 @@ Ext.define('SeaGrant_Proto.view.Home', {
 	alias: 'widget.home',
 	config: {
 		items: [
-<<<<<<< HEAD
 			{
 				xtype: 'toolbar',
 				title: 'Whats Fresh?',
@@ -41,7 +40,6 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						xtype: 'selectfield',			
 						itemId: 'selectlocation',
 						label: 'Location',
-						activeLabel: 'Here We Use The Location of The User',
 						labelWrap: true,
 						displayField: 'title',
 						store: 'Location',
@@ -148,14 +146,6 @@ Ext.define('SeaGrant_Proto.view.Home', {
 	},
 	onGoButtonTap: function(){
 		console.log('viewGoCommand');
-		var map = Ext.getCmp('SeaGrantMap').map;
-        this.on({
-            show: function(){
-                google.maps.event.trigger(map, 'resize');
-                map.panTo(new google.maps.LatLng(44.634115, -124.062796));
-                google.maps.event.trigger(map, 'zoom_changed');
-            }
-        }); 
 		this.fireEvent('viewGoCommand');
 	}
 });

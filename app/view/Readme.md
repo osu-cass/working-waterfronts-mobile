@@ -17,3 +17,8 @@
 
 * Map.js  
 	The Map page creates a Google map using the Google maps API, this map can then be inserted into any view using the xtype: SeaGrantMap.
+
+	Note:    
+	While the app is running, it can only display a map when it has the google api. The only way that the device can access the google api is if it has internet access, otherwise you will get an error that the google maps api must be referenced or you will get a google map that lets you know they can't show images of your current position.
+
+
