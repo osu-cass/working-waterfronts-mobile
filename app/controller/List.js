@@ -134,13 +134,23 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 		
 		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
+<<<<<<< HEAD
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
 		SeaGrant_Proto.Litem = new Array();
+=======
+
+		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
+		SeaGrant_Proto.Litem = new Array();;
+>>>>>>> Dynamicly add all of the list items as map markers
 		SeaGrant_Proto.VstoreLength = store.data.items.length;
 		for (j = 0; j < store.data.items.length; j++){
 			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
 			// console.log(SeaGrant_Proto.Litem[j]);
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> Dynamicly add all of the list items as map markers
 		var vendcount;
 		console.log(vendcount);
 		var homeView = this.getHomeView();
