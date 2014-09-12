@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.model.City', {
+Ext.define('SeaGrant_Proto.model.Vendors', {
     extend: 'Ext.data.Model',
     requires: ['Ext.data.Field'],
     config: {
@@ -10,7 +10,7 @@ Ext.define('SeaGrant_Proto.model.City', {
         	'created',
         	'ext',
         	'location_description',
-        	'long',
+        	'lng',
         	'email',
         	'website',
         	'phone',
