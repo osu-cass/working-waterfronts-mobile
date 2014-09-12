@@ -6,16 +6,8 @@
 
 // Custom code goes here..
 
-#ext-SeaGrantMap-1{
-	height: 50%;
-	
-}
 
-#ext-SeaGrantMap-2{
-	height: 50%;
-
-}
-
+// HOME PAGE COLORS
 #ext-list-1{
 	height: 50%;
 	top: 50%;
@@ -28,6 +20,31 @@
 	height: 50%;
 	top: 50%;
 }	
+
+// MAP STYLE
+#ext-SeaGrantMap-1{
+	height: 50%;	
+}
+
+#ext-SeaGrantMap-2{
+	height: 50%;
+}
+
+// LIST VIEW MAP PIN INFO STYLE
+#ext-element-73{
+	background-color: red;
+	maxWidth: 250px;
+}
+
+div.gm-style{
+	background-color: blue;
+	maxWidth: 250px;
+}
+
+div.gm-style div div div div div div>div{
+	background-color: yellow;
+	maxWidth: 250px;
+}
 
 
 #ext-element-49{

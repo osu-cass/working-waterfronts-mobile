@@ -295,20 +295,56 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			lng = SeaGrant_Proto.Litem[k].lng;
 			// console.log(lng);
 			SeaGrant_Proto.cent[k] = new google.maps.LatLng(lat, lng);
+
+			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
+			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
 			marker[k] = new google.maps.Marker({
 				map: SeaGrant_Proto.gMap,
 				animation: google.maps.Animation.DROP,
 				position: SeaGrant_Proto.cent[k],
 				clickable: true
 			});
-			// Adding clickable marker info window
-			marker.info = new google.maps.InfoWindow({
+			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
+			marker[k].info = new google.maps.InfoWindow({
         		content: SeaGrant_Proto.Litem[k].name
         	});
-        	google.maps.event.addListener(marker, 'click', function(){
-        		marker.info.open(gMap, marker);
+        	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
+        	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
+        	console.log('This is the marker: (1)');
+			console.log(marker[k]);
+        	google.maps.event.addListener(marker[k], 'click', function(){
+        		// console.log('This is the marker inside of the addListener function');
+        		// console.log(marker[k]);
+        		this.info.open(SeaGrant_Proto.gMap, this);
+    //     		console.log('This is the marker after an event click: (3)');
+				// console.log(marker);
         	});
-		}setTimeout(function() {
+	
+			// var marker = new google.maps.Marker({
+			// 	map: SeaGrant_Proto.gMap,
+			// 	animation: google.maps.Animation.DROP,
+			// 	position: SeaGrant_Proto.cent[k],
+			// 	clickable: true
+			// });			
+			// console.log('This is the marker: (1)');
+			// console.log(marker);
+			// 
+			// marker.info = new google.maps.InfoWindow({
+   //      		content: SeaGrant_Proto.Litem[k].name
+   //      	});
+   //      	markerArray[k] = marker;
+   //      	console.log('This is the markerArray[k]: (2)');
+			// console.log(markerArray[k]);
+			// 
+			// google.maps.event.addListener(markerArray[k], 'click', function(){
+   //      		console.log('We use marker here in this addListener function!');
+   //      		console.log(marker);
+   //      		this.info.open(SeaGrant_Proto.gMap, this);
+   //      		console.log('This is the marker after an event click: (3)');
+			// 	console.log(marker);
+   //      	});
+		}
+		setTimeout(function() {
            SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
         }, 1000);
 
