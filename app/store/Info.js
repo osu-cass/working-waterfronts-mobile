@@ -1,9 +1,7 @@
 Ext.define('SeaGrant_Proto.store.Info', {
 	extend: 'Ext.data.Store',
-	// requires: ['SeaGrant_Proto.model.City'],
-	// id: 'thisStuff',
 	config: {
-		model: 'SeaGrant_Proto.model.City',
+		model: 'SeaGrant_Proto.model.Vendors',
 		autoLoad: true,
 		proxy: {
 			type: 'ajax',
