@@ -137,9 +137,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
 			// console.log(SeaGrant_Proto.Litem[j]);
 		}
-		// SeaGrant_Proto.Litem1 = store.data.items[0].data;
-		// SeaGrant_Proto.Litem2 = store.data.items[1].data;
-
 		var vendcount;
 		console.log(vendcount);
 		var homeView = this.getHomeView();
@@ -287,7 +284,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// THIS DYNAMICLY LOADS THE MAP MARKERS
 		var lat;
 		var lng;
-		var marker = new Array();
+		var infowindow = new google.maps.InfoWindow();
+		SeaGrant_Proto.marker = new Array();
 		SeaGrant_Proto.cent = new Array();
 		for (k = 0; k < SeaGrant_Proto.VstoreLength; k++){
 			lat = SeaGrant_Proto.Litem[k].lat;
@@ -298,90 +296,41 @@ Ext.define('SeaGrant_Proto.controller.List', {
 
 			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
 			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
-			marker[k] = new google.maps.Marker({
+			SeaGrant_Proto.marker[k] = new google.maps.Marker({
 				map: SeaGrant_Proto.gMap,
 				animation: google.maps.Animation.DROP,
 				position: SeaGrant_Proto.cent[k],
 				clickable: true
 			});
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
-			marker[k].info = new google.maps.InfoWindow({
+			SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
         		content: SeaGrant_Proto.Litem[k].name
         	});
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
         	console.log('This is the marker: (1)');
-			console.log(marker[k]);
-        	google.maps.event.addListener(marker[k], 'click', function(){
-        		// console.log('This is the marker inside of the addListener function');
-        		// console.log(marker[k]);
-        		this.info.open(SeaGrant_Proto.gMap, this);
-    //     		console.log('This is the marker after an event click: (3)');
-				// console.log(marker);
+			console.log(SeaGrant_Proto.marker[k]);
+        	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
+        		// console.log(this.info.content);
+        		infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
+        		infowindow.open(SeaGrant_Proto.gMap, this);
         	});
-	
-			// var marker = new google.maps.Marker({
-			// 	map: SeaGrant_Proto.gMap,
-			// 	animation: google.maps.Animation.DROP,
-			// 	position: SeaGrant_Proto.cent[k],
-			// 	clickable: true
-			// });			
-			// console.log('This is the marker: (1)');
-			// console.log(marker);
-			// 
-			// marker.info = new google.maps.InfoWindow({
-   //      		content: SeaGrant_Proto.Litem[k].name
-   //      	});
-   //      	markerArray[k] = marker;
-   //      	console.log('This is the markerArray[k]: (2)');
-			// console.log(markerArray[k]);
-			// 
-			// google.maps.event.addListener(markerArray[k], 'click', function(){
-   //      		console.log('We use marker here in this addListener function!');
-   //      		console.log(marker);
-   //      		this.info.open(SeaGrant_Proto.gMap, this);
-   //      		console.log('This is the marker after an event click: (3)');
-			// 	console.log(marker);
-   //      	});
 		}
 		setTimeout(function() {
            SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
         }, 1000);
-
-
-
-        
-        // OLD CODE THAT STATICLY LOADS MAP MARKERS
-		// var lat = SeaGrant_Proto.Litem1.lat;
-		// var lng = SeaGrant_Proto.Litem1.lng;
-		// var lat2 = SeaGrant_Proto.Litem2.lat;
-		// var lng2 = SeaGrant_Proto.Litem2.lng;
-		// SeaGrant_Proto.cent = new google.maps.LatLng(lat, lng);
-		// SeaGrant_Proto.cent2 = new google.maps.LatLng(lat2, lng2);
-		//  setTimeout(function() {
-  //          SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent);
-  //       }, 1000);
-		// var markers = [
-		// 	new google.maps.Marker(
-		// 	{
-	 //            map: SeaGrant_Proto.gMap,
-	 //            animation: google.maps.Animation.DROP,
-	 //            position: SeaGrant_Proto.cent
-	 //        }),
-	 //        new google.maps.Marker(
-	 //        {
-	 //            map: SeaGrant_Proto.gMap,
-	 //            animation: google.maps.Animation.DROP,
-	 //            position: SeaGrant_Proto.cent2
-	 //        })
-  //       ];
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
+        Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 
 	// LIST
 	// stuff	######################################################################################	LIST
 	onViewBackHomeCommand: function(){
 		console.log('In controller(list): Back to Home Page Button');
+		// This removes the old markers from the map on the list page
+		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
+			SeaGrant_Proto.marker[i].setMap(null);
+		}
+		SeaGrant_Proto.marker.length = 0;
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
 	},
 	onViewDetailCommand: function(){
