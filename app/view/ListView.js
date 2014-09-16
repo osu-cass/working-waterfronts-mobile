@@ -44,11 +44,7 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-name">{name}</div><pre>'
-			},
-			{
-				xtype: 'SeaGrantMap',
-				itemId: 'listmap'
-			}			
+			}
 		],
 		listeners: [
 			{
