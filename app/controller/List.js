@@ -284,7 +284,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	onSortByProductCommand: function(){
 		console.log('In controller(home): Product checkbox');
 	},
-	onViewGoCommand: function(){
+	onViewGoCommand: function(record, list, index){
+		var self = this;
+		console.log(this);
+		console.log(list);
+		console.log(index);
 		console.log('In controller(home): Go to List Page Button');
 		// TRYING TO RECENTER THE MAP ON LOAD OF LIST PAGE
 		// This WORKS to get a map centered at the correct location!!
@@ -316,19 +320,62 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				position: SeaGrant_Proto.cent[k],
 				clickable: true
 			});
+			
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
-			SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
-        		content: SeaGrant_Proto.Litem[k].name
+        	SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
+        		content: '<button onclick=\"javascript:onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
+        		data: SeaGrant_Proto.Litem[k]
         	});
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
-        	console.log('This is the marker: (1)');
-			console.log(SeaGrant_Proto.marker[k]);
+   //      	console.log('This is the marker: (1)');
+			// console.log(SeaGrant_Proto.marker[k]);
+			// console.log(this);
+			self = this;
         	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
-        		// console.log(this.info.content);
+        		console.log(this);
+        		SeaGrant_Proto.storeItem = this;
         		infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
-        		infowindow.open(SeaGrant_Proto.gMap, this);
+        		console.log(self);
+        		infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
+        		
+        		console.log('in the google maps marker listener:');
+				console.log(infowindow);
+				console.log('Here we have the elusive event.target.className:');
+        		console.log(event.target.className);
         	});
+
+        	onInfoWindowClick = function(record, list, index){
+				console.log('PLEASE WORK NOW!');
+				// USE THIS CODE TO SET THE INFO VIEW AND THE HEADER IN THE DETAIL VIEW
+				// console.log(this);
+				// var detailView = this.getDetailView();
+				// detailView.getAt(1).setData(SeaGrant_Proto.storeItem.getData());
+				// Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
+
+				var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
+				// console.log(stuff);
+				// console.log('storeStuff Items: ');
+				// console.log(storeStuff.data.items[0]);
+				storeInventory.removeAll();
+				console.log('this is the storeItem in the onInfoWindowClick function');
+				console.log(SeaGrant_Proto.storeItem);
+				// console.log(storeStuff.data.items);
+				// Store is populated with items from selected vendor
+				console.log(SeaGrant_Proto.storeItem.info.data.products.length);
+				for(i = 0; i < SeaGrant_Proto.storeItem.info.data.products.length; i++){
+					var newpro = {
+						name: SeaGrant_Proto.storeItem.info.data.products[i].name, 
+						preparation: SeaGrant_Proto.storeItem.info.data.products[i].preparation
+					};
+					// console.log('Name:');
+					// console.log(index.data.products[i].name);
+					// console.log('Prep:');
+					// console.log(index.data.products[i].preparation);
+					storeInventory.add(newpro);
+				}
+				Ext.Viewport.animateActiveItem(self.getDetailView(), self.slideLeftTransition);
+			};
 		}
 		setTimeout(function() {
            SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);

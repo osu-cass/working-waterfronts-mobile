@@ -144,7 +144,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 		console.log('sortByProductCommand');
 		this.fireEvent('sortByProductCommand', this, record);
 	},
-	onGoButtonTap: function(){
+	onGoButtonTap: function(list, record, target, index, evt, options){
 		console.log('viewGoCommand');
 		this.fireEvent('viewGoCommand');
 	}
