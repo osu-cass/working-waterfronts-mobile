@@ -1,6 +1,6 @@
 Ext.define('SeaGrant_Proto.controller.List', {
 	extend: 'Ext.app.Controller',
-	requires: 'Ext.MessageBox',
+	requires: ['Ext.MessageBox', 'Ext.device.Geolocation'],
 	alias: 'cont',
 	config: {
 		refs: {
@@ -51,11 +51,33 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	// Functions dealing with 
 	// HOME
 	// stuff	######################################################################################	HOME
-	onSetUseLocation: function(){
+	onSetUseLocation: function(index, record){
 		console.log('In controller(home): User Location toggle');
+		console.log(record._component._value[0]);
+		console.log(record);
+		if(record._component._value[0] == 1){
+			// This updates the user's location and how far from their location they would like to search for vendors/products
+			Ext.device.Geolocation.watchPosition({
+			    frequency: 3000, // Update every 3 seconds
+			    callback: function(position) {
+			        console.log('Position updated!', position.coords);
+			        // console.log(index._items.items[2]._value.data.val);
+					var dist = index._items.items[2]._value.data.val;
+			    },
+			    failure: function() {
+			        console.log('something went wrong!');
+			    }
+			});
+			
+		}else{
+			Ext.device.Geolocation.clearWatch();
+		};
 	},
+	// This function may be unnecessary due to the fact that we set the distance in the callback function above
 	onSetDistance: function(index, record){
 		console.log("In controller(home): Distance from user chosen");
+		// console.log(record._value.data.val);
+		SeaGrant_Proto.dist = record._value.data.val;
 	},
 	onChooseLocation: function(index, record){
 		// We first check to see if a location is chosen, if one is we sort by locataion,
@@ -112,6 +134,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log(vendcount);
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
+
 		// This defines how the tpl data is printed out given the drop down table states
 		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
 			if(SeaGrant_Proto.location === 'Please choose a location'){
@@ -157,7 +180,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// then we check to see if a product is chosen, if one is we sort by product
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
-		console.log('Product is: '+ record._value.data.name);
+		console.log('Product is: '+ record._value.data.name); 
 		SeaGrant_Proto.product = record._value.data.name;
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		// console.log(store.data.all);
