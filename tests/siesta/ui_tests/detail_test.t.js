@@ -11,7 +11,8 @@ StartTest(function(t) {
     var Bbtn = Ext.ComponentQuery.query('button[itemId=backListButton]');
     // console.log("Here is Bbtn: ");
     // console.log(Bbtn[0]);
-    //t.click(Bbtn);
+    t.click(Bbtn); 
+
     // Check that button exists
     t.is(Bbtn[0]._itemId, 'backListButton', 'Back button exists.');
     // Now check that it fires correct event to controller

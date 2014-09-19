@@ -293,6 +293,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// I changed it from 100 to 1000. This WORKS to get a map centered at the correct location!!
 		setTimeout(function() {
            SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
+           SeaGrant_Proto.gMap.setZoom(13);
         }, 1000);
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
@@ -313,7 +314,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var self = this; // important to get the correct data to the viewport
 		var lat;
 		var lng;
-		var infowindow = new google.maps.InfoWindow();
+		SeaGrant_Proto.infowindow = new google.maps.InfoWindow();
 		SeaGrant_Proto.marker = new Array();
 		SeaGrant_Proto.cent = new Array();
 		for (k = 0; k < SeaGrant_Proto.VstoreLength; k++){
@@ -334,14 +335,17 @@ Ext.define('SeaGrant_Proto.controller.List', {
         	SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
         		content: '<button onclick=\"javascript:onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
         		data: SeaGrant_Proto.Litem[k],
-        		Lpos: k // used to highlight correct list item
+        		Lpos: k, // used to highlight correct list item
+        		zoom: 13
         	});
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
         	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
         		SeaGrant_Proto.storeItem = this;
-        		infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
-        		infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
+        		console.log('THIS IN THE EVENT LISTENER');
+        		console.log(this);
+        		SeaGrant_Proto.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
+        		SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
         	});
         	onInfoWindowClick = function(record, list, index){
 				var lv = self.getListView();
@@ -360,6 +364,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(list): Select list item');
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
 		var detailView = this.getDetailView();
+		var lv = this.getListView();
 		detailView.getAt(1).setData(index.data);
 		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 		// console.log(index.data.name);
@@ -405,8 +410,13 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 		// console.log('Final storeStuff items: ');
 		// console.log(storeStuff.data.items); 
-
-
+		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
+		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
+			if(SeaGrant_Proto.marker[i].info.data.id === index.id){
+				SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
+		        SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
+		    }
+		}
 		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 	},
 	// Functions dealing with 
