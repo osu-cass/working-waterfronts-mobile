@@ -55,7 +55,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): User Location toggle');
 		console.log(record._component._value[0]);
 		console.log(record);
-		if(record._component._value[0] == 1){
+		if(record._component._value[0] === 1){
 			// This updates the user's location and how far from their location they would like to search for vendors/products
 			Ext.device.Geolocation.watchPosition({
 			    frequency: 3000, // Update every 3 seconds
@@ -71,7 +71,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			
 		}else{
 			Ext.device.Geolocation.clearWatch();
-		};
+		}
 	},
 	// This function may be unnecessary due to the fact that we set the distance in the callback function above
 	onSetDistance: function(index, record){
@@ -101,7 +101,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// store.clearFilter(); // this is the fix
 		// store.filter(locationfilter); //now it works
 		var len = store.data.all.length;
-		if(SeaGrant_Proto.location != 'Please choose a location'){
+		if(SeaGrant_Proto.location !== 'Please choose a location'){
 			var locationfilter = new Ext.util.Filter({
 				filterFn: function(item, record){
 					return item.get('city') === SeaGrant_Proto.location;
@@ -112,8 +112,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(locationfilter); //now it works
 		}else{
 			store.clearFilter();
-		};
-		if(SeaGrant_Proto.product != 'Please choose a product'){
+		}
+		if(SeaGrant_Proto.product !== 'Please choose a product'){
 			// console.log('IN PROD FILTER');
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -127,11 +127,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});
 			store.filter(prodFilter);
-		};
+		}
 		
 		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
-		SeaGrant_Proto.Litem = new Array();;
+		SeaGrant_Proto.Litem = new Array();
 		SeaGrant_Proto.VstoreLength = store.data.items.length;
 		for (j = 0; j < store.data.items.length; j++){
 			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
@@ -205,7 +205,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(locationfilter);
 		} else{
 			store.clearFilter();
-		};
+		}
 		if(SeaGrant_Proto.product != 'Please choose a product'){
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -219,7 +219,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});		
 			store.filter(prodFilter);
-		};
+		}
 
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
@@ -410,7 +410,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(locationfilter); //now it works
 		}else{
 			store.clearFilter();
-		};
+		}
 		if(SeaGrant_Proto.product != 'Please choose a product'){
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -424,7 +424,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});
 			store.filter(prodFilter);
-		};
+		}
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 	},
 	onViewInfoCommand: function(){
