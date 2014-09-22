@@ -143,6 +143,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.Litem = new Array();;
 >>>>>>> Dynamicly add all of the list items as map markers
 		SeaGrant_Proto.VstoreLength = store.data.items.length;
+		console.log(store.data.items);
 		for (j = 0; j < store.data.items.length; j++){
 			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
 			// console.log(SeaGrant_Proto.Litem[j]);
@@ -234,6 +235,15 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(prodFilter);
 		}
 
+		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
+		SeaGrant_Proto.Litem = new Array();;
+		SeaGrant_Proto.VstoreLength = store.data.items.length;
+		console.log(store.data.items);
+		for (j = 0; j < store.data.items.length; j++){
+			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
+			// console.log(SeaGrant_Proto.Litem[j]);
+		}
+
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
 		var vendcount;
@@ -291,9 +301,22 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// because gMap is not defined untill the SeaGrantMap xtype is called in the list view."
 		// WHAT I REALLY NEEDED TO DO TO FIX IT WAS: make the timeout longer, so 
 		// I changed it from 100 to 1000. This WORKS to get a map centered at the correct location!!
+		// SeaGrant_Proto.gMap.fitBounds(SeaGrant_Proto.gMap.bounds);
+		// google.maps.event.addListener(SeaGrant_Proto.gMap, 'zoom_changed', function(){
+		// 	zoomChangeBoundsListener = google.maps.event.addListenerOnce(SeaGrant_Proto.gMap, 'bounds_changed', function(event){
+		// 		if(this.getzoom() >15 && this.initialZoom == true){
+		// 			this.setZoom(13);
+		// 			this.initialZoom = false;
+		// 		}
+		// 		google.maps.event.removeListener(zoomChangeBoundsListener);
+		// 	});
+		// });
+		// SeaGrant_Proto.gMap.initialZoom = true;
+		// SeaGrant_Proto.fitBounds(bounds);
 		setTimeout(function() {
            SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
-           SeaGrant_Proto.gMap.setZoom(13);
+           
+           // SeaGrant_Proto.gMap.setZoom(5);
         }, 1000);
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
@@ -309,6 +332,48 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.marker.length = 0;
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
 	},
+	getExtraZoom: function(projection, expectedBounds, actualBounds) {
+
+	    // in: LatLngBounds bounds -> out: height and width as a Point
+	    function getSizeInPixels(bounds) {
+	        var sw = projection.fromLatLngToContainerPixel(bounds.getSouthWest());
+	        var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
+	        return new google.maps.Point(Math.abs(sw.y - ne.y), Math.abs(sw.x - ne.x));
+	    }
+
+	    var expectedSize = getSizeInPixels(expectedBounds),
+	        actualSize = getSizeInPixels(actualBounds);
+
+	    if (Math.floor(expectedSize.x) == 0 || Math.floor(expectedSize.y) == 0) {
+	        return 0;
+	    }
+
+	    var qx = actualSize.x / expectedSize.x;
+	    var qy = actualSize.y / expectedSize.y;
+	    var min = Math.min(qx, qy);
+
+	    if (min < 1) {
+	        return 0;
+	    }
+
+	    return Math.floor(Math.log(min) / Math.LN2 /* = log2(min) */);
+	},
+	myFitBounds: function(myMap, bounds) {
+	    myMap.fitBounds(bounds); // calling fitBounds() here to center the map for the bounds
+	    var me = this;
+	    var overlayHelper = new google.maps.OverlayView();
+	    overlayHelper.draw = function () {
+	        if (!this.ready) {
+	            var extraZoom = me.getExtraZoom(this.getProjection(), bounds, myMap.getBounds());
+	            if (extraZoom > 0) {
+	                myMap.setZoom(myMap.getZoom() + extraZoom);
+	            }
+	            this.ready = true;
+	            google.maps.event.trigger(this, 'ready');
+	        }
+	    };
+	    overlayHelper.setMap(myMap);
+	},	
 	// declareMap markers and infowindows as well as functions for the listview map
 	addMapMarkers: function(){
 		var self = this; // important to get the correct data to the viewport
@@ -317,11 +382,29 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.infowindow = new google.maps.InfoWindow();
 		SeaGrant_Proto.marker = new Array();
 		SeaGrant_Proto.cent = new Array();
+		var minLat = SeaGrant_Proto.Litem[0].lat; 
+		var minLng = SeaGrant_Proto.Litem[0].lng;
+		var maxLat = SeaGrant_Proto.Litem[0].lat;
+		var maxLng = SeaGrant_Proto.Litem[0].lng;
+		var bounds = new google.maps.LatLngBounds();
 		for (k = 0; k < SeaGrant_Proto.VstoreLength; k++){
 			lat = SeaGrant_Proto.Litem[k].lat;
 			// console.log(lat);
+			if(lat < minLat){
+				minLat = lat;
+			}
+			if(lat > maxLat){
+				maxLat = lat;
+			}
 			lng = SeaGrant_Proto.Litem[k].lng;
 			// console.log(lng);
+			if(lng < minLng){
+				minLng = lng;
+			}
+			if(lng > maxLng){
+				maxLng = lng;
+			}
+
 			SeaGrant_Proto.cent[k] = new google.maps.LatLng(lat, lng);
 			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
 			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
@@ -330,14 +413,15 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				animation: google.maps.Animation.DROP,
 				position: SeaGrant_Proto.cent[k],
 				clickable: true
-			});			
+			});
+			
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
         		content: '<button onclick=\"javascript:onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
         		data: SeaGrant_Proto.Litem[k],
-        		Lpos: k, // used to highlight correct list item
-        		zoom: 13
+        		Lpos: k // used to highlight correct list item
         	});
+        	bounds.extend(SeaGrant_Proto.marker[k].position);
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
         	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
         	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
@@ -347,6 +431,26 @@ Ext.define('SeaGrant_Proto.controller.List', {
         		SeaGrant_Proto.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
         		SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
         	});
+
+			// var testMark = new google.maps.Marker({
+			// 	map: SeaGrant_Proto.gMap,
+			// 	animation: google.maps.Animation.DROP,
+			// 	position: SeaGrant_Proto.cent[k],
+			// 	clickable: true
+			// });
+			// testMark.info = new google.maps.InfoWindow({
+   //      		content: '<button onclick=\"javascript:onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
+   //      		data: SeaGrant_Proto.Litem[k],
+   //      		Lpos: k // used to highlight correct list item
+   //      	});
+   //      	bounds.extend(testMark.position);
+   //      	google.maps.event.addListener(testMark, 'click', function(){
+   //      		SeaGrant_Proto.storeItem = this;
+   //      		console.log('THIS IN THE EVENT LISTENER');
+   //      		console.log(this);
+   //      		SeaGrant_Proto.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
+   //      		SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
+   //      	});				
         	onInfoWindowClick = function(record, list, index){
 				var lv = self.getListView();
 				lv._items.items[2].select(SeaGrant_Proto.storeItem.info.Lpos); // selects the list item coresponding to the map marker
@@ -355,6 +459,44 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				self.onViewLpageListItemCommand(this, self, SeaGrant_Proto.storeItem.info);
 			};			
 		}
+		// console.log('minLat');
+		// 	console.log(minLat);
+		// 	console.log('minLng');
+		// 	console.log(minLng);
+		// 	console.log('maxLat');
+		// 	console.log(maxLat);
+		// 	console.log('maxLng');
+		// 	console.log(maxLng);
+		
+		// console.log('bounds');
+  //      	console.log(bounds);
+		// bounds = new google.maps.LatLngBounds(new google.maps.LatLng(minLat, minLng),new google.maps.LatLng(maxLat, maxLng));
+		  
+		 var rectangle = new google.maps.Rectangle({
+		    strokeColor: '#FF0000',
+		    strokeOpacity: 0.8,
+		    strokeWeight: 2,
+		    fillColor: '#FF0000',
+		    fillOpacity: 0.35,
+		    map: SeaGrant_Proto.gMap,
+		    bounds: bounds
+		  });
+		SeaGrant_Proto.gMap.fitBounds(bounds);
+		// SeaGrant_Proto.gMap.setMaxBounds(bounds);
+		// SeaGrant_Proto.gMap.setCenter(new google.maps.LatLng(
+		// 		  ((maxLat + minLat) / 2.0),
+		// 		  ((maxLng + minLng) / 2.0)
+		// 		));
+
+	
+
+		// self.myFitBounds(SeaGrant_Proto.gMap, bounds);
+		var Vbounds = SeaGrant_Proto.gMap.getBounds();
+
+
+       	console.log('Map viewport bounds');
+       	console.log(Vbounds);
+       	// SeaGrant_Proto.gMap.fitBounds(bounds);
 	},
 	onViewDetailCommand: function(){
 		console.log('In controller(list): View Detail Page Button');
