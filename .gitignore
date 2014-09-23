@@ -4,6 +4,7 @@ bootstrap.*
 
 ### Compiled Files ###
 build/*
+docs/build/*
 **/.sass-cache/*
 resources/css/*
 phonegap/*
