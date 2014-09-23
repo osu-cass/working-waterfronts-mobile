@@ -55,7 +55,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): User Location toggle');
 		console.log(record._component._value[0]);
 		console.log(record);
-		if(record._component._value[0] == 1){
+		if(record._component._value[0] === 1){
 			// This updates the user's location and how far from their location they would like to search for vendors/products
 			Ext.device.Geolocation.watchPosition({
 			    frequency: 3000, // Update every 3 seconds
@@ -71,7 +71,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			
 		}else{
 			Ext.device.Geolocation.clearWatch();
-		};
+		}
 	},
 	// This function may be unnecessary due to the fact that we set the distance in the callback function above
 	onSetDistance: function(index, record){
@@ -101,7 +101,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// store.clearFilter(); // this is the fix
 		// store.filter(locationfilter); //now it works
 		var len = store.data.all.length;
-		if(SeaGrant_Proto.location != 'Please choose a location'){
+		if(SeaGrant_Proto.location !== 'Please choose a location'){
 			var locationfilter = new Ext.util.Filter({
 				filterFn: function(item, record){
 					return item.get('city') === SeaGrant_Proto.location;
@@ -112,8 +112,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(locationfilter); //now it works
 		}else{
 			store.clearFilter();
-		};
-		if(SeaGrant_Proto.product != 'Please choose a product'){
+		}
+		if(SeaGrant_Proto.product !== 'Please choose a product'){
 			// console.log('IN PROD FILTER');
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -127,9 +127,16 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});
 			store.filter(prodFilter);
-		};
+		}
 		
 		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
+		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
+		SeaGrant_Proto.Litem = new Array();
+		SeaGrant_Proto.VstoreLength = store.data.items.length;
+		for (j = 0; j < store.data.items.length; j++){
+			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
+			// console.log(SeaGrant_Proto.Litem[j]);
+		}
 		var vendcount;
 		console.log(vendcount);
 		var homeView = this.getHomeView();
@@ -148,7 +155,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					};
 			}else{
 				if (SeaGrant_Proto.product !== 'Please choose a product'){
-					console.log('Prod ok');
+					// console.log('Prod ok');
 					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
@@ -160,7 +167,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						end: '.'			
 					};
 				}else{
-					console.log('Prod is horid');
+					// console.log('Prod is horid');
 					vendcount = {
 						th: 'There are ',
 						numItems: store.getCount(),
@@ -198,7 +205,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(locationfilter);
 		} else{
 			store.clearFilter();
-		};
+		}
 		if(SeaGrant_Proto.product != 'Please choose a product'){
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -212,7 +219,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});		
 			store.filter(prodFilter);
-		};
+		}
 
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
@@ -265,13 +272,65 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},
 	onViewGoCommand: function(){
 		console.log('In controller(home): Go to List Page Button');
-		Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
+		// TRYING TO RECENTER THE MAP ON LOAD OF LIST PAGE
+		// This WORKS to get a map centered at the correct location!!
+		// NOTE: THIS IS WHAT I FIRST THOUGHT THE APP WAS DOING: 
+		// "Note: that it doesn't work on the first press of the go button because gMap is not defined untill the 
+		// SeaGrantMap xtype is called in the list view."
+		// WHAT I REALLY NEED TO DO TO FIX IT WAS: make the timeout longer, so 
+		// I changed it from 100 to 1000.
+		// console.log('In Our wonderful Controller Go button function:');
+		// console.log(SeaGrant_Proto);
+		// THIS DYNAMICLY LOADS THE MAP MARKERS
+		var lat;
+		var lng;
+		var infowindow = new google.maps.InfoWindow();
+		SeaGrant_Proto.marker = new Array();
+		SeaGrant_Proto.cent = new Array();
+		for (k = 0; k < SeaGrant_Proto.VstoreLength; k++){
+			lat = SeaGrant_Proto.Litem[k].lat;
+			// console.log(lat);
+			lng = SeaGrant_Proto.Litem[k].lng;
+			// console.log(lng);
+			SeaGrant_Proto.cent[k] = new google.maps.LatLng(lat, lng);
+
+			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
+			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
+			SeaGrant_Proto.marker[k] = new google.maps.Marker({
+				map: SeaGrant_Proto.gMap,
+				animation: google.maps.Animation.DROP,
+				position: SeaGrant_Proto.cent[k],
+				clickable: true
+			});
+			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
+			SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
+        		content: SeaGrant_Proto.Litem[k].name
+        	});
+        	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
+        	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
+        	console.log('This is the marker: (1)');
+			console.log(SeaGrant_Proto.marker[k]);
+        	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
+        		// console.log(this.info.content);
+        		infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
+        		infowindow.open(SeaGrant_Proto.gMap, this);
+        	});
+		}
+		setTimeout(function() {
+           SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
+        }, 1000);
+        Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 
 	// LIST
 	// stuff	######################################################################################	LIST
 	onViewBackHomeCommand: function(){
 		console.log('In controller(list): Back to Home Page Button');
+		// This removes the old markers from the map on the list page
+		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
+			SeaGrant_Proto.marker[i].setMap(null);
+		}
+		SeaGrant_Proto.marker.length = 0;
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
 	},
 	onViewDetailCommand: function(){
@@ -351,7 +410,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			store.filter(locationfilter); //now it works
 		}else{
 			store.clearFilter();
-		};
+		}
 		if(SeaGrant_Proto.product != 'Please choose a product'){
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -365,7 +424,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});
 			store.filter(prodFilter);
-		};
+		}
 		Ext.Viewport.animateActiveItem(this.getListView(), this.slideRightTransition);
 	},
 	onViewInfoCommand: function(){

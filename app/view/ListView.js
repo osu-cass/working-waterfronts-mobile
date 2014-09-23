@@ -1,13 +1,11 @@
 Ext.define('SeaGrant_Proto.view.ListView', {
 	extend: 'Ext.Panel',
-	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox'],
-    fullscreen: true,
+	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'SeaGrant_Proto.view.Map'],
+    // fullscreen: true,
     xtype: 'ListView',
 	alias: 'widget.listview',
 	config: {
-		layout: {
-			type: 'fit'
-		},
+		layout: 'fit',
 		items: [
 			{
 				xtype: 'toolbar',
@@ -28,7 +26,11 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 						itemId: 'detailButton'
 					}
 				]
-			},			
+			},
+			{
+				xtype: 'SeaGrantMap',
+				itemId: 'listmap'
+			},					
 			{
 				config: {
 					scrollable: {
@@ -42,11 +44,7 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
 				itemTpl: '</pre><div class="list-item-name">{name}</div><pre>'
-			},
-			{
-				xtype: 'SeaGrantMap',
-				itemId: 'listmap'
-			}			
+			}
 		],
 		listeners: [
 			{

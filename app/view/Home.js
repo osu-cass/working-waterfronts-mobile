@@ -1,7 +1,7 @@
 Ext.define('SeaGrant_Proto.view.Home', {
-	extend: 'Ext.form.Panel',
-	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select'],
-    fullscreen: true,
+	extend: 'Ext.Panel',
+	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select', 'SeaGrant_Proto.view.Map'],
+    // fullscreen: true,
     xtype: 'Home',
 	alias: 'widget.home',
 	config: {
@@ -40,7 +40,6 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						xtype: 'selectfield',			
 						itemId: 'selectlocation',
 						label: 'Location',
-						activeLabel: 'Here We Use The Location of The User',
 						labelWrap: true,
 						displayField: 'title',
 						store: 'Location',
@@ -145,8 +144,8 @@ Ext.define('SeaGrant_Proto.view.Home', {
 		console.log('sortByProductCommand');
 		this.fireEvent('sortByProductCommand', this, record);
 	},
-	onGoButtonTap: function(list, record, target, index, evt, options){
+	onGoButtonTap: function(){
 		console.log('viewGoCommand');
-		this.fireEvent('viewGoCommand', this, record);
+		this.fireEvent('viewGoCommand');
 	}
 });

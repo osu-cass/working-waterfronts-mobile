@@ -5,7 +5,7 @@ StartTest(function(t) {
     var tool = Ext.ComponentQuery.query('toolbar');
     // console.log('This is the toolbar: ');
     // console.log(tool[1]);
-    t.is(tool[1].config.itemId, 'detailPageToolbar', "We have a Header");
+    t.is(tool[2].config.itemId, 'detailPageToolbar', "We have a Header");
 
     // Back button test
     var Bbtn = Ext.ComponentQuery.query('button[itemId=backListButton]');
