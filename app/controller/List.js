@@ -199,7 +199,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log(store.data.all);
 		var len = store.data.all.length;
 		// console.log(store);
-		if(SeaGrant_Proto.location != 'Please choose a location'){
+		if(SeaGrant_Proto.location !== 'Please choose a location'){
 			// console.log('IN LOC FILTER');
 			var locationfilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -212,7 +212,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		} else{
 			store.clearFilter();
 		}
-		if(SeaGrant_Proto.product != 'Please choose a product'){
+		if(SeaGrant_Proto.product !== 'Please choose a product'){
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
 					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products
@@ -228,7 +228,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
-		SeaGrant_Proto.Litem = new Array();;
+		SeaGrant_Proto.Litem = new Array();
 		SeaGrant_Proto.VstoreLength = store.data.items.length;
 		console.log(store.data.items);
 		for (j = 0; j < store.data.items.length; j++){
@@ -311,12 +311,19 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
 			SeaGrant_Proto.marker[i].setMap(null);
 		}
-		SeaGrant_Proto.marker.length = 0;
+		SeaGrant_Proto.marker.length = 0;		
+		var listItems = this.getListView();
+		listItems._items.items[2].deselect(listItems._items.items[2].selected.items[0]);		
 		Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
 	},
+		onViewDetailCommand: function(){
+		console.log('In controller(list): View Detail Page Button');
+		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
+	},		
 	// declareMap markers and infowindows as well as functions for the listview map
 	addMapMarkers: function(){
 		var self = this; // important to get the correct data to the viewport
+		SeaGrant_Proto.infoClickSelf = self;
 		var lat;
 		var lng;
 		SeaGrant_Proto.infowindow = new google.maps.InfoWindow();
@@ -336,37 +343,33 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				animation: google.maps.Animation.DROP,
 				position: SeaGrant_Proto.cent[k],
 				clickable: true
-			});
-			
+			});			
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	SeaGrant_Proto.marker[k].info = new google.maps.InfoWindow({
-        		content: '<button onclick=\"javascript:onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
+        		content: '<button onclick=\"javascript:SeaGrant_Proto.infoClickSelf.onInfoWindowClick();\">'+ SeaGrant_Proto.Litem[k].name + '</button>',
         		data: SeaGrant_Proto.Litem[k],
-        		Lpos: k // used to highlight correct list item
+        		Lpos: k // used to index and highlight the correct list item
         	});
+        	// This gets the map bounds based on the markers
         	SeaGrant_Proto.bounds.extend(SeaGrant_Proto.marker[k].position);
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
-        	// WE WILL USE THIS LITENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
+        	// WE WILL USE THIS LISTENER TO OPEN THE SPECIFIC MARKER INFO THAT WAS CLICKED
         	google.maps.event.addListener(SeaGrant_Proto.marker[k], 'click', function(){
         		SeaGrant_Proto.storeItem = this;
         		// console.log('THIS IN THE EVENT LISTENER');
         		// console.log(this);
         		SeaGrant_Proto.infowindow.setContent(this.info.content); // this makes it so that only one info window is displayed at one time
         		SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, this); // this opens the infowindow defined above
-        	});
-        	onInfoWindowClick = function(record, list, index){
-				var lv = self.getListView();
-				lv._items.items[2].select(SeaGrant_Proto.storeItem.info.Lpos); // selects the list item coresponding to the map marker
-				// note, "self" is the key, if I use "this" it will not refrence the correct data
-				// THIS USES THE SAME DETAIL PAGE DATA POPULATING CODE THAT THE ON CLICK LIST ITEM EVENT DOES
-				self.onViewLpageListItemCommand(this, self, SeaGrant_Proto.storeItem.info);
-			};			
+        	});	
 		}
 	},
-	onViewDetailCommand: function(){
-		console.log('In controller(list): View Detail Page Button');
-		Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
-	},	
+	onInfoWindowClick: function(record, list, index){
+		var lv = SeaGrant_Proto.infoClickSelf.getListView();
+		lv._items.items[2].select(SeaGrant_Proto.storeItem.info.Lpos); // selects the list item coresponding to the map marker
+		// note, "self" is the key, if I use "this" it will not refrence the correct data
+		// THIS USES THE SAME DETAIL PAGE DATA POPULATING CODE THAT THE ON CLICK LIST ITEM EVENT DOES
+		SeaGrant_Proto.infoClickSelf.onViewLpageListItemCommand(this, SeaGrant_Proto.infoClickSelf, SeaGrant_Proto.storeItem.info);
+	},		
 	onViewLpageListItemCommand: function(record, list, index){
 		console.log('In controller(list): Select list item');
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
