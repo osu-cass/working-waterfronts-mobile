@@ -30,26 +30,38 @@ Home
 
 	.. image:: ../_images/homeview.png
 
-	The **User location** section contains a toggle and a drop down menu, which determine if the app should be locating using the user location and what distance from the user it should be locating vendors. In the code Home view below we first add a togglefield to switch the user location on or off. Underneath the toggle we add a drop down menu for users to choose how far away from themselves they want to look for a vendor. Our listeners then grab this info when an event is fired and they use functions to fire events to the controller. Then in the controller we use the functions to take the data input from the home screen to make an api call and get back data that relates to the user input.
+	The **User location** section contains a toggle and a drop down menu, which determine if the app should be locating using the user location and what distance from the user it should be locating vendors. In Home.js (excerpt below), we first add a togglefield to switch the user location on or off. Underneath the toggle we add a drop down menu for users to choose how far away from themselves they want to look for a vendor. Our listeners then grab this info when an event is fired and they use functions to fire events to the controller. Then in the controller we use the functions to take the data input from the home screen to make an api call and get back data that relates to the user input.
+
+**/app/view/Home.js**
 
 	.. literalinclude:: ../../app/view/Home.js
 		:lines: 15-29, 87-96, 124-131
 
+**/app/controller/List.js**
+
 	.. literalinclude:: ../../app/controller/List.js
 		:lines: 54-83
 
-	We also add in a **number of search results print out** like the Google search result. So when a user inputs a location or product we tell them how many vendors there are near that location or with that specific product or near that location with that specific product. The code for that tpl print out in the Home view is below, as well as the controller code that sends back the correct variable to print out.
+	We also add in a **number of search results print out**. This feature emulates a Google search result summary. When a user inputs a location or product, we tell them how many vendors there are near that location or with that specific product or near that location with that specific product. The code for that tpl print out in the Home view is below, as well as the controller code that sends back the correct variable to print out.
+
+**/app/view/Home.js**
 
 	.. literalinclude:: ../../app/view/Home.js
 		:lines: 30-34
+
+**/app/controller/List.js**
 
 	.. literalinclude:: ../../app/controller/List.js
 		:lines: 116-158
 
 	The **Location and Products drop down menus** are populated from the location and product stores. These drop down menus will determine how the data vendor data is sorted and displayed on the list page. In the home view code below we add code to make a location and product drop down menu, their listeners, and functions to fire events to the controller. Then in the controller we sort the vendors store base on that input data.
 
+**/app/view/Home.js**
+
 	.. literalinclude:: ../../app/view/Home.js
 		:lines: 35-59, 97-106, 132-139
+
+**/app/controller/List.js**
 
 	.. literalinclude:: ../../app/controller/List.js
 		:lines: 84-101
