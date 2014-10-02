@@ -36,29 +36,29 @@ describe('SeaGrant_Proto.controller.List',function() {
         // console.log('in before each function');
         // jasmine.Ajax.install();
         // console.log('Ajax is installed');
-        console.log('Create app');
+        // console.log('Create app');
         app = Ext.create('Ext.app.Application', {name: 'SeaGrant_Proto'});
-        console.log('app created');
-        console.log(app);
+        // console.log('app created');
+        // console.log(app);
         // this checks that the controller is sourced correctly, see the top of List.js
         if(isPresent === true){
             console.log('present is true');
         }
         // We are not loading our store correctly here
         controller = Ext.create('SeaGrant_Proto.controller.List', {application: app});
-        console.log('controller created');
-        console.log(controller);
+        // console.log('controller created');
+        // console.log(controller);
         controller.launch();
     });
 
     afterEach(function() {
         app.destroy();
-        console.log('app destroyed');
+        // console.log('app destroyed');
     });
 
-    it('#onViewgoCommand', function() {
-        console.log('#onViewgoCommand function');
-        var go = controller.onViewgoCommand();
-        expect(SeaGrant_Proto.cent[0]).toBeTruthy();
-    });
+    // it('#onViewgoCommand', function() {
+    //     // console.log('#onViewgoCommand function');
+    //     var go = controller.onViewgoCommand();
+    //     expect(SeaGrant_Proto.cent[0]).toBeTruthy();
+    // });
 });

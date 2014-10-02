@@ -22,29 +22,16 @@ Ext.application({
     name: 'SeaGrant_Proto',
 
     controllers: ["List"],
-    models: ["Vendors", "Test", "Products", "Locations", "VendorInventories"],
-    stores: ["Info", "Education", "CountryStore", "Vendor", "Product", "Location", "Distance", "VendorInventory"],
-    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "TestView"],
+    models: ["Vendors", "Products", "Locations", "VendorInventories"],
+    stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory"],
+    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific"],
 
 
     launch: function() {
-        // Initialize the main view
-        // Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.TestView'));
-     
-
-         // Ext.defer(function(){ 
-            Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Home'));
-             Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Map'));
-            Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ListView'));
-            Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Detail')); 
-
-        // }, 5000, this);
-       
-         
-
-        
-           
-        
+        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Home'));
+        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Map'));
+        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ListView'));
+        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Detail')); 
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Info'));
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Specific'));
     }

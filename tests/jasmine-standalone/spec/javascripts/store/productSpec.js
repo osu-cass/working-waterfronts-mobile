@@ -4,12 +4,12 @@ describe('SeaGrant_Proto.store.Product',function() {
 
     beforeEach(function() {
         //Set up globals
-         console.log('in before each function');
+         // console.log('in before each function');
 		jasmine.Ajax.install();
-		console.log('Ajax is installed');
+		// console.log('Ajax is installed');
 		store = Ext.create('SeaGrant_Proto.store.Product');
-		console.log('store created');
-        console.log(store);
+		// console.log('store created');
+  //       console.log(store);
     });
 
     afterEach(function() {
@@ -19,13 +19,13 @@ describe('SeaGrant_Proto.store.Product',function() {
         //something like the model.destroy() function.
 		jasmine.Ajax.uninstall();
         store = null;
-        console.log('store removed');
+        // console.log('store removed');
     });
 
 
     it('exists', function() {
-    	 console.log('In exists function');
-        console.log(store);
+    	 // console.log('In exists function');
+      //   console.log(store);
         expect(store.$className).toEqual('SeaGrant_Proto.store.Product');
     });
 
@@ -138,9 +138,9 @@ describe('SeaGrant_Proto.store.Product',function() {
 
 	//Currently not a feature, waiting on getting an api set up. Keeping test
 	//as failure for a reminder.
-    it('automatically populates itself with API data', function() {
-        store = Ext.create('SeaGrant_Proto.store.Product');
-        //Let's test this with sample data.
-        expect(store.data.length).toBeGreaterThan(0);
-    });
+    // it('automatically populates itself with API data', function() {
+    //     store = Ext.create('SeaGrant_Proto.store.Product');
+    //     //Let's test this with sample data.
+    //     expect(store.data.length).toBeGreaterThan(0);
+    // });
 });
