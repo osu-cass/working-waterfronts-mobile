@@ -6,12 +6,12 @@ Ext.define('SeaGrant_Proto.store.VendorInventory', {
         model: 'SeaGrant_Proto.model.VendorInventories',
         data: [
             {
-                "name": "Michael Fish",
+                "name": "test Fish",
                 "preparation": "Skewered"
             },
             {
-                "name": "Bad Fish",
-                "preparation": "Rotten"
+                "name": "other Fish",
+                "preparation": "new"
             }
         ]
         // autoLoad: true,

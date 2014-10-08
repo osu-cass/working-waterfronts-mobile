@@ -7,7 +7,11 @@ Ext.define('SeaGrant_Proto.store.Product', {
 		autoLoad: true,
 		proxy: {
 			type: 'ajax',
-			url: 'newProducts.json',
+			url: '/newProducts.json',
+			noCache: false,
+			pageParam: false,
+			startParam: false,
+			limitParam: false,
 			reader: {
 				type: 'json',
 				rootProperty: 'products'
