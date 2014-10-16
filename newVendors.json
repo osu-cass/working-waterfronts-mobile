@@ -167,7 +167,7 @@
 							}, 
 							{
 								"preparation": "fresh", 
-								"name": "Albacore Tuna"
+								"name": "Oysters"
 							}
 						], 
 			"lat": 44.424758, 
@@ -197,7 +197,7 @@
 							}, 
 							{
 								"preparation": "fresh", 
-								"name": "Salmon"
+								"name": "Oysters"
 							}
 						], 
 			"lat": 44.631730, 
@@ -252,11 +252,11 @@
 			"products": [ 
 							{
 								"preparation": "grilled", 
-								"name": "Crab"
+								"name": "Dungeness Crab"
 							}, 
 							{
 								"preparation": "boiled", 
-								"name": "Crab Legs"
+								"name": "Dungeness Crab"
 							}
 						], 
 			"lat": 42.414767, 

@@ -1,7 +1,6 @@
 Ext.define('SeaGrant_Proto.view.ListView', {
 	extend: 'Ext.Panel',
 	requires: ['Ext.form.FieldSet', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'SeaGrant_Proto.view.Map'],
-    // fullscreen: true,
     xtype: 'ListView',
 	alias: 'widget.listview',
 	config: {
