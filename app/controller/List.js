@@ -10,7 +10,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		refs: {
 			homeView: 'home',
 			listView: 'listview',
-			detailView: 'detail',			
+			detailView: 'detail',
+			productdetailView: 'productdetail',			
 			infoView: 'info',
 			specificView: 'specific'
 		},
@@ -31,6 +32,11 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				viewLpageListItemCommand: 'onViewLpageListItemCommand'
 			},
 			detailView: {
+				viewBackListCommand: 'onViewBackListCommand',
+				viewInfoCommand: 'onViewInfoCommand',
+				viewDpageListItemCommand: 'onViewDpageListItemCommand'
+			},
+			productdetailView: {
 				viewBackListCommand: 'onViewBackListCommand',
 				viewInfoCommand: 'onViewInfoCommand',
 				viewDpageListItemCommand: 'onViewDpageListItemCommand'
@@ -91,7 +97,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// var loc = this.getHomeView();
 		// console.log(record);
 		SeaGrant_Proto.location = record._value.data.title;
-		// console.log('Location is: '+ location);
+		console.log('Location is: '+ SeaGrant_Proto.location +'\n'); 
 		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
 		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
 		// FUNCTION WILL NOT WORK
@@ -145,34 +151,31 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					flag = 0;
 					for(k = 0; k < pstore.data.length; k++){
 						// check to see if product and prep already exist
-						if((store.data.items[i].data.products[j].name == pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation == pstore.data.items[k].data.preparation)){
+						if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
 							addVendor = store.data.items[i].data.name;
 							newNum = k;
 							flag = 1;
 						}					
 					}
 					// if prod/prep exist, add a new vendor to the vendors list
-					if(flag == 1){
-						pstore.data.items[newNum].data.vendors = addVendor;
+					if(flag === 1){
+						pstore.data.items[newNum].data.vendors.push(addVendor);
 					}
 					// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
-					if((flag == 0) && (store.data.items[i].data.products[j].name == SeaGrant_Proto.product)){
+					if((flag === 0) && (store.data.items[i].data.products[j].name === SeaGrant_Proto.product)){
 						var newpro = {
 							name: store.data.items[i].data.products[j].name, 
 							preparation: store.data.items[i].data.products[j].preparation,
-							vendors: store.data.items[i].data.name
+							vendors: [store.data.items[i].data.name]
 						};
 						pstore.add(newpro);
 					}
 				}
 			}	
 		}else{
-			console.log('vendor store set');
+			// console.log('vendor store set');
 			var view = this.getListView();
 			view.down('list').setStore(store);
-			SeaGrant_Proto.tplStore = "Vendor";
-			SeaGrant_Proto.writer = '{name}';
-			console.log('Set the store and writer for the list');
 		}
 		
 		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
@@ -180,14 +183,14 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.Litem = new Array();
 
 		SeaGrant_Proto.VstoreLength = store.data.items.length;
-		console.log(store.data.items);
+		// console.log(store.data.items);
 		for (j = 0; j < store.data.items.length; j++){
 			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
 			// console.log(SeaGrant_Proto.Litem[j]);
 		}
 
 		var vendcount;
-		console.log(vendcount);
+		// console.log(vendcount);
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
 		// This defines how the tpl data is printed out given the drop down table states
@@ -235,7 +238,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// then we check to see if a product is chosen, if one is we sort by product
 		console.log('In controller(home): Drop Down list Products');
 		// console.log(record);
-		console.log('Product is: '+ record._value.data.name); 
+		console.log('Product is: '+ record._value.data.name +'\n'); 
 		SeaGrant_Proto.product = record._value.data.name;
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
@@ -289,32 +292,29 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					}
 					// if prod/prep exist, add a new vendor to the vendors list
 					if(flag == 1){
-						pstore.data.items[newNum].data.vendors = addVendor;
+						pstore.data.items[newNum].data.vendors.push(addVendor);
 					}
 					// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
 					if((flag == 0) && (store.data.items[i].data.products[j].name == SeaGrant_Proto.product)){
 						var newpro = {
 							name: store.data.items[i].data.products[j].name, 
 							preparation: store.data.items[i].data.products[j].preparation,
-							vendors: store.data.items[i].data.name
+							vendors:[store.data.items[i].data.name]
 						};
 						pstore.add(newpro);
 					}
 				}
 			}	
 		}else{
-			console.log('vendor store set');
+			// console.log('vendor store set');
 			var view = this.getListView();
 			view.down('list').setStore(store);
-			SeaGrant_Proto.tplStore = "Vendor";
-			SeaGrant_Proto.writer = '{name}';
-			console.log('Set the store and writer for the list');
 		}
 
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
 		SeaGrant_Proto.Litem = new Array();
 		SeaGrant_Proto.VstoreLength = store.data.items.length;
-		console.log(store.data.items);
+		// console.log(store.data.items);
 		for (j = 0; j < store.data.items.length; j++){
 			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
 			// console.log(SeaGrant_Proto.Litem[j]);
@@ -362,8 +362,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			
 		}
 		crud.setData(vendcount); // needed to display tpl data on home view
-		console.log('SeaGrant_Proto.tplStore');
-		console.log(SeaGrant_Proto.tplStore);
 		Ext.Viewport.setActiveItem(homeView);
 	},	
 	onSortByVendorCommand: function(){
@@ -386,6 +384,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					SeaGrant_Proto.gMap.setZoom(6);
 				}
         }, 1000);
+        SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'list';
+        SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
 	// Functions dealing with 
@@ -457,20 +457,47 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.infoClickSelf.onViewLpageListItemCommand(this, SeaGrant_Proto.infoClickSelf, SeaGrant_Proto.storeItem.info);
 	},
 	onViewLpageListHighlightCommand: function(record, list, index){
+		var view = this.getListView();
+		console.log('list view');
+		console.log(view);
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
 		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
-			if(SeaGrant_Proto.marker[i].info.data.id === index.id){
-				SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
-		        SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
-		    }
+			console.log('SeaGrant_Proto.marker[i].info.data.id   '+ SeaGrant_Proto.marker[i].info.data.id +'   index.id   '+ index.id +'\n');
+			console.log('marker data   ');
+			console.log(SeaGrant_Proto.marker[i].info.data);
+			console.log('Index');
+			console.log(index.data);
+			if(view._items.items[2]._store._storeId === 'ProductList'){
+				for(j = 0; j < index.data.vendors.length; j++){
+					// Note: this only leaves the last marker infowinow open. But we want to change the color of the pins!
+					if(SeaGrant_Proto.marker[i].info.data.name === index.data.vendors[j]){
+						SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
+			        	SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
+					}
+				}
+			}
+			if(view._items.items[2]._store._storeId === 'Vendor'){
+				if(SeaGrant_Proto.marker[i].info.data.id === index.id){
+					SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
+			        SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
+			    }
+			}
 		}
 	},		
 	onViewLpageListItemCommand: function(record, list, index){
 		console.log('In controller(list): Select list item');
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
+		
 		var detailView = this.getDetailView();
-		var lv = this.getListView();
+		var productdetailView = this.getProductdetailView();
+		
 		detailView.getAt(1).setData(index.data);
+		productdetailView.getAt(1).setData(index.data);
+		// console.log(this);
+		// console.log(productdetailView._items.items[1]._data);
+		// console.log(detailView._items.items[1]._data);
+		
+		Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.name);
 		Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 		// Trying to pass product data from selected vendor to new store, so that we
 		// can use the new store to correctly use tpl print to make selectable list 
@@ -483,22 +510,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log(storeStuff.data.items[0]);
 		storeInventory.removeAll();
 		// console.log(storeStuff.data.items);
+		var view = this.getListView();
+		// console.log('list view');
+		// console.log(view);
 
-		// Store is populated with items from selected vendor
-		console.log(index.data.products.length);
-		for(i = 0; i < index.data.products.length; i++){
-			var newpro = {
-				name: index.data.products[i].name, 
-				preparation: index.data.products[i].preparation
-			};
-			// console.log('Name:');
-			// console.log(index.data.products[i].name);
-			// console.log('Prep:');
-			// console.log(index.data.products[i].preparation);
-			storeInventory.add(newpro);
-		}
-		// console.log('Final storeStuff items: ');
-		// console.log(storeStuff.data.items); 
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
 		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
 			if(SeaGrant_Proto.marker[i].info.data.id === index.id){
@@ -506,7 +521,38 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		        SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
 		    }
 		}
-		Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
+
+		
+		// console.log(index);
+		if(view._items.items[2]._store._storeId === 'Vendor'){
+			// Store is populated with items from selected vendor
+			console.log(index.data.products.length);
+			for(i = 0; i < index.data.products.length; i++){
+				var newpro = {
+					name: index.data.products[i].name, 
+					preparation: index.data.products[i].preparation
+				};
+				storeInventory.add(newpro);
+			}
+			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
+        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+			Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
+		}
+		if(view._items.items[2]._store._storeId === 'ProductList'){
+			console.log('going to productdetailView');
+			// console.log(index);
+			for(i = 0; i < index.data.vendors.length; i++){
+				var newpro = {
+					name: index.data.vendors[i]
+				};
+				storeInventory.add(newpro);
+			}
+			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'productdetail';
+        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+			Ext.Viewport.animateActiveItem(productdetailView, this.slideLeftTransition);
+		}
+		
+		
 	},
 	// Functions dealing with 
 	// DETAIL
@@ -551,9 +597,95 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},	
 	onViewDpageListItemCommand: function(record, list, index){
 		console.log('In controller(detail): Select list item');
+		console.log(this);
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
-		Ext.ComponentQuery.query('toolbar[itemId=infoPageToolbar]')[0].setTitle(index.data.name);
-		Ext.Viewport.animateActiveItem(this.getInfoView(), this.slideLeftTransition);
+		var view = this.getListView();
+		var detailView = this.getDetailView();
+		var productdetailView = this.getProductdetailView();
+		
+		
+		
+		var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
+		storeInventory.removeAll();
+		// console.log(SeaGrant_Proto);
+		// Check to see if we are currently on the detail page or productdetail page, so that we know how to deal
+		// with our data selection
+		if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 1] === 'detail'){
+			// Store is populated with items from selected vendor
+			console.log('we are going from the detail page to the productsdetail page');
+			var vendorstore = Ext.data.StoreManager.lookup('Vendor');
+			console.log(vendorstore.data.items);
+			var productstore = Ext.data.StoreManager.lookup('Product');
+			console.log(productstore.data.items);
+
+			// search through the vendors to find the vendors who carry the product we are selecting, 
+			// so that we can display the vendors that carry that product
+			for(i = 0; i < vendorstore.data.items.length; i++){
+				for(j = 0; j < vendorstore.data.items[i].data.products.length; j++){
+					// populating the storeInventory with the vendors who sell the chosen product
+					if((vendorstore.data.items[i].data.products[j].name === index.data.name) && (vendorstore.data.items[i].data.products[j].preparation === index.data.preparation)){
+
+						var newpro = {
+							name: vendorstore.data.items[i].data.name
+						};
+						storeInventory.add(newpro);
+					}
+					
+				}
+			}
+			for(k = 0; k <  productstore.data.items.length; k++){
+				// console.log('in k loop'+ k);
+				// console.log(productstore.data.items[k]);
+				if(productstore.data.items[k].data.name === index.data.name){
+					console.log(productstore.data.items[k].data.name);
+					console.log(index.data.name)
+					// Sets data for the info block on productdetail page
+					productdetailView.getAt(1).setData(productstore.data.items[k].data); 
+				}
+			}
+
+			
+			console.log(index);
+			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'productdetail';
+        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+			Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.name);
+			Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideLeftTransition);
+		}else if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 1] === 'productdetail'){
+			console.log('Leaving the productdetail page to see the detail page');
+			console.log(index);
+			var vendorstore = Ext.data.StoreManager.lookup('Vendor');
+			console.log(vendorstore.data.items);
+
+
+			// NOTE THAT WE SHOULD BE LOOKING AT ALL VENDORS, NOT JUST THE ONES IN ITEMS, BECAUSE THEN WHEN WE LOOK AT A 
+			// DIFFERENT PRODUCT FROM THE SAME VENDOR IT ONLY POPULATES THE VENDORS THAT SELL THE PRODUCT, FROM THE VENDORS
+			// WHO SOLD THE LAST PRODUCT. WE ALSO HAVE A PROBLEM WHERE THE TITLE OF THE INFO BLOCK IS NOT INCLUDING THE PROPER PREPARATION.
+
+
+
+			// search through the vendors that carry the item and find the one we are selecting, 
+			// so that we can use the data from the selected vendor
+			for(i = 0; i < vendorstore.data.items.length; i++){
+				if(vendorstore.data.items[i].data.name === index.data.name){
+					// populating the storeInventory with the vendor's products
+					for(j = 0; j < vendorstore.data.items[i].data.products.length; j++){
+						var newpro = {
+							name: vendorstore.data.items[i].data.products[j].name, 
+							preparation: vendorstore.data.items[i].data.products[j].preparation
+						};
+						storeInventory.add(newpro); 
+					}
+					// Sets data for the info block on detail page
+					detailView.getAt(1).setData(vendorstore.data.items[i].data); 
+				}
+			}
+			// adding a log item to the "stack"
+			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail'; 
+        	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
+        	// Sets the title of the header on detail page
+			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name); 
+			Ext.Viewport.animateActiveItem(this.getDetailView(), this.slideLeftTransition);
+		}
 	},
 	// Functions dealing with 
 	// INFO 
@@ -586,6 +718,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},
 	init: function(){
 		this.callParent(arguments);
+		SeaGrant_Proto.path = [];
+		SeaGrant_Proto.pcount = 0;
 		// console.log("init");
 	}
 });

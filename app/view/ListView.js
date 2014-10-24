@@ -45,7 +45,7 @@ Ext.define('SeaGrant_Proto.view.ListView', {
 				// store: SeaGrant_Proto.tplStore,
 				loadingText: 'Loading Notes ...',
 				emptyText: '</pre><div class="notes-list-empty-text">No notes found.</div><pre>',
-				itemTpl: '</pre><div class="list-item-name">{name} {preparation}</div><pre>'
+				itemTpl: '</pre><div class="list-item-name">{preparation} {name}</div><pre>'
 				// itemTpl: '</pre><div class="list-item-name">'SeaGrant_Proto.writer'</div><pre>'
 			}
 		],
