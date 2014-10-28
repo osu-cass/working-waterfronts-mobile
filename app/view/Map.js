@@ -14,8 +14,15 @@ Ext.define('SeaGrant_Proto.view.Map', {
                  mapOptions: {
                     center: new google.maps.LatLng(43, -123),
                     // mapTypeId: google.maps.MapTypeId.ROADMAP,    this will keep the app from loading correctly
-                    zoom: 13
-                }                
+                    zoom: 13,
+					styles: {
+						featureType: "poi",
+						elementType: "labels",
+						stylers: [
+							{visibility: "off"}
+						]
+					}
+                }
             }
         ]
     },
