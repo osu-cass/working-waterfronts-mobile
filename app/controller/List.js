@@ -125,8 +125,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}else{
 			store.clearFilter();
 		}
+		var view = this.getListView();
 		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			var view = this.getListView();
+			
 			view.down('list').setStore(pstore);
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -174,7 +175,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			}	
 		}else{
 			// console.log('vendor store set');
-			var view = this.getListView();
 			view.down('list').setStore(store);
 		}
 		
@@ -259,8 +259,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			
 			store.clearFilter();
 		}
+		var view = this.getListView();
 		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			var view = this.getListView();
+			
 			view.down('list').setStore(pstore);
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
@@ -284,18 +285,18 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					flag = 0;
 					for(k = 0; k < pstore.data.length; k++){
 						// check to see if product and prep already exist
-						if((store.data.items[i].data.products[j].name == pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation == pstore.data.items[k].data.preparation)){
+						if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
 							addVendor = store.data.items[i].data.name;
 							newNum = k;
 							flag = 1;
 						}					
 					}
 					// if prod/prep exist, add a new vendor to the vendors list
-					if(flag == 1){
+					if(flag === 1){
 						pstore.data.items[newNum].data.vendors.push(addVendor);
 					}
 					// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
-					if((flag == 0) && (store.data.items[i].data.products[j].name == SeaGrant_Proto.product)){
+					if((flag === 0) && (store.data.items[i].data.products[j].name === SeaGrant_Proto.product)){
 						var newpro = {
 							name: store.data.items[i].data.products[j].name, 
 							preparation: store.data.items[i].data.products[j].preparation,
@@ -307,7 +308,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			}	
 		}else{
 			// console.log('vendor store set');
-			var view = this.getListView();
 			view.down('list').setStore(store);
 		}
 
@@ -493,6 +493,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		
 		detailView.getAt(1).setData(index.data);
 		productdetailView.getAt(1).setData(index.data);
+		console.log('data that we need');
+		console.log(productdetailView.getAt(1)._data);
 		// console.log(this);
 		// console.log(productdetailView._items.items[1]._data);
 		// console.log(detailView._items.items[1]._data);
@@ -505,6 +507,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				
 		// Trying to find store so that we can add data to the new store.
 		var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
+		var productstore = Ext.data.StoreManager.lookup('Product');
 		// console.log(stuff);
 		// console.log('storeStuff Items: ');
 		// console.log(storeStuff.data.items[0]);
@@ -546,6 +549,18 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					name: index.data.vendors[i]
 				};
 				storeInventory.add(newpro);
+			}
+			for(k = 0; k <  productstore.data.all.length; k++){
+				// console.log('in k loop'+ k);
+				// console.log(productstore.data.items[k]);
+				if(productstore.data.all[k].data.name === index.data.name){
+					// console.log(productstore.data.all[k].data.name);
+					// console.log(index.data.name);
+					// Sets data for the info block on productdetail page
+					productdetailView.getAt(1).setData(productstore.data.all[k].data);
+					console.log('NEEDED DISPLAY DATA');
+					console.log(productdetailView.getAt(1)._data);  
+				}
 			}
 			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'productdetail';
         	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
@@ -607,59 +622,58 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		
 		var storeInventory = Ext.data.StoreManager.lookup('VendorInventory');
 		storeInventory.removeAll();
+		var vendorstore = Ext.data.StoreManager.lookup('Vendor');
 		// console.log(SeaGrant_Proto);
 		// Check to see if we are currently on the detail page or productdetail page, so that we know how to deal
 		// with our data selection
 		if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 1] === 'detail'){
 			// Store is populated with items from selected vendor
 			console.log('we are going from the detail page to the productsdetail page');
-			var vendorstore = Ext.data.StoreManager.lookup('Vendor');
-			console.log(vendorstore.data.items);
+			// console.log(vendorstore.data.items);
 			var productstore = Ext.data.StoreManager.lookup('Product');
-			console.log(productstore.data.items);
+			// console.log(productstore.data.items);
 
 			// search through the vendors to find the vendors who carry the product we are selecting, 
 			// so that we can display the vendors that carry that product
-			for(i = 0; i < vendorstore.data.items.length; i++){
-				for(j = 0; j < vendorstore.data.items[i].data.products.length; j++){
+			for(i = 0; i < vendorstore.data.all.length; i++){
+				for(j = 0; j < vendorstore.data.all[i].data.products.length; j++){
 					// populating the storeInventory with the vendors who sell the chosen product
-					if((vendorstore.data.items[i].data.products[j].name === index.data.name) && (vendorstore.data.items[i].data.products[j].preparation === index.data.preparation)){
+					if((vendorstore.data.all[i].data.products[j].name === index.data.name) && (vendorstore.data.all[i].data.products[j].preparation === index.data.preparation)){
 
 						var newpro = {
-							name: vendorstore.data.items[i].data.name
+							name: vendorstore.data.all[i].data.name
 						};
 						storeInventory.add(newpro);
 					}
 					
 				}
 			}
-			for(k = 0; k <  productstore.data.items.length; k++){
+			for(k = 0; k <  productstore.data.all.length; k++){
 				// console.log('in k loop'+ k);
 				// console.log(productstore.data.items[k]);
-				if(productstore.data.items[k].data.name === index.data.name){
-					console.log(productstore.data.items[k].data.name);
-					console.log(index.data.name)
+				if(productstore.data.all[k].data.name === index.data.name){
+					// console.log(productstore.data.all[k].data.name);
+					// console.log(index.data.name);
 					// Sets data for the info block on productdetail page
-					productdetailView.getAt(1).setData(productstore.data.items[k].data); 
+					productdetailView.getAt(1).setData(productstore.data.all[k].data);
+					console.log('NEEDED DISPLAY DATA');
+					console.log(productdetailView.getAt(1)._data);  
 				}
 			}
 
 			
-			console.log(index);
+			// console.log(index);
 			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'productdetail';
         	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
 			Ext.ComponentQuery.query('toolbar[itemId=productdetailPageToolbar]')[0].setTitle(index.data.name);
 			Ext.Viewport.animateActiveItem(this.getProductdetailView(), this.slideLeftTransition);
 		}else if(SeaGrant_Proto.path[SeaGrant_Proto.pcount - 1] === 'productdetail'){
 			console.log('Leaving the productdetail page to see the detail page');
-			console.log(index);
-			var vendorstore = Ext.data.StoreManager.lookup('Vendor');
-			console.log(vendorstore.data.items);
+			// console.log(index);
+			// console.log(vendorstore.data.items);
 
 
-			// NOTE THAT WE SHOULD BE LOOKING AT ALL VENDORS, NOT JUST THE ONES IN ITEMS, BECAUSE THEN WHEN WE LOOK AT A 
-			// DIFFERENT PRODUCT FROM THE SAME VENDOR IT ONLY POPULATES THE VENDORS THAT SELL THE PRODUCT, FROM THE VENDORS
-			// WHO SOLD THE LAST PRODUCT. WE ALSO HAVE A PROBLEM WHERE THE TITLE OF THE INFO BLOCK IS NOT INCLUDING THE PROPER PREPARATION.
+			// WE ALSO HAVE A PROBLEM WHERE THE TITLE OF THE INFO BLOCK IS NOT INCLUDING THE PROPER PREPARATION.
 
 
 
@@ -676,7 +690,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						storeInventory.add(newpro); 
 					}
 					// Sets data for the info block on detail page
-					detailView.getAt(1).setData(vendorstore.data.items[i].data); 
+					detailView.getAt(1).setData(vendorstore.data.items[i].data);
+					
 				}
 			}
 			// adding a log item to the "stack"
