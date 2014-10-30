@@ -3,7 +3,7 @@
 //removed from the map.
 var mystyles =[
 	{
-	featureType: "poi",
+	featureType: "all",
 	elementType: "labels",
 	stylers: [
 		{visibility: "off"}
