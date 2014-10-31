@@ -475,8 +475,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},
 	onViewLpageListHighlightCommand: function(record, list, index){
 		var view = this.getListView();
-		// console.log('list view');
-		// console.log(view);
 		var t = 0;
 		var h;
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
@@ -510,7 +508,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
 								// SeaGrant_Proto.opnum = 0.5;
 								// remake the red marker
 								this.addAMapMarker(SeaGrant_Proto.lastNodeSet[h], SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-								// console.log('added');
 								// reset t so that the new set of nodes for a product are populated
 								t = 0;
 							}
