@@ -131,8 +131,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 		var view = this.getListView();
 		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			
-			view.down('list').setStore(pstore);
+			SeaGrant_Proto.use2 = 0;
+			// view.down('list').setStore(pstore);
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
 					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products
@@ -144,54 +144,15 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				},
 				root: 'data'
 			});
-			store.filter(prodFilter);
-			// pstore is populated with items from selected vendor
-			var countLen = 0;
-			var flag = 0;
-			var addVendor;
-			var newNum = 0;
-			pstore.removeAll();
-			for(i = 0; i < store.data.items.length; i++){
-				for(j = 0; j < store.data.items[i].data.products.length; j++){
-					flag = 0;
-					for(k = 0; k < pstore.data.length; k++){
-						// check to see if product and prep already exist
-						if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
-							addVendor = store.data.items[i].data.name;
-							newNum = k;
-							flag = 1;
-						}					
-					}
-					// if prod/prep exist, add a new vendor to the vendors list
-					if(flag === 1){
-						pstore.data.items[newNum].data.vendors.push(addVendor);
-					}
-					// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
-					if((flag === 0) && (store.data.items[i].data.products[j].name === SeaGrant_Proto.product)){
-						var newpro = {
-							name: store.data.items[i].data.products[j].name, 
-							preparation: store.data.items[i].data.products[j].preparation,
-							vendors: [store.data.items[i].data.name]
-						};
-						pstore.add(newpro);
-					}
-				}
-			}	
+			store.filter(prodFilter);			
+			this.populatePstore(store, pstore);
 		}else{
 			// console.log('vendor store set');
-			view.down('list').setStore(store);
+			// view.down('list').setStore(store);
+			SeaGrant_Proto.use2 = 1;
 		}
 		
-		// THIS FINDS THE NUMBER OF VENDORS AFTER THE SORT
-		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
-		SeaGrant_Proto.Litem = new Array();
-
-		SeaGrant_Proto.VstoreLength = store.data.items.length;
-		// console.log(store.data.items);
-		for (j = 0; j < store.data.items.length; j++){
-			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
-			// console.log(SeaGrant_Proto.Litem[j]);
-		}
+		this.numberOfVendors(store);
 
 		var vendcount;
 		// console.log(vendcount);
@@ -265,8 +226,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 		var view = this.getListView();
 		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			
-			view.down('list').setStore(pstore);
+			SeaGrant_Proto.use = 0;
+			// view.down('list').setStore(pstore);
 			var prodFilter = new Ext.util.Filter({
 				filterFn: function(item, record){
 					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products// console.log(b+'  '+item.data.products[b].name);
@@ -278,51 +239,14 @@ Ext.define('SeaGrant_Proto.controller.List', {
 				root: 'data'
 			});
 			store.filter(prodFilter);
-			// pstore is populated with items from selected vendor
-			var countLen = 0;
-			var flag = 0;
-			var addVendor;
-			var newNum = 0;
-			pstore.removeAll();
-			for(i = 0; i < store.data.items.length; i++){
-				for(j = 0; j < store.data.items[i].data.products.length; j++){
-					flag = 0;
-					for(k = 0; k < pstore.data.length; k++){
-						// check to see if product and prep already exist
-						if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
-							addVendor = store.data.items[i].data.name;
-							newNum = k;
-							flag = 1;
-						}					
-					}
-					// if prod/prep exist, add a new vendor to the vendors list
-					if(flag === 1){
-						pstore.data.items[newNum].data.vendors.push(addVendor);
-					}
-					// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
-					if((flag === 0) && (store.data.items[i].data.products[j].name === SeaGrant_Proto.product)){
-						var newpro = {
-							name: store.data.items[i].data.products[j].name, 
-							preparation: store.data.items[i].data.products[j].preparation,
-							vendors:[store.data.items[i].data.name]
-						};
-						pstore.add(newpro);
-					}
-				}
-			}	
+			this.populatePstore(store, pstore);
 		}else{
 			// console.log('vendor store set');
-			view.down('list').setStore(store);
+			// view.down('list').setStore(store);
+			SeaGrant_Proto.use = 1;
 		}
 
-		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
-		SeaGrant_Proto.Litem = new Array();
-		SeaGrant_Proto.VstoreLength = store.data.items.length;
-		// console.log(store.data.items);
-		for (j = 0; j < store.data.items.length; j++){
-			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
-			// console.log(SeaGrant_Proto.Litem[j]);
-		}
+		this.numberOfVendors(store);
 
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
@@ -367,15 +291,94 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		}
 		crud.setData(vendcount); // needed to display tpl data on home view
 		Ext.Viewport.setActiveItem(homeView);
+	},
+	numberOfVendors: function(store){
+		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
+		SeaGrant_Proto.Litem = new Array();
+		SeaGrant_Proto.VstoreLength = store.data.items.length;
+		// console.log(store.data.items);
+		for (j = 0; j < store.data.items.length; j++){
+			SeaGrant_Proto.Litem[j] = store.data.items[j].data;			
+			// console.log(SeaGrant_Proto.Litem[j]);
+		}
+	},
+	populatePstore: function(store, pstore, usekey){
+		// pstore is populated with items from selected vendors
+		var countLen = 0;
+		var flag = 0;
+		var addVendor;
+		var newNum = 0;
+		pstore.removeAll();
+		for(i = 0; i < store.data.items.length; i++){
+			// console.log('store.data.items.length');
+			// console.log(store.data.items.length);
+			for(j = 0; j < store.data.items[i].data.products.length; j++){
+			// console.log('store.data.items[i].data.products.length');
+			// console.log(store.data.items[i].data.products.length);
+				flag = 0;
+				for(k = 0; k < pstore.data.length; k++){
+					// check to see if product and prep already exist
+					if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
+						addVendor = store.data.items[i].data.name;
+						newNum = k;
+						flag = 1;
+					}					
+				}
+				// if prod/prep exist, add a new vendor to the vendors list
+				if(flag === 1){
+					pstore.data.items[newNum].data.vendors.push(addVendor);
+				}
+				// if the prod/prep DNE, then creat a new product from the current vendor as long as its name is same as chosen product name
+				if(((flag === 0) && (store.data.items[i].data.products[j].name === SeaGrant_Proto.product)) | ((flag === 0) && (usekey === 1))){
+					var newpro = {
+						name: store.data.items[i].data.products[j].name, 
+						preparation: store.data.items[i].data.products[j].preparation,
+						vendors:[store.data.items[i].data.name]
+					};
+					pstore.add(newpro);
+				}
+			}
+		}	
 	},	
+	// Need to reset the store when the check is clicked again, so store is set back to original store
 	onSortByVendorCommand: function(){
 		console.log('In controller(home): Vendor checkbox');
+		var view = this.getListView();
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		// Note: the code for the functionality of this command is included in the onViewGoCommand,
+		// because we want the program to call the function once, and if we put it in the go button
+		// command, then we are able to make sure that the correct store is set. If a checkbox is set
+		// then the specific list view store will be set by the checkbox in the onViewGoCommand and if 
+		// the checkbox is not set, then the list store has already been set.
+		console.log(this.getHomeView().items.items[5].items);
+		console.log(view.down('list'));
+		var homeView = this.getHomeView();
+		if(homeView.items.items[5].items.items[0]._checked === true){
+			// if vendors is true, then we must set products to false
+			homeView.items.items[5].items.items[1]._checked = false;
+			homeView.items.items[5].items.items[1]._component._checked = false;
+			homeView.items.items[5].items.items[1]._component.input.dom.checked = false;
+		}
 	},
 	onSortByProductCommand: function(){
 		console.log('In controller(home): Product checkbox');
+		var view = this.getListView();
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		var pstore = Ext.data.StoreManager.lookup('ProductList');
+		var homeView = this.getHomeView();
+		if(homeView.items.items[5].items.items[1]._checked === true){
+			// if products is true, then we must set vendors to false
+			homeView.items.items[5].items.items[0]._checked = false;
+			homeView.items.items[5].items.items[0]._component._checked = false;
+			homeView.items.items[5].items.items[0]._component.input.dom.checked = false;
+		}		
 	},
 	onViewGoCommand: function(){
-		console.log('In controller(home): Go to List Page Button');	
+		console.log('In controller(home): Go to List Page Button');
+		var view = this.getListView();
+		var store = Ext.data.StoreManager.lookup('Vendor');
+		var pstore = Ext.data.StoreManager.lookup('ProductList');
+		var homeView = this.getHomeView();	
 		SeaGrant_Proto.iconImage = '/images/red.png';	
 		this.addMapMarkers();
 		setTimeout(function() {
@@ -389,6 +392,24 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					SeaGrant_Proto.gMap.setZoom(6);
 				}
         }, 1000);
+		if(homeView.items.items[5].items.items[0]._checked === true){
+			view.down('list').setStore(store);
+		}
+		if(homeView.items.items[5].items.items[1]._checked === true){
+			console.log('use');
+			console.log(SeaGrant_Proto.use);
+			this.populatePstore(store, pstore, SeaGrant_Proto.use);
+			view.down('list').setStore(pstore);
+		}
+		// If the checkboxes are both unused again we need to make sure that we set the correct stores for the items being searched
+		if((homeView.items.items[5].items.items[0]._checked === false) && (homeView.items.items[5].items.items[1]._checked === false)){
+			if(((SeaGrant_Proto.use === 1) && (SeaGrant_Proto.use2 === 1)) | ((SeaGrant_Proto.use === 1) && (SeaGrant_Proto.use2 === 0))){
+				view.down('list').setStore(store);
+			}
+			if(((SeaGrant_Proto.use === 0) && (SeaGrant_Proto.use2 === 1)) | ((SeaGrant_Proto.use === 0) && (SeaGrant_Proto.use2 === 0))){
+				view.down('list').setStore(pstore);
+			}
+		}		
         SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'list';
         SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
@@ -828,6 +849,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.path = [];
 		SeaGrant_Proto.pcount = 0;
 		SeaGrant_Proto.backFlag = 0;
+		SeaGrant_Proto.use = 1;
+		SeaGrant_Proto.use2 = 1;
 		// console.log("init");
 	}
 });
