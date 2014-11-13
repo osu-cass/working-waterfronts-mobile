@@ -22,9 +22,9 @@ Ext.application({
     name: 'SeaGrant_Proto',
 
     controllers: ["List"],
-    models: ["Vendors", "Products", "Locations", "VendorInventories"],
-    stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory"],
-    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific"],
+    models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists"],
+    stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList"],
+    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail"],
 
 
     launch: function() {
@@ -32,6 +32,7 @@ Ext.application({
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Map'));
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ListView'));
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Detail')); 
+        Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.ProductDetail')); 
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Info'));
         Ext.Viewport.add(Ext.create('SeaGrant_Proto.view.Specific'));
     }
