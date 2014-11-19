@@ -20,7 +20,14 @@ var mystyles =[
 		stylers: [
 			{ visibility: "off" }
 		]
+	},{
+		featureType: "transit.station.airport",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
 	}
+
 ];
 
 Ext.define('SeaGrant_Proto.view.Map', {
