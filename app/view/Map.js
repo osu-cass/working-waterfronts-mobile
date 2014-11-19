@@ -1,3 +1,35 @@
+//This variable is to avoid issues with the way sencha touch reads variable
+//objects. The point of this piece is so that the points of interest are
+//removed from the map.
+var mystyles =[
+	{
+		featureType: "administrative",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
+	},{
+		featureType: "landscape",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
+	},{
+		featureType: "poi",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
+	},{
+		featureType: "transit.station.airport",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
+	}
+
+];
+
 Ext.define('SeaGrant_Proto.view.Map', {
     extend: 'Ext.Container',
     requires: ['Ext.Map'],
@@ -8,14 +40,12 @@ Ext.define('SeaGrant_Proto.view.Map', {
         items: [
             {
                 xtype: 'map',
-                // What MF added
-                // This Doesn't work: setCenter: new google.maps.LatLng(44.566988, -123.277046)
-                // Now, adding Map options centers the map if the view with the map is loaded before any other view
                  mapOptions: {
                     center: new google.maps.LatLng(43, -123),
-                    // mapTypeId: google.maps.MapTypeId.ROADMAP,    this will keep the app from loading correctly
-                    zoom: 13
-                }                
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    zoom: 13,
+					styles: mystyles
+                }
             }
         ]
     },
