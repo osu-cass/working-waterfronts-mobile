@@ -3,11 +3,23 @@
 //removed from the map.
 var mystyles =[
 	{
-	featureType: "all",
-	elementType: "labels",
-	stylers: [
-		{visibility: "off"}
-	]
+		featureType: "administrative",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
+	},{
+		featureType: "landscape",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
+	},{
+		featureType: "poi",
+		elementType: "labels",
+		stylers: [
+			{ visibility: "off" }
+		]
 	}
 ];
 
