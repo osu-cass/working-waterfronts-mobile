@@ -4,6 +4,7 @@ Ext.define('SeaGrant_Proto.model.ProductLists', {
         fields:[
             'name',
             'preparation',
+            'PLpos',
             'vendors'
         ]
     }

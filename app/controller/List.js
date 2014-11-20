@@ -308,6 +308,9 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var flag = 0;
 		var addVendor;
 		var newNum = 0;
+		// n is used to set PLpos or ProductList position when adding new products
+		// to the productlist, PLpos is used to select a list item
+		var n = 0;
 		pstore.removeAll();
 		for(i = 0; i < store.data.items.length; i++){
 			// console.log('store.data.items.length');
@@ -333,9 +336,12 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					var newpro = {
 						name: store.data.items[i].data.products[j].name, 
 						preparation: store.data.items[i].data.products[j].preparation,
-						vendors:[store.data.items[i].data.name]
+						vendors:[store.data.items[i].data.name],
+						PLpos: n
 					};
 					pstore.add(newpro);
+					n = n+1;
+					console.log(n);
 				}
 			}
 		}	
@@ -494,16 +500,50 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	},
 	onInfoWindowClick: function(record, list, index){
 		var lv = SeaGrant_Proto.infoClickSelf.getListView();
-		console.log(SeaGrant_Proto.storeItem);
-		lv._items.items[2].select(SeaGrant_Proto.storeItem.info.Lpos); // selects the list item coresponding to the map marker
-		// note, "self" is the key, if I use "this" it will not refrence the correct data
+		lv._items.items[2].deselect(lv._items.items[2].selected.items[0]);
+		var pstore = Ext.data.StoreManager.lookup('ProductList');
+		var selectListItemFlag = 0;
+		// console.log(pstore);
+		// console.log('SeaGrant_Proto.storeItem');
+		// console.log(SeaGrant_Proto.storeItem);
+		// If the vendors store is used, we can select a list item in here
+		if(lv._items.items[2]._store._storeId === 'Vendor'){
+        	// console.log("I shouldn't see this when I'm in the products list");
+			lv._items.items[2].select(SeaGrant_Proto.storeItem.info.Lpos);
+		}
+		// if the productlist store is selected, we need to select the first product and prep in the productlist store
+		// that contains our vendor as a seller of that product
+		if(lv._items.items[2]._store._storeId === 'ProductList'){
+			console.log('PRODUCTS LIST SELECT');
+			for(i = 0; i < pstore.data.all.length; i++){
+				for(j = 0; j < pstore.data.all[i].data.vendors.length; j++){
+					// if vendor exists in the productlist item as carrying that product, then set highlight flag
+					// console.log(pstore.data.all[i].data.vendors[j]);
+					// console.log(SeaGrant_Proto.storeItem.info.data.name);
+					if(SeaGrant_Proto.storeItem.info.data.name === pstore.data.all[i].data.vendors[j]){
+						if(selectListItemFlag !== 2){
+							selectListItemFlag = 1;
+						}
+						// console.log('the productlist item contains the vendor');
+					}
+				}
+				// if a productlist item contains the vendor, highlight it
+				if(selectListItemFlag === 1){
+					// console.log('highlight the correct list item');
+					// console.log(pstore.data.all[i].data);
+					lv._items.items[2].select(pstore.data.all[i].data.PLpos);
+					selectListItemFlag = 2;
+				}
+			}
+			selectListItemFlag = 0;
+		}
+		SeaGrant_Proto.infowindowFlag = 1;
 		// THIS USES THE SAME DETAIL PAGE DATA POPULATING CODE THAT THE ON CLICK LIST ITEM EVENT DOES
 		SeaGrant_Proto.infoClickSelf.onViewLpageListItemCommand(this, SeaGrant_Proto.infoClickSelf, SeaGrant_Proto.storeItem.info);
 	},
 	onViewLpageListHighlightCommand: function(record, list, index){
 		var view = this.getListView();
 		var t = 0;
-		var h;
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
 		for(i = 0; i < SeaGrant_Proto.marker.length; i++){
 			// console.log('SeaGrant_Proto.marker[i].info.data.id   '+ SeaGrant_Proto.marker[i].info.data.id +'   index.id   '+ index.id +'\n');
@@ -511,7 +551,46 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			// console.log(SeaGrant_Proto.marker[i].icon);
 			// console.log('Index');
 			// console.log(index.data);
-			if(view._items.items[2]._store._storeId === 'ProductList'){
+
+
+			// Here we want to set all previous blue nodes to red, then we will navigate into the respective function and turn
+			// a node or nodes blue depending on our criteria.
+			if((SeaGrant_Proto.lastNodeSet[0] != null) && (t == 0)){
+				console.log("removing last set of blue markers");
+				// console.log("SeaGrant_Proto.lent = "+ SeaGrant_Proto.lent);
+				for(h = 0; h < SeaGrant_Proto.lent; h++){
+					// get rid of last blue marker
+					SeaGrant_Proto.marker[SeaGrant_Proto.lastNodeSet[h]].setMap(null);
+					// console.log('removed');
+					// console.log(SeaGrant_Proto.lastNodeSet[h]);
+					// reset marker to red
+					SeaGrant_Proto.iconImage = '/images/red.png';
+					// Setting the animation to null
+					SeaGrant_Proto.animation = null;
+					// Set the opacity of the pin
+					// SeaGrant_Proto.opnum = 0.5;
+					// remake the red marker
+					this.addAMapMarker(SeaGrant_Proto.lastNodeSet[h], SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
+					// console.log('added');
+					// reset t so that the new set of nodes for a product are populated
+					t = 0;
+				}
+				SeaGrant_Proto.lent = 0;
+	        }
+	     //    if(SeaGrant_Proto.lastI != null){
+						// // get rid of last blue marker
+						// console.log('get rid of last blue marker');
+						// SeaGrant_Proto.marker[SeaGrant_Proto.lastI].setMap(null);
+						// // reset marker to red
+						// SeaGrant_Proto.iconImage = '/images/red.png';
+						// SeaGrant_Proto.animation = null;
+						// // Set the opacity of the pin
+						// // SeaGrant_Proto.opnum = 0.5;
+						// // remake the red marker
+						// this.addAMapMarker(SeaGrant_Proto.lastI, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);						
+			   //      }
+
+			if((view._items.items[2]._store._storeId === 'ProductList') && (SeaGrant_Proto.infowindowFlag !== 1)){
 				// Use this for loop to find all the vendors that sell this product
 				for(j = 0; j < index.data.vendors.length; j++){					
 					// this if statement finds vendors who carry the specific product
@@ -519,79 +598,72 @@ Ext.define('SeaGrant_Proto.controller.List', {
 						// check to make sure that we have a previous set of nodes to turn red again
 						// also checks that we only reset the nodes once when we search for and change 
 						// the new nodes for the new product to blue
-						if((SeaGrant_Proto.lastNodeSet[0] != null) && (t == 0)){
-							// console.log("removing last set of blue markers");
-							// console.log("SeaGrant_Proto.lent = "+ SeaGrant_Proto.lent);
-							for(h = 0; h < SeaGrant_Proto.lent; h++){
-								// get rid of last blue marker
-								SeaGrant_Proto.marker[SeaGrant_Proto.lastNodeSet[h]].setMap(null);
-								// console.log('removed');
-								// console.log(SeaGrant_Proto.lastNodeSet[h]);
-								// reset marker to red
-								SeaGrant_Proto.iconImage = '/images/red.png';
-								// Setting the animation to null
-								SeaGrant_Proto.animation = null;
-								// Set the opacity of the pin
-								// SeaGrant_Proto.opnum = 0.5;
-								// remake the red marker
-								this.addAMapMarker(SeaGrant_Proto.lastNodeSet[h], SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-								// reset t so that the new set of nodes for a product are populated
-								t = 0;
-							}
-							SeaGrant_Proto.lent = 0;
-				        }
+						this.blueMapMarkers(t, i);
 				        // get rid of red marker for selected list item
-				        SeaGrant_Proto.marker[i].setMap(null);
-				        // reset marker to blue
-						SeaGrant_Proto.iconImage = '/images/blue.png';
-						// Setting the animation to drop
-						SeaGrant_Proto.animation = google.maps.Animation.DROP;
-						// Set the opacity of the pin
-						// SeaGrant_Proto.opnum = 1.0;
-						// make the blue marker
-						this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-						SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
-						SeaGrant_Proto.lastNodeSet[t] = i;
+				  //       SeaGrant_Proto.marker[i].setMap(null);
+				  //       // reset marker to blue
+						// SeaGrant_Proto.iconImage = '/images/blue.png';
+						// // Setting the animation to drop
+						// SeaGrant_Proto.animation = google.maps.Animation.DROP;
+						// // Set the opacity of the pin
+						// // SeaGrant_Proto.opnum = 1.0;
+						// // make the blue marker
+						// this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
+						// SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+						// SeaGrant_Proto.lastNodeSet[t] = i;
 			   			t = t+1;
-			   			SeaGrant_Proto.lent = t;
+			   			// SeaGrant_Proto.lent = t;
 					}
 				}
 			}
-			if(view._items.items[2]._store._storeId === 'Vendor'){
-				if(SeaGrant_Proto.marker[i].info.data.id === index.id){					
+			if((view._items.items[2]._store._storeId === 'Vendor') | (SeaGrant_Proto.infowindowFlag === 1)){
+				if(SeaGrant_Proto.marker[i].info.data.id === index.data.id){					
 					// This is setting the pin of the selected list item to be blue and popping open its infowindow
-					if(SeaGrant_Proto.lastI != null){
-						// get rid of last blue marker
-						SeaGrant_Proto.marker[SeaGrant_Proto.lastI].setMap(null);
-						// reset marker to red
-						SeaGrant_Proto.iconImage = '/images/red.png';
-						SeaGrant_Proto.animation = null;
-						// Set the opacity of the pin
-						// SeaGrant_Proto.opnum = 0.5;
-						// remake the red marker
-						this.addAMapMarker(SeaGrant_Proto.lastI, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);						
-			        }
+					this.blueMapMarkers(t, i);
 			        // get rid of red marker for selected list item
-			        SeaGrant_Proto.marker[i].setMap(null);
-			        // reset marker to blue
-					SeaGrant_Proto.iconImage = '/images/blue.png';
-					SeaGrant_Proto.animation = google.maps.Animation.DROP;
-					// Set the opacity of the pin
-					// SeaGrant_Proto.opnum = 1.0;
-					// make the blue marker
-					this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
-					SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+			  //       SeaGrant_Proto.marker[i].setMap(null);
+			  //       // reset marker to blue
+					// SeaGrant_Proto.iconImage = '/images/blue.png';
+					// SeaGrant_Proto.animation = google.maps.Animation.DROP;
+					// // Set the opacity of the pin
+					// // SeaGrant_Proto.opnum = 1.0;
+					// // make the blue marker
+					// this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
+					// SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
 					// add data to blue marker info window and open it
 					SeaGrant_Proto.infowindow.setContent(SeaGrant_Proto.marker[i].info.content); // sets the infowindow that coresponds to the selected list
 			        SeaGrant_Proto.infowindow.open(SeaGrant_Proto.gMap, SeaGrant_Proto.marker[i]); // this opens the infowindow defined above
-					SeaGrant_Proto.lastI = i;
+					
+			        // SeaGrant_Proto.lastNodeSet[t] = i;
+		   			t = t+1;
+		   // 			SeaGrant_Proto.lent = t;
+
+					// SeaGrant_Proto.lastI = i;
 			    }
 			}
 		}
+	},
+	// having trouble with the passed in value t, when we are removing old map markers
+	blueMapMarkers: function(t, i){
+		// get rid of red marker for selected list item
+        SeaGrant_Proto.marker[i].setMap(null);
+        // reset marker to blue
+		SeaGrant_Proto.iconImage = '/images/blue.png';
+		// Setting the animation to drop
+		SeaGrant_Proto.animation = google.maps.Animation.DROP;
+		// Set the opacity of the pin
+		// SeaGrant_Proto.opnum = 1.0;
+		// make the blue marker
+		this.addAMapMarker(i, SeaGrant_Proto.animation, SeaGrant_Proto.opnum);
+		SeaGrant_Proto.marker[i].setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+		SeaGrant_Proto.lastNodeSet[t] = i;
+		t = t+1;
+		SeaGrant_Proto.lent = t;
 	},		
 	onViewLpageListItemCommand: function(record, list, index){
 		console.log('In controller(list): Select list item');
 		// Ext.Msg.alert(index.data.name, 'This is the selected list item.');
+		
 		
 		var detailView = this.getDetailView();
 		var productdetailView = this.getProductdetailView();
@@ -632,7 +704,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		this.onViewLpageListHighlightCommand(record, list, index);
 		
 		// console.log(index);
-		if(view._items.items[2]._store._storeId === 'Vendor'){
+		if((view._items.items[2]._store._storeId === 'Vendor') | (SeaGrant_Proto.infowindowFlag === 1)){
 			// Store is populated with items from selected vendor
 			// console.log(index.data.products.length);
 			for(i = 0; i < index.data.products.length; i++){
@@ -646,10 +718,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			SeaGrant_Proto.path[SeaGrant_Proto.pcount] = 'detail';
 			SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
         	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
-			Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
+        	Ext.Viewport.animateActiveItem(detailView, this.slideLeftTransition);
 		}
-		if(view._items.items[2]._store._storeId === 'ProductList'){
-			// console.log('going to productdetailView');
+		if((view._items.items[2]._store._storeId === 'ProductList') && (SeaGrant_Proto.infowindowFlag !== 1)){
+			console.log('going to productdetailView');
 			// console.log(index);
 			for(i = 0; i < index.data.vendors.length; i++){
 				var newpro = {
@@ -674,7 +746,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			SeaGrant_Proto.pvalue[SeaGrant_Proto.pcount] = index;
         	SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
 			Ext.Viewport.animateActiveItem(productdetailView, this.slideLeftTransition);
-		}		
+		}
+		console.log(index);
+		//
+		SeaGrant_Proto.infowindowFlag = 0;		
 	},
 	// Functions dealing with 
 	// DETAIL
@@ -851,6 +926,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		SeaGrant_Proto.backFlag = 0;
 		SeaGrant_Proto.use = 1;
 		SeaGrant_Proto.use2 = 1;
+		SeaGrant_Proto.infowindowFlag = 0;
 		// console.log("init");
 	}
 });
