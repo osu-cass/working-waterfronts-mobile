@@ -9,7 +9,8 @@ Ext.define('SeaGrant_Proto.model.Locations', {
             'Latlng',
             'id',
             'address',
-            'desc'
+            'desc',
+            'name'
         ]
     }
 });
