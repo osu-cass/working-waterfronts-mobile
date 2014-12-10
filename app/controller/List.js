@@ -100,59 +100,18 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		console.log('In controller(home): Drop Down list Location');
 		// var loc = this.getHomeView();
 		// console.log(record);
-		SeaGrant_Proto.location = record._value.data.title;
+		SeaGrant_Proto.location = record._value.data.name;
 		console.log('Location is: '+ SeaGrant_Proto.location +'\n'); 
+            
 		// ALL FILTERS ONLY TAKE STRINGS, NONE WORK WITH VARABLES
 		// THAT ARE SELECED USING DROP DOWN TABLES, EVEN TOSTRING()
 		// FUNCTION WILL NOT WORK
-		var store = Ext.data.StoreManager.lookup('Vendor');
-		var pstore = Ext.data.StoreManager.lookup('ProductList');
-		// OLD DATA THAT WORKED TO FILTER BY LOCATION ONLY
-		// var locationfilter = new Ext.util.Filter({
-		// 	filterFn: function(item, record){
-		// 		return item.get('city') === SeaGrant_Proto.location;
-		// 	},
-		// 	root: 'data'
-		// });
-		// store.clearFilter(); // this is the fix
-		// store.filter(locationfilter); //now it works
-		var len = store.data.all.length;
-		if(SeaGrant_Proto.location !== 'Please choose a location'){
-			var locationfilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					return item.get('city') === SeaGrant_Proto.location;
-				},
-				root: 'data'
-			});
-			store.clearFilter(); // this is the fix
-			store.filter(locationfilter); //now it works
-		}else{
-			store.clearFilter();
-		}
-		var view = this.getListView();
-		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			SeaGrant_Proto.use2 = 0;
-			// view.down('list').setStore(pstore);
-			var prodFilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products
-						// console.log(b+'  '+item.data.products[b].name);
-						if(item.data.products[b].name === SeaGrant_Proto.product){ // returns true for vendors with selected product
-							return item.data.products[b].name === SeaGrant_Proto.product;
-						}
-					}				
-				},
-				root: 'data'
-			});
-			store.filter(prodFilter);			
-			this.populatePstore(store, pstore);
-		}else{
-			// console.log('vendor store set');
-			// view.down('list').setStore(store);
-			SeaGrant_Proto.use2 = 1;
-		}
-		
-		this.numberOfVendors(store);
+		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+		var productStore = Ext.data.StoreManager.lookup('ProductList');
+
+            this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+
+		this.numberOfVendors(vendorStore);
 
 		var vendcount;
 		// console.log(vendcount);
@@ -163,7 +122,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			if(SeaGrant_Proto.location === 'Please choose a location'){
 					vendcount = {
 						th: 'There are ',
-						numItems: store.getCount(),
+						numItems: vendorStore.getCount(),
 						v: ' vendors ',
 						w: ' with ',
 						prod: SeaGrant_Proto.product,
@@ -174,7 +133,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					// console.log('Prod ok');
 					vendcount = {
 						th: 'There are ',
-						numItems: store.getCount(),
+						numItems: vendorStore.getCount(),
 						v: ' vendors ',
 						i: 'in ',
 						loc: SeaGrant_Proto.location,
@@ -186,7 +145,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					// console.log('Prod is horid');
 					vendcount = {
 						th: 'There are ',
-						numItems: store.getCount(),
+						numItems: vendorStore.getCount(),
 						v: ' vendors ',
 						i: 'in ',
 						loc: SeaGrant_Proto.location,
@@ -205,48 +164,13 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log(record);
 		console.log('Product is: '+ record._value.data.name +'\n'); 
 		SeaGrant_Proto.product = record._value.data.name;
-		var store = Ext.data.StoreManager.lookup('Vendor');
-		var pstore = Ext.data.StoreManager.lookup('ProductList');
+		var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+		var productStore = Ext.data.StoreManager.lookup('ProductList');
 		// console.log(store.data.all);
-		var len = store.data.all.length;
 		// console.log(store);
-		if(SeaGrant_Proto.location !== 'Please choose a location'){			
-			// console.log('IN LOC FILTER');
-			var locationfilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					return item.get('city') === SeaGrant_Proto.location;
-				},
-				root: 'data'
-			});
-			store.clearFilter();
-			store.filter(locationfilter);
-		}else{
-			
-			store.clearFilter();
-		}
-		var view = this.getListView();
-		if(SeaGrant_Proto.product !== 'Please choose a product'){
-			SeaGrant_Proto.use = 0;
-			// view.down('list').setStore(pstore);
-			var prodFilter = new Ext.util.Filter({
-				filterFn: function(item, record){
-					for(b = 0; b < item.data.products.length; b++){ // cycles through the vendor's products// console.log(b+'  '+item.data.products[b].name);
-						if(item.data.products[b].name === SeaGrant_Proto.product){ // returns true for vendors with selected product
-							return item.data.products[b].name === SeaGrant_Proto.product;
-						}
-					}				
-				},
-				root: 'data'
-			});
-			store.filter(prodFilter);
-			this.populatePstore(store, pstore);
-		}else{
-			// console.log('vendor store set');
-			// view.down('list').setStore(store);
-			SeaGrant_Proto.use = 1;
-		}
 
-		this.numberOfVendors(store);
+            this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+		this.numberOfVendors(vendorStore);
 
 		var homeView = this.getHomeView();
 		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
@@ -256,7 +180,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 			if(SeaGrant_Proto.product === 'Please choose a product'){
 					vendcount = {
 						th: 'There are ',
-						numItems: store.getCount(),
+						numItems: vendorStore.getCount(),
 						v: ' vendors ',
 						i: 'in ',
 						loc: SeaGrant_Proto.location,
@@ -267,7 +191,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					console.log('Prod ok');
 					vendcount = {
 						th: 'There are ',
-						numItems: store.getCount(),
+						numItems: vendorStore.getCount(),
 						v: ' vendors ',
 						i: 'in ',
 						loc: SeaGrant_Proto.location,
@@ -279,7 +203,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					console.log('Prod is horid');
 					vendcount = {
 						th: 'There are ',
-						numItems: store.getCount(),
+						numItems: vendorStore.getCount(),
 						v: ' vendors ',
 						w: ' with ',
 						prod: SeaGrant_Proto.product,
@@ -420,6 +344,55 @@ Ext.define('SeaGrant_Proto.controller.List', {
         SeaGrant_Proto.pcount = ++SeaGrant_Proto.pcount;
         Ext.Viewport.animateActiveItem(this.getListView(), this.slideLeftTransition);
 	},
+
+    // Home Screen Helper Functions
+
+    filterVendorStore: function(selectedLocationName, selectedProductName) {
+        
+        //Function Variables
+        var self = this;
+        var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+        var criteria;
+
+        vendorStore.clearFilter();
+
+        criteria = new Ext.util.Filter({
+            filterFn: function(item){
+                return (self.matchesLocation(item, selectedLocationName)) && (self.matchesProduct(item, selectedProductName));
+            },
+            root: 'data'
+        });
+
+        vendorStore.filter(criteria);
+
+        console.log("--- filterVendorStore results: ---");
+        console.log("selectedLocationName: " + selectedLocationName);
+        console.log("Vendor Store State:");
+        console.log(vendorStore);
+        console.log(vendorStore.getCount());
+        console.log(vendorStore.getAllCount());
+
+    },
+
+    matchesLocation: function(storeItem, comparator){
+        if (comparator !== "Please choose a location"){
+            return storeItem.get('city') === comparator;
+        }else{
+            return true;
+        }
+    },
+    matchesProduct: function(storeItem, comparator){
+        if (comparator !== "Please choose a product"){
+            for(b = 0; b < storeItem.data.products.length; b++){
+		if(storeItem.data.products[b].name === comparator){
+		    return true;
+		}
+	    }
+	    return false;
+        }else{
+            return true;
+        }
+    },
 	// Functions dealing with 
 	// LIST
 	// stuff	######################################################################################	LIST
@@ -917,6 +890,8 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	launch: function(){
 		this.callParent(arguments);
 		// console.log("launch");
+
+
 	},
 	init: function(){
 		this.callParent(arguments);

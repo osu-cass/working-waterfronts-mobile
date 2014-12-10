@@ -10,8 +10,8 @@ Ext.define('SeaGrant_Proto.store.Product', {
                         id: 0
                     }
                 ]);
-                console.log("Product Store: autoload result records:");
-                console.log(records);
+                //console.log("Product Store: autoload result records:");
+                //console.log(records);
             }
         },
 	proxy: {
