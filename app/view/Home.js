@@ -44,7 +44,7 @@ Ext.define('SeaGrant_Proto.view.Home', {
 						displayField: 'name',
 						store: 'Location',
                             value: "Loading, please wait...",
-						 valueField: 'id'
+						 valueField: 'location'
 					},
 	                {
 						xtype: 'selectfield',			
