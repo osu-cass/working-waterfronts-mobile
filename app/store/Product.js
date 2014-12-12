@@ -4,14 +4,15 @@ Ext.define('SeaGrant_Proto.store.Product', {
 	model: 'SeaGrant_Proto.model.Products',
 	autoLoad: {
             callback: function(records, operation, success) {
-                Ext.getStore('Product').insert( 0, [
+                var productStore = Ext.getStore('Product');
+                productStore.insert( 0, [
                     {
                         name: "Please choose a product",
-                        id: 0
                     }
                 ]);
-                //console.log("Product Store: autoload result records:");
-                //console.log(records);
+                console.log("Product Store: autoload result records:");
+                console.log(productStore.data);
+                productStore.fireEvent('refresh');
             }
         },
 	proxy: {

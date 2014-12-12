@@ -4,14 +4,17 @@ Ext.define('SeaGrant_Proto.store.Location', {
 	model: 'SeaGrant_Proto.model.Locations',
 	autoLoad: {
             callback: function(records, operation, success) {
-                Ext.getStore('Location').insert( 0, [
+                var locationStore = Ext.getStore('Location');
+                var locationIndex = locationStore.data.length;
+                locationStore.insert( 0, 
                     {
                         name: "Please choose a location",
-                        id: 0
+                        location: locationIndex
                     }
-                ]);
+                );
                 //console.log("Location Store: autoload result records:");
-                //console.log(records);
+                //console.log(locationStore.data);
+                locationStore.fireEvent('refresh');
             }
         },
 	proxy: {

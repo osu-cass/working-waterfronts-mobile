@@ -364,14 +364,6 @@ Ext.define('SeaGrant_Proto.controller.List', {
         });
 
         vendorStore.filter(criteria);
-
-        console.log("--- filterVendorStore results: ---");
-        console.log("selectedLocationName: " + selectedLocationName);
-        console.log("Vendor Store State:");
-        console.log(vendorStore);
-        console.log(vendorStore.getCount());
-        console.log(vendorStore.getAllCount());
-
     },
 
     matchesLocation: function(storeItem, comparator){
@@ -890,9 +882,17 @@ Ext.define('SeaGrant_Proto.controller.List', {
 	launch: function(){
 		this.callParent(arguments);
 		// console.log("launch");
-
-
+            Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
+            Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
 	},
+    onLocationStoreRefresh: function(){
+        console.log("Location store data has changed, selectfield should be updated.");
+        this.getHomeView().down('[itemId=selectlocation]').reset();
+    },
+    onProductStoreRefresh: function (){
+        console.log("Product store data has changed, selectfield should be updated.");
+        this.getHomeView().down('[itemId=selectproduct]').reset();
+    },
 	init: function(){
 		this.callParent(arguments);
 		SeaGrant_Proto.pvalue = [];
