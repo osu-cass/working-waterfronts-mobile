@@ -110,52 +110,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
             this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
-
-		this.numberOfVendors(vendorStore);
-
-		var vendcount;
-		// console.log(vendcount);
-		var homeView = this.getHomeView();
-		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
-		// This defines how the tpl data is printed out given the drop down table states
-		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
-			if(SeaGrant_Proto.location === 'Please choose a location'){
-					vendcount = {
-						th: 'There are ',
-						numItems: vendorStore.getCount(),
-						v: ' vendors ',
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-			}else{
-				if (SeaGrant_Proto.product !== 'Please choose a product'){
-					// console.log('Prod ok');
-					vendcount = {
-						th: 'There are ',
-						numItems: vendorStore.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-				}else{
-					// console.log('Prod is horid');
-					vendcount = {
-						th: 'There are ',
-						numItems: vendorStore.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						end: '.'			
-					};
-				}
-			}			
-		}
-		crud.setData(vendcount); // needed to display tpl data on home view
-		Ext.Viewport.setActiveItem(homeView);
+	    this.numberOfVendors(vendorStore);
+	    var homeView = this.getHomeView();
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto));
+	    //Ext.Viewport.setActiveItem(homeView);
 	},
 	onChooseProduct: function(index, record){
 		// We first check to see if a location is chosen, if one is we sort by locataion,
@@ -170,51 +128,10 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log(store);
 
             this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
-		this.numberOfVendors(vendorStore);
-
-		var homeView = this.getHomeView();
-		var crud = homeView.getComponent('vendnum'); // gets our display item in from the home page
-		var vendcount;
-		// This defines how the tpl data is printed out given the drop down table states
-		if ((SeaGrant_Proto.location !== 'Please choose a location') || (SeaGrant_Proto.product !== 'Please choose a product')){
-			if(SeaGrant_Proto.product === 'Please choose a product'){
-					vendcount = {
-						th: 'There are ',
-						numItems: vendorStore.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						end: '.'			
-					};
-			}else{
-				if(SeaGrant_Proto.location !== 'Please choose a location'){
-					console.log('Prod ok');
-					vendcount = {
-						th: 'There are ',
-						numItems: vendorStore.getCount(),
-						v: ' vendors ',
-						i: 'in ',
-						loc: SeaGrant_Proto.location,
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-				}else{
-					console.log('Prod is horid');
-					vendcount = {
-						th: 'There are ',
-						numItems: vendorStore.getCount(),
-						v: ' vendors ',
-						w: ' with ',
-						prod: SeaGrant_Proto.product,
-						end: '.'			
-					};
-				}
-			}
-			
-		}
-		crud.setData(vendcount); // needed to display tpl data on home view
-		Ext.Viewport.setActiveItem(homeView);
+	    this.numberOfVendors(vendorStore);
+	    var homeView = this.getHomeView();
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto));            
+	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
 		// NEEDED TO SET MAP MARKERS IN ONGOBUTTONCOMMAND
@@ -384,6 +301,36 @@ Ext.define('SeaGrant_Proto.controller.List', {
         }else{
             return true;
         }
+    },
+    buildInventorySummary: function(sourceObject){
+
+        var vendors = Ext.data.StoreManager.lookup('Vendor');
+
+        console.log("inside buildInventorySummary");
+        var summary = {
+            th: "There are ",
+            numItems: vendors.getCount(),
+            v: " vendors ",
+            i: "in ",
+            loc: "the database",
+            end: "."
+        };
+        
+        // Location/City is specified:
+        // "There are <number> vendors near <location>."
+        if (sourceObject.location !== "Please choose a location"){
+            summary.i = "near ";
+            summary.loc = sourceObject.location;
+        }
+
+        // Product is specified:
+        // "There are <number> vendors ... with <product>."
+        if (sourceObject.product !== "Please choose a product"){
+            summary.w = " with ";
+            summary.prod = SeaGrant_Proto.product;
+        }
+
+        return summary;
     },
 	// Functions dealing with 
 	// LIST
