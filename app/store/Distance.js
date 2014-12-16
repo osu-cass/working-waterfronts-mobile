@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.store.Distance', {
+Ext.define('WorkingWaterfronts.store.Distance', {
 	extend: 'Ext.data.Store',
 	config: {
 		data: [
