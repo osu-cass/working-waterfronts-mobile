@@ -1,12 +1,12 @@
-describe('SeaGrant_Proto.store.Education',function() {
+describe('WorkingWaterfronts.store.Education',function() {
 
-    // Ext.require('SeaGrant_Proto.store.Distance');
+    // Ext.require('WorkingWaterfronts.store.Distance');
 
     var store;
  
     beforeEach(function() {
 	jasmine.Ajax.install();
-	store = Ext.create('SeaGrant_Proto.store.Education');
+	store = Ext.create('WorkingWaterfronts.store.Education');
     });
 
     afterEach(function() {
@@ -15,7 +15,7 @@ describe('SeaGrant_Proto.store.Education',function() {
     });
 
     it('exists', function() {
-        expect(store.$className).toEqual('SeaGrant_Proto.store.Education');
+        expect(store.$className).toEqual('WorkingWaterfronts.store.Education');
     });
 
     it('Is populated with education data', function(){

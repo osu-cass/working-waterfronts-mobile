@@ -1,4 +1,4 @@
-describe('SeaGrant_Proto.model.Locations', function() {
+describe('WorkingWaterfronts.model.Locations', function() {
 
     var model;
 
@@ -13,13 +13,13 @@ describe('SeaGrant_Proto.model.Locations', function() {
     });
 
     it('exists', function() {
-        model = Ext.create('SeaGrant_Proto.model.Locations');
-        expect(model.$className).toEqual('SeaGrant_Proto.model.Locations');
+        model = Ext.create('WorkingWaterfronts.model.Locations');
+        expect(model.$className).toEqual('WorkingWaterfronts.model.Locations');
     });
 
     it('stores profile data on locations', function() {
         //Test model fields
-        model = Ext.create('SeaGrant_Proto.model.Locations',{
+        model = Ext.create('WorkingWaterfronts.model.Locations',{
            title: 'Test',
            text: 'test',
            value: 1,

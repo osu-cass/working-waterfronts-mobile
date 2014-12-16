@@ -1,7 +1,7 @@
-Ext.define('SeaGrant_Proto.store.Location', {
+Ext.define('WorkingWaterfronts.store.Location', {
     extend: 'Ext.data.Store',
     config: {
-	model: 'SeaGrant_Proto.model.Locations',
+	model: 'WorkingWaterfronts.model.Locations',
 	autoLoad: {
             callback: function(records, operation, success) {
                 var locationStore = Ext.getStore('Location');

@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.store.Education', {
+Ext.define('WorkingWaterfronts.store.Education', {
 	extend: 'Ext.data.Store',
 	config: {
 		data: [

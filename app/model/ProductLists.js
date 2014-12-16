@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.model.ProductLists', {
+Ext.define('WorkingWaterfronts.model.ProductLists', {
     extend: 'Ext.data.Model',
     config: {
         fields:[

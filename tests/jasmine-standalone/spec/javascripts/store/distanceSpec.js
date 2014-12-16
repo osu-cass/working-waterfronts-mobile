@@ -1,12 +1,12 @@
-describe('SeaGrant_Proto.store.Distance',function() {
+describe('WorkingWaterfronts.store.Distance',function() {
 
-    // Ext.require('SeaGrant_Proto.store.Distance');
+    // Ext.require('WorkingWaterfronts.store.Distance');
 
     var store;
  
     beforeEach(function() {
 	jasmine.Ajax.install();
-	store = Ext.create('SeaGrant_Proto.store.Distance');
+	store = Ext.create('WorkingWaterfronts.store.Distance');
     });
 
     afterEach(function() {
@@ -15,7 +15,7 @@ describe('SeaGrant_Proto.store.Distance',function() {
     });
 
     it('exists', function() {
-        expect(store.$className).toEqual('SeaGrant_Proto.store.Distance');
+        expect(store.$className).toEqual('WorkingWaterfronts.store.Distance');
     });
 
     it('Is populated with distance data', function(){

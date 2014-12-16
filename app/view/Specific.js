@@ -1,4 +1,4 @@
-Ext.define('SeaGrant_Proto.view.Specific', {
+Ext.define('WorkingWaterfronts.view.Specific', {
 	extend: 'Ext.form.Panel',
     fullscreen: true,
     xtype: 'Specific',
