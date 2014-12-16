@@ -112,7 +112,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
             this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
 	    this.numberOfVendors(vendorStore);
 	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto));
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));
 	    //Ext.Viewport.setActiveItem(homeView);
 	},
 	onChooseProduct: function(index, record){
@@ -130,7 +130,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
             this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
 	    this.numberOfVendors(vendorStore);
 	    var homeView = this.getHomeView();
-            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto));            
+            homeView.getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));       
 	    Ext.Viewport.setActiveItem(homeView);
 	},
 	numberOfVendors: function(store){
@@ -302,7 +302,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
             return true;
         }
     },
-    buildInventorySummary: function(sourceObject){
+    buildInventorySummary: function(locationString, productString){
 
         var vendors = Ext.data.StoreManager.lookup('Vendor');
 
@@ -318,16 +318,16 @@ Ext.define('SeaGrant_Proto.controller.List', {
         
         // Location/City is specified:
         // "There are <number> vendors near <location>."
-        if (sourceObject.location !== "Please choose a location"){
+        if (locationString !== "Please choose a location"){
             summary.i = "near ";
-            summary.loc = sourceObject.location;
+            summary.loc = locationString;
         }
 
         // Product is specified:
         // "There are <number> vendors ... with <product>."
-        if (sourceObject.product !== "Please choose a product"){
+        if (productString !== "Please choose a product"){
             summary.w = " with ";
-            summary.prod = SeaGrant_Proto.product;
+            summary.prod = productString;
         }
 
         return summary;
@@ -831,6 +831,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// console.log("launch");
             Ext.getStore('Location').addListener('refresh', 'onLocationStoreRefresh', this);
             Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
+            Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
 	},
     onLocationStoreRefresh: function(){
         console.log("Location store data has changed, selectfield should be updated.");
@@ -839,6 +840,12 @@ Ext.define('SeaGrant_Proto.controller.List', {
     onProductStoreRefresh: function (){
         console.log("Product store data has changed, selectfield should be updated.");
         this.getHomeView().down('[itemId=selectproduct]').reset();
+    },
+    onVendorStoreLoad: function(){
+        SeaGrant_Proto.location = "Please choose a location";
+        SeaGrant_Proto.product = "Please choose a product";
+        this.filterVendorStore(SeaGrant_Proto.location, SeaGrant_Proto.product);
+        this.getHomeView().getComponent('vendnum').setData(this.buildInventorySummary(SeaGrant_Proto.location, SeaGrant_Proto.product));
     },
 	init: function(){
 		this.callParent(arguments);
