@@ -110,7 +110,6 @@ Ext.define('WorkingWaterfronts.controller.List', {
 		var productStore = Ext.data.StoreManager.lookup('ProductList');
 
             this.filterVendorStore(WorkingWaterfronts.location, WorkingWaterfronts.product);
-	    this.numberOfVendors(vendorStore);
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WorkingWaterfronts.location, WorkingWaterfronts.product));
 	    //Ext.Viewport.setActiveItem(homeView);
@@ -128,7 +127,6 @@ Ext.define('WorkingWaterfronts.controller.List', {
 		// console.log(store);
 
             this.filterVendorStore(WorkingWaterfronts.location, WorkingWaterfronts.product);
-	    this.numberOfVendors(vendorStore);
 	    var homeView = this.getHomeView();
             homeView.getComponent('vendnum').setData(this.buildInventorySummary(WorkingWaterfronts.location, WorkingWaterfronts.product));       
 	    Ext.Viewport.setActiveItem(homeView);
@@ -228,17 +226,21 @@ Ext.define('WorkingWaterfronts.controller.List', {
 		var homeView = this.getHomeView();	
 		WorkingWaterfronts.iconImage = '/images/red.png';	
 		this.addMapMarkers();
-		setTimeout(function() {
-           WorkingWaterfronts.gMap.panTo(WorkingWaterfronts.cent[0]);
-           		WorkingWaterfronts.gMap.fitBounds(WorkingWaterfronts.bounds);
-           		// these statements make sure that our zoom is not to close or to far away from the marker
-           		if(WorkingWaterfronts.gMap.getZoom() > 15){
-					WorkingWaterfronts.gMap.setZoom(15);
-				}
-				if(WorkingWaterfronts.gMap.getZoom() < 6){
-					WorkingWaterfronts.gMap.setZoom(6);
-				}
-        }, 1000);
+	    setTimeout(function() {
+
+                console.log("Inside setTimeout(), looking at the cent array:");
+                console.log(WorkingWaterfronts.cent[0]);
+
+                WorkingWaterfronts.gMap.panTo(WorkingWaterfronts.cent[0]);
+           	WorkingWaterfronts.gMap.fitBounds(WorkingWaterfronts.bounds);
+           	// these statements make sure that our zoom is not to close or to far away from the marker
+           	if(WorkingWaterfronts.gMap.getZoom() > 15){
+		    WorkingWaterfronts.gMap.setZoom(15);
+		}
+		if(WorkingWaterfronts.gMap.getZoom() < 6){
+		    WorkingWaterfronts.gMap.setZoom(6);
+		}
+            }, 1000);
 		if(homeView.items.items[5].items.items[0]._checked === true){
 			view.down('list').setStore(store);
 		}
@@ -368,11 +370,12 @@ Ext.define('WorkingWaterfronts.controller.List', {
 		WorkingWaterfronts.marker = new Array();
 		WorkingWaterfronts.cent = new Array();
 		WorkingWaterfronts.bounds = new google.maps.LatLngBounds();
-		for (k = 0; k < WorkingWaterfronts.VstoreLength; k++){
-			lat = WorkingWaterfronts.Litem[k].lat;
-			// console.log(lat);
-			lng = WorkingWaterfronts.Litem[k].lng;
-			// console.log(lng);
+
+            var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+
+		for (k = 0; k < vendorStore.getCount(); k++){
+			lat = vendorStore.data.items[k].data.lat;
+			lng = vendorStore.data.items[k].data.lng;
 			WorkingWaterfronts.cent[k] = new google.maps.LatLng(lat, lng);
 			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
 			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
@@ -385,6 +388,8 @@ Ext.define('WorkingWaterfronts.controller.List', {
 	addAMapMarker: function(k, animation){
 		// I moved all of the code to create a single map marker with an infowindow and listener for that window
 		// out of the add map markers function in order to use it in the onViewLpageListHighlightCommand
+            var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+            
 		WorkingWaterfronts.marker[k] = new google.maps.Marker({
 				map: WorkingWaterfronts.gMap,
 				animation: animation,
@@ -396,8 +401,8 @@ Ext.define('WorkingWaterfronts.controller.List', {
 			});			
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	WorkingWaterfronts.marker[k].info = new google.maps.InfoWindow({
-        		content: '<button onclick=\"javascript:WorkingWaterfronts.infoClickSelf.onInfoWindowClick();\">'+ WorkingWaterfronts.Litem[k].name + '</button>',
-        		data: WorkingWaterfronts.Litem[k],
+        		content: '<button onclick=\"javascript:WorkingWaterfronts.infoClickSelf.onInfoWindowClick();\">'+ vendorStore.data.items[k].data.name + '</button>',
+        		data: vendorStore.data.items[k].data,
         		Lpos: k // used to index and highlight the correct list item
         	});
         	// NOW WE ADD AN ON CLICK EVENT LISTENER TO EACH MARKER
@@ -849,6 +854,8 @@ Ext.define('WorkingWaterfronts.controller.List', {
     },
 	init: function(){
 		this.callParent(arguments);
+
+            // Initializing UI globals
 		WorkingWaterfronts.pvalue = [];
 		WorkingWaterfronts.path = [];
 		WorkingWaterfronts.pcount = 0;
@@ -856,6 +863,7 @@ Ext.define('WorkingWaterfronts.controller.List', {
 		WorkingWaterfronts.use = 1;
 		WorkingWaterfronts.use2 = 1;
 		WorkingWaterfronts.infowindowFlag = 0;
+
 		// console.log("init");
 	}
 });
