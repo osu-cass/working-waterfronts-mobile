@@ -3,7 +3,6 @@
 	"predef": [
 		"window",
 		"jasmine","describe","it","expect","beforeEach","afterEach",
-		"Ext",
 		"TestData","Helper"
 	]
 }
