@@ -18,16 +18,9 @@ describe('WorkingWaterfronts.model.Locations', function() {
 	});
 
 	it('stores profile data on locations', function() {
-
-		// test_data.js
-		data = MOCK_LocationArray[0];
-
+		var data = TestData.LocationArray[0];
 		model = Ext.create('WorkingWaterfronts.model.Locations', data);
-
-		for (var k in data) {
-			// For every key in 'data', ensure the model has a matching field.
-			expect(model.get(k)).toEqual(data[k]);
-		}
+		Helper.compareModelToDefinition(data, model);
 	});
 
 });
