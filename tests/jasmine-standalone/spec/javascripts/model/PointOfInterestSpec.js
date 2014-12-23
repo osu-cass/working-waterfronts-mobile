@@ -13,7 +13,7 @@ describe('WorkingWaterfronts.model.PointOfInterest', function () {
 		model = model.destroy();
 	});
 
-	it('can be created without throwing a tantrum', function () {
+	it('can be created', function () {
 		function createNew () { model = Ext.create('WorkingWaterfronts.model.PointOfInterest'); }
 		expect(createNew).not.toThrow();
 	});
@@ -34,17 +34,6 @@ describe('WorkingWaterfronts.model.PointOfInterest', function () {
 			// For every key in 'data', ensure the model has a matching field.
 			expect(model.get(k)).toEqual(data[k]);
 		}
-	});
-
-	it('does not save other information', function () {
-
-		data = {
-			fish	: 'I\'m a fish.'
-		};
-
-		model = Ext.create('WorkingWaterfronts.model.PointOfInterest', data);
-
-		expect(model.get('fish')).not.toBeDefined();
 	});
 
 });
