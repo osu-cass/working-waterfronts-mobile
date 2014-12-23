@@ -26,28 +26,7 @@ describe('WorkingWaterfronts.model.PointOfInterest', function () {
 	it('saves the same info as provided by the API', function () {
 
 		// todo: not verified against docs yet
-		data = {
-			name					: 'The Gates of Hell',
-			description 			: '',
-			// contact
-			email 					: '',
-			website					: '',
-			phone					: '',
-			contact_name			: '',
-			// location
-			street					: '',
-			city					: '',
-			state					: '',
-			zip						: '',
-			lat						: 44.7889,
-			lng						: 666,
-			location_description	: '',
-			// meta
-			created					: Date.now(),
-			updated					: Date.now(),
-			ext						: '',
-			id						: 1
-		};
+		data = MOCK_PointOfInterestArray[0];
 
 		model = Ext.create('WorkingWaterfronts.model.PointOfInterest', data);
 
