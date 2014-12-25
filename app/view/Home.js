@@ -13,40 +13,25 @@ Ext.define('WorkingWaterfronts.view.Home', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'CHANGE ME',
+				title: 'Working Waterfronts',
 				itemId: 'homePageToolbar',
 				docked: 'top'
 			},
 			{
-				xtype: 'panel',
-				itemId: 'homePageText',
-				items: [
-				{
-					xtype: 'panel',
-					itemId: 'searchTotalTpl',
-					// todo: update template
-					data: {
-						total: 4,
-						where: 'in Newport',
-						messages: {
-							everywhere: 'on the Oregon Coast',
-							inCity: 'in {0}'
-						}
-					},
-					tpl: '</pre><div class="searchTotal">There are {total} places to see {where}.</div><pre>'
+				xtype: 'fieldset',
+				itemId: 'searchSummaryTpl',
+				data: {
+					total		: '...',
+					city		: '...',
+					distance	: '...',
+					tpls: {
+						everywhere	: '<div class="searchTotal">There are {total} places to see on the Oregon coast.</div>',
+						city		: '<div class="searchTotal">There are {total} places to see in {city}.</div>',
+						nearby		: '<div class="searchTotal">There are {total} places to see within {distance} miles.</div>',
+						nowhere		: '<div class="searchTotal">There are {total} places to see in {city}.</div>'
+					}
 				},
-				{
-					xtype: 'panel',
-					itemId: 'noResultsTpl',
-					data: undefined,
-					tpl: '</pre><div class="noResults">There are no matching locations.</div><pre>'
-				},
-				{
-					xtype: 'panel',
-					itemId: 'errorTpl',
-					data: undefined,
-					tpl: '</pre><div class="error">Unable to load data.<br>Check internet connection.</div><pre>'
-				}]
+				tpl: '<div class="searchTotal">Please wait...</div>',
 			},
 			{
 				xtype: 'fieldset',
@@ -60,9 +45,10 @@ Ext.define('WorkingWaterfronts.view.Home', {
 				},
 				{
 					xtype: 'selectfield',
-					itemId: 'distance',
-					label: 'within',
+					itemId: 'selectdistance',
+					label: 'Range',
 					labelWrap: true,
+					disabled: true,
 					displayField: 'distance',
 					store: 'Distance',
 					valueField: 'id'
@@ -114,9 +100,9 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			}
 		]
 	},
-	onUseLocation: function (toggle) {
-		console.log('setUseLocation', toggle.getValue());
-		this.fireEvent('setUseLocation', this, toggle);
+	onUseLocation: function (toggle, newVal, oldVal, eOpts) {
+		console.log('setUseLocation', newVal);
+		this.fireEvent('setUseLocation', this, toggle, newVal, oldVal, eOpts);
 	},
 	onDistance: function (record) {
 		console.log('setDistance', record.record.data.distance);

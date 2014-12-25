@@ -14,22 +14,25 @@ Ext.Loader.setConfig({
 	enabled:true,
 	disableCaching: false,
 	paths: {
-		Ext: 'touch/src'
+		Ext: './touch/src',
+		WorkingWaterfronts: './app'
 	}
 });
 
 Ext.application({
 	name: 'WorkingWaterfronts',
 
-	controllers: [],
+	controllers: ['Home'],
 	models: ['Vendors', 'Locations', 'PointsOfInterest'],
 	stores: ['Vendor', 'Location', 'Distance', 'PointOfInterest'],
 	views: ['Home', 'ListView', 'Map'],
+
+	// utils: SearchOptions,
 
 	launch: function() {
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Home'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Map'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.ListView'));
 		// todo: add detail for point view
-	}
+	},
 });
