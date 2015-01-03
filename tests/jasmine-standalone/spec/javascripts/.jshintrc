@@ -1,7 +1,7 @@
 {
 	"extends": "../../../../.jshintrc",
 	"predef": [
-		"window",
+		"window", "Ext",
 		"jasmine","describe","it","expect","beforeEach","afterEach",
 		"TestData","Helper"
 	]

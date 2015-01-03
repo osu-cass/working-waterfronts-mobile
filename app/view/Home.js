@@ -28,7 +28,7 @@ Ext.define('WorkingWaterfronts.view.Home', {
 						everywhere	: '<div class="searchTotal">There are {total} places to see on the Oregon coast.</div>',
 						city		: '<div class="searchTotal">There are {total} places to see in {city}.</div>',
 						nearby		: '<div class="searchTotal">There are {total} places to see within {distance} miles.</div>',
-						nowhere		: '<div class="searchTotal">There are {total} places to see in {city}.</div>'
+						nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
 					}
 				},
 				tpl: '<div class="searchTotal">Please wait...</div>',
@@ -79,41 +79,44 @@ Ext.define('WorkingWaterfronts.view.Home', {
 		],
 		listeners: [
 			{
-				delegate: '#userlocation',
-				event: 'change',
-				fn: 'onUseLocation'
+				delegate	: '#userlocation',
+				event		: 'change',
+				fn			: 'onSetUseLocation'
 			},
 			{
-				delegate: '#distance',
-				event: 'change',
-				fn: 'onDistance'
+				delegate	: '#selectdistance',
+				event		: 'change',
+				fn			: 'onSelectDistance'
 			},
 			{
-				delegate: '#selectlocation',
-				event: 'change',
-				fn: 'onSelectLocation'
+				delegate	: '#selectlocation',
+				event		: 'change',
+				fn			: 'onSelectLocation'
 			},
 			{
-				delegate: '#goButton',
-				event: 'tap',
-				fn: 'onGoButtonTap'
+				delegate	: '#goButton',
+				event		: 'tap',
+				fn			: 'onGoButtonTap'
 			}
 		]
 	},
-	onUseLocation: function (toggle, newVal, oldVal, eOpts) {
-		console.log('setUseLocation', newVal);
-		this.fireEvent('setUseLocation', this, toggle, newVal, oldVal, eOpts);
+
+	/* jshint unused:false */
+
+	onSetUseLocation: function (toggle, newVal, oldVal, eOpts) {
+		// triggers controller event with 1 or 0
+		this.fireEvent('setUseLocation', newVal);
 	},
-	onDistance: function (record) {
-		console.log('setDistance', record.record.data.distance);
-		this.fireEvent('setDistance', this, record);
+
+	onSelectDistance: function (select, newVal, oldVal, eOpts) {
+		this.fireEvent('onAny');
 	},
-	onSelectLocation: function (record) {
-		console.log('chosenLocation', record.record.data.name);
-		this.fireEvent('chosenLocation', this, record);
+
+	onSelectLocation: function (select, newVal, oldVal, eOpts) {
+		this.fireEvent('onAny');
 	},
+
 	onGoButtonTap: function () {
-		console.log('viewGoCommand');
 		this.fireEvent('viewGoCommand');
 	}
 });
