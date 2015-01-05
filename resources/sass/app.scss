@@ -92,3 +92,17 @@ div.gm-style-iw{
 
 // Examples of using the icon mixin:
 // @include icon('user');
+
+// Home View Styles
+div.searchTotal {
+	text-align: center;
+}
+
+div.noResults {
+	text-align: center;
+}
+
+div.error {
+	text-align: center;
+	color: red;
+}

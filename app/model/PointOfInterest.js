@@ -1,7 +1,7 @@
 Ext.define('WorkingWaterfronts.model.PointsOfInterest', {
 	extend: 'Ext.data.Model',
 	config: {
-		fields:[
+		fields: [
 			{ name: 'name',			type: 'string' },
 			{ name: 'description',	type: 'string' },
 
@@ -20,8 +20,7 @@ Ext.define('WorkingWaterfronts.model.PointsOfInterest', {
 
 			{ name: 'created',		type: 'datetime' },
 			{ name: 'updated',		type: 'datetime' },
-			{ name: 'ext',			type: 'string' },
-			{ name: 'id',			type: 'number' }
+			{ name: 'ext',			type: 'string' }
 		]
 	}
 });
