@@ -9,12 +9,13 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 	],
 	config: {
 		refs: {
-			homeView			: 'home',
-			useLocationToggle	: '#userlocation',
-			distanceSelect		: '#selectdistance',
-			locationSelect		: '#selectlocation',
-			goButton			: '#goButton',
-			searchSummaryTpl	: '#searchSummaryTpl'
+			homeView			: 'HomeView',
+			listView			: 'MapListView',
+			useLocationToggle	: 'HomeView #userlocation',
+			distanceSelect		: 'HomeView #selectdistance',
+			locationSelect		: 'HomeView #selectlocation',
+			goButton			: 'HomeView #goButton',
+			searchSummaryTpl	: 'HomeView #searchSummaryTpl'
 		},
 		control: {
 			homeView: {
@@ -23,14 +24,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 				viewGoCommand	: 'onViewGoCommand'
 			}
 		}
-	},
-	slideLeftTransition: {
-		type		: 'slide',
-		direction	: 'left'
-	},
-	slideRightTransition: {
-		type		: 'slide',
-		direction	: 'right'
 	},
 
 	/* ------------------------------------------------------------------------
@@ -56,7 +49,11 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 	},
 
 	onViewGoCommand: function () {
-		console.log('Controller sees go button.');
+		var ctrl = this;
+		ctrl.onAny(); // promise an updated list
+		var transition = ctrl.getHomeView().transitions.forward;
+		Ext.Viewport.animateActiveItem(ctrl.getListView(), transition);
+
 	},
 
 	/* ------------------------------------------------------------------------
