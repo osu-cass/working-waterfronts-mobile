@@ -23,12 +23,11 @@ Ext.application({
 	name		: 'WorkingWaterfronts',
 	models		: ['Locations', 'PointsOfInterest'],
 	stores		: ['Location', 'Distance', 'PointOfInterest'],
-	views		: ['Home', 'Map', 'MapList'],
+	views		: ['Home', 'MapList'],
 	controllers	: ['Home', 'MapList'],
 
 	launch: function() {
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Home'));
-		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Map'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.MapList'));
 		// todo: add detail for point view
 	},

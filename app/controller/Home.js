@@ -53,7 +53,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		ctrl.onAny(); // promise an updated list
 		var transition = ctrl.getHomeView().transitions.forward;
 		Ext.Viewport.animateActiveItem(ctrl.getListView(), transition);
-
 	},
 
 	/* ------------------------------------------------------------------------
