@@ -15,7 +15,8 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 			distanceSelect		: 'HomeView #selectdistance',
 			locationSelect		: 'HomeView #selectlocation',
 			goButton			: 'HomeView #goButton',
-			searchSummaryTpl	: 'HomeView #searchSummaryTpl'
+			searchSummaryTpl	: 'HomeView #searchSummaryTpl',
+			mapList				: 'MapListView #maplist'
 		},
 		control: {
 			homeView: {
@@ -35,7 +36,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		if (toggleValue) {
 			// scope allows callback to use 'this' to get Home controller
 			Ext.device.Geolocation.watchPosition({
-			    frequency	: 3000,
+			    frequency	: 60000,
 			    scope		: homeCtrl,
 			    callback	: homeCtrl.onGeolocationWatchPosition,
 			    failure		: homeCtrl.onGeolocationWatchFailure,
@@ -52,6 +53,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		var ctrl = this;
 		ctrl.onAny(); // promise an updated list
 		var transition = ctrl.getHomeView().transitions.forward;
+		ctrl.getMapList().center();
 		Ext.Viewport.animateActiveItem(ctrl.getListView(), transition);
 	},
 

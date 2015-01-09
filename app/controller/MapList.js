@@ -8,7 +8,8 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 			homeView			: 'HomeView',
 			listView			: 'MapListView',
 			homeButton			: 'MapListView #homeButton',
-			poisList			: 'MapListView #poisList'
+			poisList			: 'MapListView #poisList',
+			mapList				: 'MapListView #maplist'
 		},
 		control: {
 			homeButton: {
@@ -22,54 +23,81 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 		}
 	},
 
+	launch: function () {
+		Ext.Viewport.on({
+			// see Map.js
+			'mapButton':	this.onMapButton
+		});
+	},
+
 	onGoHome: function () {
 		var ctrl = this;
 		var transition = ctrl.getListView().transitions.back;
 		Ext.Viewport.animateActiveItem(ctrl.getHomeView(), transition);
 	},
 
-	onListSingleTap: function () {
-		console.log('You touched the list.');
+	onListSingleTap: function (list, index) {
+		var markers = this.getMapList().markers;
+		google.maps.event.trigger(markers[index], 'click');
+	},
+
+	onMapButton: function (id) {
+		Ext.Msg.alert('id: ' + id);
 	},
 
 	onListDoubleTap: function () {
-		Ext.Msg.alert('Not ready for you yet, here!');
+		var ctrl = this;
+		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var currentSelection = ctrl.getPoisList().getSelection();
+		if (currentSelection && currentSelection.length) {
+			var index = store.indexOf(currentSelection[0]);
+			ctrl.onMapButton(index);
+		}
 	},
 
 	onListRefresh: function () {
-		var gMap		= WorkingWaterfronts.gMap;
-		var infowindow	= new google.maps.InfoWindow({
-			content: 'things',
-			disableAutoPan: false
-		});
-		var bounds		= new google.maps.LatLngBounds();
-		var testPoint	= new google.maps.LatLng(45, -123);
+		var ctrl = this;
+		var seagrantmap = this.getMapList();
+		// the List firing this event is bound in the view
+		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		// addPointsAndCenter requires this to work
+		// see: view/Map.js
+		var customMarkerArray = [];
+		var currentSelection = ctrl.getPoisList().getSelection();
+		// TODO keep current selection
+		// TODO reduce geolocation update time
 
-		var marker		= new google.maps.Marker({
-			map			: WorkingWaterfronts.gMap,
-			animation	: null,
-			// opacity	: opnum,
-			// zIndex	: google.maps.Marker.MAX_ZINDEX + 1,
-			icon		: '/images/red.png',
-			position	: testPoint,
-			clickable	: true
-		});
-		bounds.extend(testPoint);
+		function getClickFunction (record) {
+			return function () {
+				ctrl.getPoisList().select(record);
+			};
+		}
 
-		/*
-		Developers beware: this is async because Google Maps does something
-		internally that is also async. It leads to the first viewing of the
-		map centering in the top, left corner instead of the middle. 100ms
-		was tested on multiple throttling levels and works fine in Chrome.
-		*/
+		function commonCloseFunction () {
+			ctrl.getPoisList().deselectAll();
+		}
 
-		/* global setTimeout */
-		setTimeout(function () {
-			gMap.fitBounds(bounds);
-			gMap.panToBounds(bounds);
-        	if(gMap.getZoom() > 15) { gMap.setZoom(15); }
-			if(gMap.getZoom() < 6) { Map.setZoom(6); }
-		}, 100);
+		for (var i = 0; i < store.getCount(); i++) {
+			var poiRecord = store.getAt(i);
+			var markerData = {
+				lat		: poiRecord.get('lat'),
+				lng		: poiRecord.get('lng'),
+				id		: i,
+				text	: poiRecord.get('name'),
+				click	: getClickFunction(poiRecord),
+				close	: commonCloseFunction
+			};
+			customMarkerArray.push(markerData);
+		}
+
+		seagrantmap.addPoints(customMarkerArray);
+
+		if (currentSelection && currentSelection.length) {
+			var index = store.indexOf(currentSelection[0]);
+			if (index < 0) return;
+			ctrl.getPoisList().select(currentSelection[0]);
+			ctrl.onListSingleTap(ctrl.getPoisList(), index);
+		}
 
 	}
 

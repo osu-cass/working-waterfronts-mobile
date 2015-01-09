@@ -3,7 +3,8 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 	requires: [
 		'Ext.form.FieldSet',
 		'Ext.TabPanel',
-		'Ext.dataview.List'
+		'Ext.dataview.List',
+		'WorkingWaterfronts.view.Map'
 	],
 	xtype: 'MapListView',
 	//alias: 'widget.listview',
@@ -25,7 +26,7 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 			},
 			{
 				xtype: 'SeaGrantMap',
-				itemId: 'listmap'
+				itemId: 'maplist'
 			},
 			{
 				config: {
