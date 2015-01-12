@@ -3,13 +3,14 @@ Ext.define('WorkingWaterfronts.store.Location', {
     config: {
 	model: 'WorkingWaterfronts.model.Locations',
 	autoLoad: {
-            callback: function(records, operation, success) {
+            callback: function() {
                 var locationStore = Ext.getStore('Location');
                 var locationIndex = locationStore.data.length;
-                locationStore.insert( 0, 
+                locationStore.insert(0,
                     {
-                        name: "Please choose a location",
-                        location: locationIndex
+                        name: '-- Anywhere --',
+                        location: locationIndex,
+                        is_not_filterable: true,
                     }
                 );
                 //console.log("Location Store: autoload result records:");

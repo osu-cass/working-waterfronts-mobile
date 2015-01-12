@@ -1,5 +1,5 @@
-describe("Sanity", function() {
-    it("succeeds", function() {
+describe('Sanity', function() {
+    it('succeeds', function() {
         expect(true).toEqual(true);
     });
 });

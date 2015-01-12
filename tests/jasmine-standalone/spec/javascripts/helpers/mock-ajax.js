@@ -1,3 +1,5 @@
+/* jshint ignore: start */
+
 /*
 
 Jasmine-Ajax : a set of helpers for testing AJAX requests under the Jasmine
