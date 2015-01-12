@@ -7,6 +7,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 		refs: {
 			homeView			: 'HomeView',
 			listView			: 'MapListView',
+			poiView				: 'PointOfInterestView',
 			homeButton			: 'MapListView #homeButton',
 			poisList			: 'MapListView #poisList',
 			mapList				: 'MapListView #maplist'
@@ -42,7 +43,10 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 	},
 
 	onMapButton: function (id) {
+		var ctrl = this;
 		Ext.Msg.alert('id: ' + id);
+		var transition = ctrl.getListView().transitions.forward;
+		Ext.Viewport.animateActiveItem(ctrl.getPoiView(), transition);
 	},
 
 	onListDoubleTap: function () {

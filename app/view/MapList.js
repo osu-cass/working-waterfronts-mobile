@@ -7,7 +7,6 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 		'WorkingWaterfronts.view.Map'
 	],
 	xtype: 'MapListView',
-	//alias: 'widget.listview',
 	config: {
 		layout: 'fit',
 		items: [
