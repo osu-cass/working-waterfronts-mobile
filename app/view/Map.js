@@ -82,11 +82,26 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	markers: [],
 
 	addPoint: function (point, id, text, onClick, onClose) {
-		var self	= this;
-		var gMap	= self.map();
+		var view	= this;
+		var gMap	= view.map();
 		onClick		= onClick || function () {};
 
-		var html	= '<button onclick="Ext.Viewport.fireEvent(\'mapButton\',\''+id+'\')">' + text + '</button>';
+		/*
+		Developers:
+
+		This code defeats the scope issue created when a button
+		needs to call a private/anonyous function.
+
+		Ext.Viewport events are fired semi-globally, such that we can
+		reliably listen for them in the currently displayed view.
+
+		This event, mapButton, is listened for in the MapList.js controller,
+		as defined in the 'launch' function. Each button is told what
+		index, or id, to use when calling the event. This allows the
+		controller to know which item in the list to select.
+		 */
+		var html = '<button onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' +
+				id + '\')">' + text + '</button>';
 
 		var marker	= new google.maps.Marker({
 			map				: gMap,
@@ -102,14 +117,14 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			})
 		});
 
-		self.markers.push(marker);
+		view.markers.push(marker);
 
 		google.maps.event.addListener(marker, 'click', function () {
-			if (self.currentInfoWindow) {
-				self.currentInfoWindow.close();
+			if (view.currentInfoWindow) {
+				view.currentInfoWindow.close();
 			}
-			self.currentInfoWindow = marker.info;
-			self.currentInfoWindow.open(gMap, this);
+			view.currentInfoWindow = marker.info;
+			view.currentInfoWindow.open(gMap, this);
 			onClick();
 		});
 
@@ -118,11 +133,11 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	},
 
 	addPoints: function (customArray) {
-		var self = this;
-		for (var i = 0; i < self.markers.length; i++) {
-			self.markers[i].setMap(null);
+		var view = this;
+		for (var i = 0; i < view.markers.length; i++) {
+			view.markers[i].setMap(null);
 		}
-		self.markers = [];
+		view.markers = [];
 		for (var k = 0; k < customArray.length; k++) {
 			var lat		= customArray[k].lat;
 			var lng		= customArray[k].lng;
@@ -131,7 +146,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			var click	= customArray[k].click;
 			var close	= customArray[k].close;
 			var point	= new google.maps.LatLng(lat, lng);
-			self.addPoint(point, id, text, click, close);
+			view.addPoint(point, id, text, click, close);
 		}
 	}
 
