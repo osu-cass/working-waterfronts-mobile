@@ -9,7 +9,7 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 			listView			: 'MapListView',
 			poiView				: 'PointOfInterestView',
 			homeButton			: 'PointOfInterestView #homeButton',
-			listButton			: 'PointOfInterestView #listButton',
+			listButton			: 'PointOfInterestView #listButton'
 		},
 		control: {
 			homeButton: {

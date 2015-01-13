@@ -30,7 +30,7 @@ Ext.define('WorkingWaterfronts.view.Home', {
 						nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
 					}
 				},
-				tpl: '<div class="searchTotal">Please wait...</div>',
+				tpl: '<div class="searchTotal">Please wait...</div>'
 			},
 			{
 				xtype: 'fieldset',

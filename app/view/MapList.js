@@ -32,14 +32,14 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 					scrollable: {
 						direction: 'vertical',
 						directionLock: true
-					},
+					}
 				},
 				loadingText	: 'Please wait...',
 				emptyText	: 'Nothing matched your search.',
 				itemTpl		: '{name}',
 				store		: 'PointOfInterest',
 				xtype		: 'list',
-				itemId		: 'poisList',
+				itemId		: 'poisList'
 			}
 		]
 	},

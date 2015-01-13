@@ -39,7 +39,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 			    frequency	: 60000,
 			    scope		: homeCtrl,
 			    callback	: homeCtrl.onGeolocationWatchPosition,
-			    failure		: homeCtrl.onGeolocationWatchFailure,
+			    failure		: homeCtrl.onGeolocationWatchFailure
 			});
 		} else {
 			// toggle off == stop geolocation and clear position

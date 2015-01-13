@@ -31,5 +31,6 @@ Ext.application({
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.MapList'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.PointOfInterest'));
 		// todo: add detail for point view
-	},
+	}
+
 });
