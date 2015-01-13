@@ -13,24 +13,36 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 						ui: 'action',
 						iconCls: 'home',
 						itemId: 'homeButton'
+					},
+					{
+						xtype: 'button',
+						ui: 'action',
+						iconCls: 'arrow_left',
+						itemId: 'listButton'
 					}
 				]
 			},
 			{
-				xtype: 'fieldset',
-				name: 'name',
-				label: 'Name'
-			},
-			{
-				xtype: 'fieldset',
-				name: 'email',
-				label: 'Email'
-			},
-			{
-				xtype: 'fieldset',
-				name: 'password',
-				label: 'Password'
+				xtype: 'label',
+				itemId: 'infoText',
+				tpl:
+					'<div>' +
+						'<p>{name}</p>' +
+						'<p>{description}</p>' +
+					'</div>'
 			}
 		]
+	},
+
+	// These are not used by Sencha, but manually in the controller.
+	transitions: {
+		'back': {
+			type		: 'slide',
+			direction	: 'right'
+		},
+		'home': {
+			type		: 'fade'
+		}
 	}
+
 });
