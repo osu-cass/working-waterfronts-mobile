@@ -7,7 +7,7 @@ Ext.define('WorkingWaterfronts.util.Search', {
 	options: {
 		position	: null,
 		distance	: null,
-		location	: null,
+		location	: null
 	},
 
 	constructor: function () { },
