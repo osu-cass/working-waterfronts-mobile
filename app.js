@@ -20,19 +20,15 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-	name: 'WorkingWaterfronts',
-
-	controllers: ['Home'],
-	models: ['Vendors', 'Locations', 'PointsOfInterest'],
-	stores: ['Vendor', 'Location', 'Distance', 'PointOfInterest'],
-	views: ['Home', 'ListView', 'Map'],
-
-	// utils: SearchOptions,
+	name		: 'WorkingWaterfronts',
+	models		: ['Locations', 'PointsOfInterest'],
+	stores		: ['Location', 'Distance', 'PointOfInterest'],
+	views		: ['Home', 'MapList'],
+	controllers	: ['Home', 'MapList'],
 
 	launch: function() {
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Home'));
-		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Map'));
-		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.ListView'));
+		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.MapList'));
 		// todo: add detail for point view
 	},
 });

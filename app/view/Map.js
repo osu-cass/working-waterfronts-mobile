@@ -1,119 +1,153 @@
-//This variable is to avoid issues with the way sencha touch reads variable
-//objects. The point of this piece is so that the points of interest are
-//removed from the map.
-var mystyles =[
-	{
-		featureType: "administrative",
-		elementType: "labels",
-		stylers: [
-			{ visibility: "off" }
+Ext.define('WorkingWaterfronts.view.Map', {
+	extend: 'Ext.Container',
+	requires: ['Ext.Map'],
+	xtype: 'SeaGrantMap',
+	config: {
+		layout: 'fit',
+		items: [
+			{
+				xtype: 'map',
+				mapOptions: {
+					center: new google.maps.LatLng(43, -123),
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					zoom: 13,
+					// The point of this piece is so that the
+					// points of interest are removed from the map.
+					styles: [
+						{
+							featureType: 'administrative',
+							elementType: 'labels',
+							stylers: [
+								{ visibility: 'off' }
+							]
+						},
+						{
+							featureType: 'landscape',
+							elementType: 'labels',
+							stylers: [
+								{ visibility: 'off' }
+							]
+						},
+						{
+							featureType: 'poi',
+							elementType: 'labels',
+							stylers: [
+								{ visibility: 'off' }
+							]
+						},
+						{
+							featureType: 'transit.station.airport',
+							elementType: 'labels',
+							stylers: [
+								{ visibility: 'off' }
+							]
+						}
+					]
+				}
+			}
 		]
-	},{
-		featureType: "landscape",
-		elementType: "labels",
-		stylers: [
-			{ visibility: "off" }
-		]
-	},{
-		featureType: "poi",
-		elementType: "labels",
-		stylers: [
-			{ visibility: "off" }
-		]
-	},{
-		featureType: "transit.station.airport",
-		elementType: "labels",
-		stylers: [
-			{ visibility: "off" }
-		]
+	},
+
+	map: function () { return this.down('map').getMap(); },
+
+	centerToBounds: function (bounds) {
+		var gMap = this.map();
+
+		/*
+		Developers beware: this is async because Google Maps does something
+		internally that is also async. It leads to the first viewing of the
+		map centering in the top, left corner instead of the middle. 100ms
+		was tested on multiple throttling levels in Chrome.
+		*/
+
+		/* global setTimeout */
+		setTimeout(function () {
+			gMap.fitBounds(bounds);
+			gMap.panToBounds(bounds);
+			if(gMap.getZoom() > 15) { gMap.setZoom(15); }
+			if(gMap.getZoom() < 6) { gMap.setZoom(6); }
+		}, 100);
+	},
+
+	center: function () {
+		var self = this;
+		var bounds = new google.maps.LatLngBounds();
+		for (var k = 0; k < self.markers.length; k++) {
+			bounds.extend(self.markers[k].position);
+		}
+		self.centerToBounds(bounds);
+	},
+
+	currentInfoWindow: null,
+	markers: [],
+
+	addPoint: function (point, id, text, onClick, onClose) {
+		var view	= this;
+		var gMap	= view.map();
+		onClick		= onClick || function () {};
+
+		/*
+		Developers:
+
+		This code defeats the scope issue created when a button
+		needs to call a private/anonyous function.
+
+		Ext.Viewport events are fired semi-globally, such that we can
+		reliably listen for them in the currently displayed view.
+
+		This event, mapButton, is listened for in the MapList.js controller,
+		as defined in the 'launch' function. Each button is told what
+		index, or id, to use when calling the event. This allows the
+		controller to know which item in the list to select.
+		 */
+		var html = '<button onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' +
+				id + '\')">' + text + '</button>';
+
+		var marker	= new google.maps.Marker({
+			map				: gMap,
+			animation		: null,
+			// opacity		: opnum,
+			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
+			icon			: '/images/red.png',
+			position		: point,
+			clickable		: true,
+			info			: new google.maps.InfoWindow({
+				content			: html,
+				disableAutoPan	: true
+			})
+		});
+
+		view.markers.push(marker);
+
+		google.maps.event.addListener(marker, 'click', function () {
+			if (view.currentInfoWindow) {
+				view.currentInfoWindow.close();
+			}
+			view.currentInfoWindow = marker.info;
+			view.currentInfoWindow.open(gMap, this);
+			onClick();
+		});
+
+		google.maps.event.addListener(marker.info, 'closeclick', onClose);
+
+	},
+
+	addPoints: function (customArray) {
+		var view = this;
+		for (var i = 0; i < view.markers.length; i++) {
+			view.markers[i].setMap(null);
+		}
+		view.markers = [];
+		for (var k = 0; k < customArray.length; k++) {
+			var lat		= customArray[k].lat;
+			var lng		= customArray[k].lng;
+			var id		= customArray[k].id;
+			var text	= customArray[k].text;
+			var click	= customArray[k].click;
+			var close	= customArray[k].close;
+			var point	= new google.maps.LatLng(lat, lng);
+			view.addPoint(point, id, text, click, close);
+		}
 	}
 
-];
-
-Ext.define('WorkingWaterfronts.view.Map', {
-    extend: 'Ext.Container',
-    requires: ['Ext.Map'],
-    xtype: 'SeaGrantMap',
-
-   config: {
-        layout: 'fit',
-        items: [
-            {
-                xtype: 'map',
-                 mapOptions: {
-                    center: new google.maps.LatLng(43, -123),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    zoom: 13,
-					styles: mystyles
-                }
-            }
-        ]
-    },
-    initialize: function(){
-        // Need this code, for more info on the process that works for our map so far, go to:
-        // http://www.joshmorony.com/integrating-the-google-maps-api-into-a-sencha-touch-application/
-        var me = this;
-        me.callParent(arguments);
-        this.initMap();
-
-        // TRYING TO MAKE MAP LOAD IN HERE
-        // Wasn't very successful
-        // var mapOptions = {
-        //     center: new google.maps.LatLng(44.634115, -124.062796),
-        //     mapTypeId: google.maps.MapTypeId.ROADMAP,
-        //     zoom: 18,
-        //     offsetWidth: 1
-        // };
-        // var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-        // **all of this code was never used**
-        // The fix that Sencha says is implemented (FYI: its not!)
-        // Also this fix doesn't work, because the map is not reinitialized when we go from home to list screen.
-        // var map = Ext.getCmp('SeaGrantMap').map;
-        // this.on({
-        //     show: function(){
-        //         google.maps.event.trigger(map, 'resize');
-        //         map.panTo(new google.maps.LatLng(44.634115, -124.062796));
-        //         google.maps.event.trigger(map, 'zoom_changed');
-        //     }
-        // }); 
-        // HELPER CODE 
-        // SEE: http://www.sencha.com/forum/showthread.php?151775-Ext.Map-rendered-incorrect-in-initially-hidden-Ext.tab.Panel
-        // google.maps.event.trigger(this.googleMap, 'resize');
-        // google.maps.event.trigger(this.googleMap, 'zoom_changed');
-        // this.googleMap.setCenter(coords);        
-    }, 
-    initMap: function(){
- 
-        var mapPanel = this.down('map');
-        WorkingWaterfronts.gMap = mapPanel.getMap();
-
-        // console.log('in the initmap function:');
-        // console.log(WorkingWaterfronts);
-
-        // this should reset our map center, but it doesn't
-        //  setTimeout(function() {
-        //    WorkingWaterfronts.gMap.panTo(new google.maps.LatLng(44.634115, -124.062796));
-        // }, 100);
-
-        // I first of all thought that 
-        // "this function correctly reset our center on the first 
-        // go button press (but only if you loaded the map and mash the go button real fast), 
-        // because the map in the listview is not instantiated before the go button press, 
-        // so there is no gMap declared yet."
-        // The truth is that I did not set the timeout time for a long enough period. Now calling this function on a go button 
-        // press is enough to recenter the mapp to the correct location.
-        // var cent = new google.maps.LatLng(44.634115, -124.062796);
-        // setTimeout(function() {
-        //    WorkingWaterfronts.gMap.panTo(cent);
-        //    // WorkingWaterfronts.gMap.zoom(14);
-        // }, 100);
-         
-         // This sets a static hard coded marker
-        // var marker = new google.maps.Marker({
-        //     map: WorkingWaterfronts.gMap,
-        //     animation: google.maps.Animation.DROP,
-        //     position: new google.maps.LatLng(44.634115, -124.062796)
-        // });
-    }
 });

@@ -3,12 +3,11 @@ Ext.define('WorkingWaterfronts.view.Home', {
 	require: [
 		'Ext.field.Toggle',
 		'Ext.form.FieldSet',
-		'Ext.field.Select',
-		'WorkingWaterfronts.view.Map'
+		'Ext.field.Select'
 	],
-	// fullscreen: true,
-	xtype: 'Home',
-	alias: 'widget.home',
+	xtype: 'HomeView',
+	//alias: 'widget.home',
+	//fullscreen: true,
 	config: {
 		items: [
 			{
@@ -99,6 +98,18 @@ Ext.define('WorkingWaterfronts.view.Home', {
 				fn			: 'onGoButtonTap'
 			}
 		]
+	},
+
+	// These are not used by Sencha, but manually in the controller.
+	transitions: {
+		'back': {
+			type		: 'slide',
+			direction	: 'right'
+		},
+		'forward': {
+			type		: 'slide',
+			direction	: 'left'
+		}
 	},
 
 	/* jshint unused:false */
