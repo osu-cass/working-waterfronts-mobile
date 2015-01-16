@@ -17,7 +17,7 @@ Ext.define('WorkingWaterfronts.store.PointOfInterest', {
 		state					: '',
 		zip						: '',
 		lat						: 44.0,
-		lng						: 120.0,
+		lng						: -120.0,
 		location_description	: '',
 		// meta
 		created					: Date.now(),
@@ -38,7 +38,7 @@ Ext.define('WorkingWaterfronts.store.PointOfInterest', {
 		state					: '',
 		zip						: '',
 		lat						: 44.0,
-		lng						: 121.0,
+		lng						: -121.0,
 		location_description	: '',
 		// meta
 		created					: Date.now(),
@@ -59,7 +59,7 @@ Ext.define('WorkingWaterfronts.store.PointOfInterest', {
 		state					: '',
 		zip						: '',
 		lat						: 45.0,
-		lng						: 121.0,
+		lng						: -121.0,
 		location_description	: '',
 		// meta
 		created					: Date.now(),
