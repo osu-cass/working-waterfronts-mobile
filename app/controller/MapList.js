@@ -55,10 +55,19 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 		Ext.Viewport.animateActiveItem(ctrl.getHomeView(), transition);
 	},
 
+	lastTappedIndex: -1,
+
 	// Simply makes the Seagrantmap open a different InfoWindow.
 	onListSingleTap: function (list, index) {
-		var markers = this.getMapList().markers;
-		google.maps.event.trigger(markers[index], 'click');
+		var ctrl = this;
+		var indexOld = ctrl.lastTappedIndex;
+		if (indexOld === index) {
+			ctrl.onListDoubleTap();
+		} else {
+			var markers = this.getMapList().markers;
+			google.maps.event.trigger(markers[index], 'click');
+		}
+		ctrl.lastTappedIndex = index;
 	},
 
 	// Calls onMapButton, first looking up the selected POI's store index.
@@ -100,6 +109,10 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 		var seagrantmap = this.getMapList();
 		var store = Ext.data.StoreManager.lookup('PointOfInterest');
 
+		// By setting this, the onTap event handler won't accidentally
+		// think the user clicked twice on a list item and open details.
+		ctrl.lastTappedIndex = -1;
+
 		// addPointsAndCenter requires this to work
 		// see: view/Map.js
 		var customMarkerArray = [];
@@ -121,6 +134,9 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 		// Needed for the loop below.
 		function commonCloseFunction () {
 			ctrl.getPoisList().deselectAll();
+			// By setting this, the onTap event handler won't accidentally
+			// think the user clicked twice on a list item and open details.
+			ctrl.lastTappedIndex = -1;
 		}
 
 		// This converts the store items into an array

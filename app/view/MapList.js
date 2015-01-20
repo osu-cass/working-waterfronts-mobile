@@ -39,7 +39,8 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 				itemTpl		: '{name}',
 				store		: 'PointOfInterest',
 				xtype		: 'list',
-				itemId		: 'poisList'
+				itemId		: 'poisList',
+				id			: 'poisList'
 			}
 		]
 	},
