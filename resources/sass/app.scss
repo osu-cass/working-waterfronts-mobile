@@ -4,83 +4,16 @@
 @import 'sencha-touch/default';
 @import 'sencha-touch/default/all';
 
-// Custom code goes here..
-
-//LIST PAGE ELEMENT HEIGHTS
-#ext-SeaGrantMap-1{
-	height: 50%;
-
-}
-
-#ext-SeaGrantMap-2{
-	height: 50%;
-
-}
-
-//LIST PAGE ELEMENT HEIGHTS
-
-#ext-list-1{
-	height: 50%;
-	top: 50%;
-}
-#ext-list-2{
-	height: 50%;
-	top: 50%;
-}
-#ext-list-3{
+#poisList {
 	height: 50%;
 	top: 50%;
 }
 
 // MAP STYLE
-#ext-SeaGrantMap-1{
+#ext-SeaGrantMap-1 {
 	height: 50%;
 }
 
-#ext-SeaGrantMap-2{
-	height: 50%;
-}
-
-// LIST VIEW MAP PIN INFO STYLE
-
-// Just for testing
-//div.gm-style:nth-child(1) div div div div div:nth-child(2){
-//	background-color: blue !important;
-//	width: 250px;
-//	border-radius: 30px;
-//}
-
-// Inner background of the infowindow (YELLOW)
-//div.gm-style:nth-child(1) div:nth-child(3) div:nth-child(4) div:nth-child(1) div:nth-child(1) div:nth-child(4){
-//	background-color: #6699CC !important;
-//	border-radius: 40px;
-//}
-
-// Outer border of the infowindow (ORANGE BROWN) NOTE: this is removed by right side background, for some reason the
-// border is also filling in that small background piece behind the pointer
-//div.gm-style:nth-child(1) div:nth-child(3) div:nth-child(4) div:nth-child(1) div:nth-child(1) div:nth-child(2){
-//	background-color: #CC9900 !important;
-//}
-
-// Right side of the infowindow pointer (PINK)
-//div.gm-style:nth-child(1) div:nth-child(3) div:nth-child(4) div:nth-child(1) div:nth-child(1) div:nth-child(2) div:nth-child(1){
-//	background-color: #6699CC !important;
-//}
-
-// Left side of the infowindow pointer (PINK)
-//div.gm-style:nth-child(1) div:nth-child(3) div:nth-child(4) div:nth-child(1) div:nth-child(1) div:nth-child(1) div:nth-child(1){
-//	background-color: #6699CC !important;
-//}
-
-// Right side of the infowindow pointer background (TRANSPARENT)
-//div.gm-style:nth-child(1) div:nth-child(3) div:nth-child(4) div:nth-child(1) div:nth-child(1) div:nth-child(2){
-//	background-color: transparent !important;
-//}
-
-// Left side of the infowindow pointer background (TRANSPARENT)
-//div.gm-style:nth-child(1) div:nth-child(3) div:nth-child(4) div:nth-child(1) div:nth-child(1) div:nth-child(1){
-//	background-color: transparent !important;
-//}
 
 // Text styling
 div.gm-style-iw{
@@ -88,7 +21,6 @@ div.gm-style-iw{
 	padding: 2px;
 //	color: white;
 }
-
 
 // Examples of using the icon mixin:
 // @include icon('user');

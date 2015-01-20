@@ -113,7 +113,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			clickable		: true,
 			info			: new google.maps.InfoWindow({
 				content			: html,
-				disableAutoPan	: true
+				disableAutoPan	: false
 			})
 		});
 

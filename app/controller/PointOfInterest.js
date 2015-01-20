@@ -1,15 +1,18 @@
 Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 	extend: 'Ext.app.Controller',
 	requires: [
-		'Ext.Label'
+		'Ext.Label',
+		'WorkingWaterfronts.util.Link'
 	],
 	config: {
 		refs: {
 			homeView			: 'HomeView',
 			listView			: 'MapListView',
 			poiView				: 'PointOfInterestView',
+			poiViewInfo			: 'PointOfInterestView #infoText',
 			homeButton			: 'PointOfInterestView #homeButton',
-			listButton			: 'PointOfInterestView #listButton'
+			listButton			: 'PointOfInterestView #listButton',
+			navigateButton		: 'PointOfInterestView #navigateButton'
 		},
 		control: {
 			homeButton: {
@@ -17,6 +20,9 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 			},
 			listButton: {
 				tap				: 'onGoBack'
+			},
+			navigateButton: {
+				tap				: 'onGoNavigate'
 			}
 		}
 	},
@@ -36,6 +42,13 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 		var ctrl = this;
 		var transition = ctrl.getView().transitions.back;
 		Ext.Viewport.animateActiveItem(ctrl.getListView(), transition);
+	},
+
+	onGoNavigate: function () {
+		var ctrl = this;
+		var Link = WorkingWaterfronts.util.Link;
+		var poi = ctrl.getPoiViewInfo().getData();
+		Link.openNavigation(poi.lat, poi.lng);
 	}
 
 });

@@ -36,7 +36,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		if (toggleValue) {
 			// scope allows callback to use 'this' to get Home controller
 			Ext.device.Geolocation.watchPosition({
-			    frequency	: 60000,
+			    frequency	: 60000, // 60000 ms == 1 min
 			    scope		: homeCtrl,
 			    callback	: homeCtrl.onGeolocationWatchPosition,
 			    failure		: homeCtrl.onGeolocationWatchFailure

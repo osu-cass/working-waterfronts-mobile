@@ -30,6 +30,16 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 						'<p>{name}</p>' +
 						'<p>{description}</p>' +
 					'</div>'
+			},
+			{
+				xtype: 'fieldset',
+				docked: 'bottom',
+				items: [{
+					xtype: 'button',
+					ui: 'action',
+					text: 'Navigate Me',
+					itemId: 'navigateButton'
+				}]
 			}
 		]
 	},
