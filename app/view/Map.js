@@ -108,7 +108,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			animation		: null,
 			// opacity		: opnum,
 			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
-			icon			: '/images/red.png',
+			icon			: '/resources/images/mapdots/red.png',
 			position		: point,
 			clickable		: true,
 			info			: new google.maps.InfoWindow({

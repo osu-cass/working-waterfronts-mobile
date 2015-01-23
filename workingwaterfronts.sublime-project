@@ -1,11 +1,4 @@
 {
-	"folders":
-	[
-		{
-			"follow_symlinks": true,
-			"path": "."
-		}
-	],
 	"build_systems":
 	[
 		{
@@ -17,6 +10,17 @@
 			"name": "Sencha Web Start",
 			"shell_cmd": "sencha web start",
 			"working_dir": "${project_path:${folder}}"
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/Users/robmac/Code/wwm2"
 		}
 	]
 }
