@@ -36,17 +36,23 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		if (toggleValue) {
 			// scope allows callback to use 'this' to get Home controller
 			Ext.device.Geolocation.watchPosition({
-			    frequency	: 60000, // 60000 ms == 1 min
-			    scope		: homeCtrl,
-			    callback	: homeCtrl.onGeolocationWatchPosition,
-			    failure		: homeCtrl.onGeolocationWatchFailure
+			    frequency	: 60000,
+			    callback	: function (position) {
+					WorkingWaterfronts.util.Search.options.position = position;
+					homeCtrl.onAny();
+				},
+			    failure		: function () {
+					WorkingWaterfronts.util.Messages.showLocationError();
+					homeCtrl.getUseLocationToggle().setValue(0);
+				}
 			});
 		} else {
 			// toggle off == stop geolocation and clear position
 			WorkingWaterfronts.util.Search.options.position = null;
 			Ext.device.Geolocation.clearWatch();
+			homeCtrl.onAny();
 		}
-		homeCtrl.onAny();
+
 	},
 
 	onViewGoCommand: function () {
@@ -55,25 +61,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		var transition = ctrl.getHomeView().transitions.forward;
 		ctrl.getMapList().center();
 		Ext.Viewport.animateActiveItem(ctrl.getListView(), transition);
-	},
-
-	/* ------------------------------------------------------------------------
-		Other Callback Functions
-	------------------------------------------------------------------------ */
-
-	// Saves updated, assumed-valid position to Search util
-	onGeolocationWatchPosition: function (position) {
-		var homeCtrl = this; // see 'scope' from 'watchPosition'
-		WorkingWaterfronts.util.Search.options.position = position;
-		homeCtrl.onAny();
-	},
-
-	// Saves the lack of a position to Search util
-	// Resets the toggle to off, see 'onSetUseLocation'
-	onGeolocationWatchFailure: function () {
-		var homeCtrl = this; // see 'scope' from 'watchPosition'
-		WorkingWaterfronts.util.Messages.showLocationError();
-		homeCtrl.getUseLocationToggle().setValue(0);
 	},
 
 	/* ------------------------------------------------------------------------
