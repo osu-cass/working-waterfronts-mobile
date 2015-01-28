@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="edu.oregonstate.cass.WorkingWaterfrontsMobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-	<name>WorkingWaterfrontsMobile</name>
+	<name>Working Waterfronts</name>
 	<description>
-		Hello World sample application that responds to the deviceready event.
+		An Oregon Sea Grant mobile app for exploring visitor-friendly work sites along the Oregon coast.
 	</description>
-	<author email="support@phonegap.com" href="http://phonegap.com">
-		PhoneGap Team
+	<author email="support@phonegap.com" href="http://seagrant.oregonstate.edu/">
+		Oregon Sea Grant, Oregon State Univerity
 	</author>
 	<content src="index.html" />
 	<preference name="permissions" value="none" />
@@ -13,7 +13,7 @@
 	<preference name="target-device" value="universal" />
 	<preference name="fullscreen" value="false" />
 	<preference name="webviewbounce" value="true" />
-	<preference name="prerendered-icon" value="true" />
+	<preference name="prerendered-icon" value="false" />
 	<preference name="stay-in-webview" value="false" />
 	<preference name="ios-statusbarstyle" value="black-opaque" />
 	<preference name="detect-data-types" value="true" />

@@ -35,7 +35,7 @@ Install Node, then Command Prompt from any folder, do:
 	$ sencha app build
     $ sencha web start
 
-## Building Native (iOS, Android)
+## Building Native (iOS)
 
 In order for native device functions to work, plugins must be manually added before building. The plugins are saved in config.xml as *Feature* tags:
 
@@ -46,8 +46,6 @@ In order for native device functions to work, plugins must be manually added bef
 ```
 
 **Install the plugins once when you first clone the project.**
-
-Phonegap creates everything within */phonegap/platforms/* when the projects builds. Installing a plugin makes changes to files within the subfolders, so it needs to be executed after a single initial build.
 
 	$ cd phonegap/
     $ phonegap restore plugins --experimental
