@@ -5,15 +5,8 @@
             "packager": "phonegap",
             "phonegap" : {
                 "config": {
-                    "platform": "ios android",
-
-                    // Uncomment and Set this line to true to enable PhoneGap Remote Building.
-                    // To properly use this you must set the following properties in your local.properties file (if this file does not exist create it in your app root)
-                    // phonegap.remote.username=myname@domain.com
-                    // phonegap.remote.password=mys3cr3tp@ssw0rd
-                    //"remote":false,
-
-                    "id": "com.seagrant.wwm",
+                    "platform": "ios",
+                    "id": "edu.oregonstate.cass.WorkingWaterfrontsMobile",
                     "name": "WorkingWaterfrontsMobile"
                 }
             }
@@ -23,7 +16,7 @@
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "WorkingWaterfronts",
+    "name": "WorkingWaterfrontsMobile",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file
@@ -53,7 +46,7 @@
      *                                      //  - "delta" to enable over-the-air delta update for this file
      *                                      //  - "full" means full update will be made when this file changes
      *          "x-bootstrap": true         // (Optional)
-     *                                      // Indicates a development mode only dependency.  
+     *                                      // Indicates a development mode only dependency.
      *                                      // These files will not be copied into the build directory or referenced
      *                                      // in the generate app.json manifest for the micro loader.
      *
@@ -156,5 +149,5 @@
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "9b68bfc8-ac4f-4a62-8f10-7a517758b0b2"
+    "id": "7a022823-bada-4f53-a5d5-82a89c1c5c70"
 }

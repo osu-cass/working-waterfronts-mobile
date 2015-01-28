@@ -6,8 +6,13 @@ build/
 docs/build/
 resources/sass/.sass-cache/
 resources/css/
-phonegap/platforms/
-phonegap/www/
+
+phonegap/*
+!phonegap/www
+
+phonegap/www/*
+!phonegap/www/config.xml
+
 bootstrap.js
 bootstrap.json
 
