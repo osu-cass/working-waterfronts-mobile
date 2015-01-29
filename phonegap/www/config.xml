@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="edu.oregonstate.cass.WorkingWaterfrontsMobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-	<name>Working Waterfronts</name>
+	<name>Waterfronts</name>
 
 	<description>
 		An Oregon Sea Grant mobile app for exploring visitor-friendly work sites along the Oregon coast.
