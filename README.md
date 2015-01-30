@@ -37,7 +37,9 @@ Install Node, then Command Prompt from any folder, do:
 
 ## Building Native (iOS)
 
-In order for native device functions to work, plugins must be manually added before building. The plugins are saved in config.xml as *Feature* tags:
+	$ sencha app build native
+
+In order for native device functions to work, plugins must installed. The plugins are saved in config.xml as *Feature* tags:
 
 ```xml
 <feature name="Geolocation">
@@ -45,15 +47,11 @@ In order for native device functions to work, plugins must be manually added bef
 </feature>
 ```
 
-**Install the plugins once when you first clone the project.**
-
-	$ cd phonegap/
-    $ phonegap restore plugins --experimental
-	$ sencha app build native
+**These plugins are now automatically installed in a Phonegap hook.**
 
 The directory */phonegap/platforms/...* contains the Android APK and Xcode project for deploying to either platform.
 
-**If there are plugin errors in the app's console log, you may need to delete the */phonegap/platforms/* and */phonegap/plugins/* folders, and repeat the above commands.**
+**If there are plugin errors in the app's console log, you may need to delete the */phonegap/platforms/*, */phonegap/plugins/*, */phonegap/www/* folders, and repeat the build.**
 
 ## Linting
 
