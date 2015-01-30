@@ -8,10 +8,8 @@ resources/sass/.sass-cache/
 resources/css/
 
 phonegap/*
-!phonegap/www
-
-phonegap/www/*
-!phonegap/www/config.xml
+!phonegap/hooks
+!phonegap/config.xml
 
 bootstrap.js
 bootstrap.json
@@ -21,3 +19,5 @@ bootstrap.json
 **/*.log
 **/*-log*
 *.sublime-workspace
+
+.DS_Store

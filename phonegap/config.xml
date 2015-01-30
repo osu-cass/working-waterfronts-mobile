@@ -34,6 +34,9 @@
 	<preference name="android-minSdkVersion" value="7" />
 	<preference name="android-installLocation" value="auto" />
 
+	<hook type="after_platform_add" src="hooks/install_plugins.js" />
+	<hook type="after_build" src="hooks/overwrite_ios_view.js" />
+
 	<platform name="ios">
 		<!-- iOS 7.0+ -->
 		<!-- iPhone / iPod Touch  -->
