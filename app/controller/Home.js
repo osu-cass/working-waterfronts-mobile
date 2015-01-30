@@ -73,6 +73,11 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		Search.applyFilterToStore(store);
 	},
 
+	launch: function () {
+		var ctrl = this;
+		ctrl.onAny();
+	},
+
 	onAny: function () {
 		var homeCtrl = this;
 		var store = Ext.data.StoreManager.lookup('PointOfInterest');

@@ -56,8 +56,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		/*
 		Developers beware: this is async because Google Maps does something
 		internally that is also async. It leads to the first viewing of the
-		map centering in the top, left corner instead of the middle. 100ms
-		was tested on multiple throttling levels in Chrome.
+		map centering in the top, left corner instead of the middle.
 		*/
 
 		/* global setTimeout */
@@ -66,7 +65,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			gMap.panToBounds(bounds);
 			if(gMap.getZoom() > 15) { gMap.setZoom(15); }
 			if(gMap.getZoom() < 6) { gMap.setZoom(6); }
-		}, 100);
+		}, 500);
 	},
 
 	center: function () {
@@ -108,7 +107,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			animation		: null,
 			// opacity		: opnum,
 			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
-			icon			: '/resources/images/mapdots/red.png',
+			icon			: 'resources/images/mapdots/red.png',
 			position		: point,
 			clickable		: true,
 			info			: new google.maps.InfoWindow({
