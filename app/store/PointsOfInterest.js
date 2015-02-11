@@ -1,11 +1,11 @@
-Ext.define('WorkingWaterfronts.store.PointOfInterest', {
+Ext.define('WorkingWaterfronts.store.PointsOfInterest', {
 	extend: 'Ext.data.Store',
 	config: {
-		model: 'WorkingWaterfronts.model.PointsOfInterest',
+		model: 'WorkingWaterfronts.model.PointOfInterest',
 		autoLoad: true,
 		proxy: {
 			type: 'ajax',
-			url: 'http://seagrant-staging.osuosl.org/1/pois',
+			url: 'http://working-waterfronts-staging.osuosl.org/1/pois',
 			noCache: false,
 			pageParam: false,
 			limitParam: false,

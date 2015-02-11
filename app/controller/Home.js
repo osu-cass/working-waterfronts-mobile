@@ -69,7 +69,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 	init: function () {
 		var Search = WorkingWaterfronts.util.Search;
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 		Search.applyFilterToStore(store);
 	},
 
@@ -80,7 +80,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 	onAny: function () {
 		var homeCtrl = this;
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 		var Search = WorkingWaterfronts.util.Search;
 
 		// Forcibly inject options over to the singleton.

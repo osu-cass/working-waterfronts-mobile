@@ -73,7 +73,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 	// Calls onMapButton, first looking up the selected POI's store index.
 	onListDoubleTap: function () {
 		var ctrl = this;
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 		var currentSelection = ctrl.getPoisList().getSelection();
 		if (currentSelection && currentSelection.length) {
 			var index = store.indexOf(currentSelection[0]);
@@ -86,7 +86,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 	onMapButton: function (id) {
 		var ctrl = this;
 		var transition = ctrl.getView().transitions.forward;
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 		ctrl.getPoiViewInfo().setData(store.getAt(id).data);
 		Ext.Viewport.animateActiveItem(ctrl.getPoiView(), transition);
 	},
@@ -107,7 +107,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 	onListRefresh: function () {
 		var ctrl = this;
 		var seagrantmap = this.getMapList();
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 
 		// By setting this, the onTap event handler won't accidentally
 		// think the user clicked twice on a list item and open details.
