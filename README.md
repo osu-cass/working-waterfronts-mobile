@@ -1,53 +1,98 @@
-# SeaGrant_Proto
+# WorkingWaterfronts
 
-A prototype mobile app implementing features common to multiple OSU Sea Grant projects.
+An [Oregon Sea Grant](http://seagrant.oregonstate.edu/) mobile app for exploring visitor-friendly work sites along the Oregon coast.
 
-# Project Requirements
+## Environment Configuration
 
-- [Sencha Touch](http://www.sencha.com/products/touch)
+This list isn't comprehensive currently.
+
+- [Node.js](http://nodejs.org/)
+	- [npm](https://www.npmjs.com/)
+	- [Phonegap](http://phonegap.com/)
 - [Sencha Cmd](http://www.sencha.com/products/sencha-cmd/)
-- [Phonegap](http://phonegap.com/)
-- Android and/or iOS testing platform
-- [npm](https://github.com/joyent/node/wiki/installing-node.js-via-package-manager)
+- [Sencha Touch](http://www.sencha.com/products/touch) (included already)
 
-# Contributors
+### Windows
+
+Install Sencha Cmd ([further instructions from BSG](https://gist.github.com/jhcarr/c0276b2978b8603c74e3)).
+
+Install Node, then Command Prompt from any folder, do:
+
+    > npm install -g cordova phonegap
+
+### Mac/Unix/Linux
+
+	$ sudo npm install -g cordova phonegap
+
+# Contributing
 
 1. Ensure that your environment is able to access the above required resources.
 2. Navigate to your development space and run `git clone` on this repo.
-3. Navigate into the new project directory and run `sencha app build` to compile project resources.
+3. Navigate into the new project directory and run commands from here.
+
+## Building/Running Local (web)
+
+	$ sencha app build
+    $ sencha web start
+
+## Building Native (iOS)
+
+	$ sencha app build native
+
+In order for native device functions to work, plugins must installed. The plugins are saved in config.xml as *Feature* tags:
+
+```xml
+<feature name="Geolocation">
+	<param name="id" value="org.apache.cordova.geolocation" />
+</feature>
+```
+
+**These plugins are now automatically installed in a Phonegap hook.**
+
+The directory */phonegap/platforms/...* contains the Android APK and Xcode project for deploying to either platform.
+
+**If there are plugin errors in the app's console log, you may need to delete the */phonegap/platforms/*, */phonegap/plugins/*, */phonegap/www/* folders, and repeat the build.**
 
 ## Linting
 
-1. Navigate to the root of the project directory and run `npm install`.
-2. Navigate to the ./syntax directory and run criticize-me.sh
+To search the javascript feature code for syntax errors, execute:
 
-# Structure
+	$ cd syntax/
+    $ npm install
+    $ sh criticize-me.sh
 
-*./.sencha*  
-Sencha configuration and internal resources.
+# Directory Structure
 
-*./app*  
-The MVC components of the SeaGrant_Proto project.
+*/.sencha/*
+> Sencha configuration and internal resources. Avoid editing within.
 
-*./jasmine-standalone*  
-Unit testing resources. Unit tests are currently unimplemented.
+*/app/*
+> MVC javascript source that employs Sencha Touch API. Feature code within.
 
-*./phonegap*  
-Phonegap's app compilation resources. Custom splash screen is configured here instead of ./app.
+*/app.js*
+> The app's entry point. Initializes whole-page views, controllers, etc.
 
-*./resources*  
-Compiled CSS, visual assets.
+*/index.html*
+> The web page template that Sencha loads into.
 
-*./siesta*  
-Siesta UI tests and resources.
+*/phonegap/*
+> Phonegap's config and build folder. Some files generated during builds.
 
-*./syntax*  
-Javascript linting resources.
+*/resources/*
+> Contains app icons, splash screens, images, and SASS.
 
-*./touch*  
-Sencha Touch configuration and internal resources.
+*/syntax/*
+> If your IDE does not have a JS linter, use this one to check your source code.
 
-# Contributors To Date  
-Michael Freeman  
-Jacob Broderick  
-Justin Carr
+*/tests/*
+> Jasmine unit tests for feature code. Open SpecRunner.html to run.
+
+*/touch/*
+> The Sencha Touch API source. Avoid editing within.
+
+# Contributors
+
+- Michael Freeman [@Free-BSG](https://github.com/free-bsg)
+- Jacob Broderick [@jabroderick](https://github.com/jabroderick)
+- Justin Carr [@jhcarr](https://github.com/jhcarr)
+- Rob Mac [@maccelerated](https://github.com/maccelerated)

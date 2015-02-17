@@ -1,17 +1,23 @@
 ### External Dependencies ###
-node_modules/*
-bootstrap.*
+node_modules/**
 
 ### Compiled Files ###
-build/*
-docs/build/*
-resources/sass/.sass-cache/*
-resources/css/*
+build/
+docs/build/
+resources/sass/.sass-cache/
+resources/css/
+
 phonegap/*
-native/*
+!phonegap/hooks
+!phonegap/config.xml
+
+bootstrap.js
+bootstrap.json
 
 ### temp and log Files ###
 **/*.temp*
 **/*.log
 **/*-log*
 *.sublime-workspace
+
+.DS_Store

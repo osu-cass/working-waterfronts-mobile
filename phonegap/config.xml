@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="edu.oregonstate.cass.WorkingWaterfrontsMobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+	<name>Waterfronts</name>
+
+	<description>
+		An Oregon Sea Grant mobile app for exploring visitor-friendly work sites along the Oregon coast.
+	</description>
+
+	<author email="support@phonegap.com" href="http://seagrant.oregonstate.edu/">
+		Oregon Sea Grant, Oregon State Univerity
+	</author>
+
+	<content src="index.html" />
+
+	<access origin="*" />
+
+	<feature name="Geolocation">
+		<param name="id" value="org.apache.cordova.geolocation" />
+	</feature>
+
+	<preference name="permissions" value="none" />
+	<preference name="orientation" value="default" />
+	<preference name="target-device" value="universal" />
+	<preference name="fullscreen" value="false" />
+	<preference name="webviewbounce" value="true" />
+	<preference name="prerendered-icon" value="false" />
+	<preference name="stay-in-webview" value="false" />
+	<preference name="ios-statusbarstyle" value="black-opaque" />
+	<preference name="detect-data-types" value="true" />
+	<preference name="exit-on-suspend" value="false" />
+	<preference name="show-splash-screen-spinner" value="true" />
+	<preference name="auto-hide-splash-screen" value="true" />
+	<preference name="disable-cursor" value="false" />
+	<preference name="android-minSdkVersion" value="7" />
+	<preference name="android-installLocation" value="auto" />
+
+	<hook type="after_platform_add" src="hooks/install_plugins.js" />
+	<hook type="after_build" src="hooks/overwrite_ios_view.js" />
+
+	<platform name="ios">
+		<!-- iOS 7.0+ -->
+		<!-- iPhone / iPod Touch  -->
+		<icon src="../resources/icons/64.png" width="60" height="60" />
+		<icon src="../resources/icons/144.png" width="120" height="120" />
+		<icon src="../resources/icons/192.png" width="180" height="180" />
+		<!-- iPad -->
+		<icon src="../resources/icons/96.png" width="76" height="76" />
+		<icon src="../resources/icons/192.png" width="152" height="152" />
+		<!-- iOS 6.1 -->
+		<!-- Spotlight Icon -->
+		<icon src="../resources/icons/48.png" width="40" height="40" />
+		<icon src="../resources/icons/96.png" width="80" height="80" />
+		<!-- iPhone / iPod Touch -->
+		<icon src="../resources/icons/57.png" width="57" height="57" />
+		<icon src="../resources/icons/114.png" width="114" height="114" />
+		<!-- iPad -->
+		<icon src="../resources/icons/72.png" width="72" height="72" />
+		<icon src="../resources/icons/144.png" width="144" height="144" />
+		<!-- iPhone Spotlight and Settings Icon -->
+		<icon src="../resources/icons/29.png" width="29" height="29" />
+		<icon src="../resources/icons/58.png" width="58" height="58" />
+		<!-- iPad Spotlight and Settings Icon -->
+		<icon src="../resources/icons/57.png" width="50" height="50" />
+		<icon src="../resources/icons/114.png" width="100" height="100" />
+
+		<splash height="480" width="320"   src="../resources/splash/ios/non_retina_por.png" />
+		<splash height="320" width="480"   src="../resources/splash/ios/non_retina_lan.png"  />
+
+		<splash height="960" width="640"   src="../resources/splash/ios/retina_por.png" />
+		<splash height="640" width="960"   src="../resources/splash/ios/retina_lan.png" />
+
+		<splash height="1136" width="640"  src="../resources/splash/ios/retina5_por.png" />
+		<splash height="640" width="1136"  src="../resources/splash/ios/retina5_lan.png" />
+
+		<splash height="1024" width="768"  src="../resources/splash/ios/ipad_non_retina_por.png" />
+		<splash height="768" width="1024"  src="../resources/splash/ios/ipad_non_retina_lan.png" />
+
+		<splash height="1334" width="750"  src="../resources/splash/ios/iphone6_por.png" />
+		<splash height="750" width="1334"  src="../resources/splash/ios/iphone6_lan.png" />
+
+		<splash height="2048" width="1536" src="../resources/splash/ios/ipad_retina_por.png" />
+		<splash height="1536" width="2048" src="../resources/splash/ios/ipad_retina_lan.png" />
+
+		<splash height="2208" width="1242" src="../resources/splash/ios/iphone6plus_por.png" />
+		<splash height="1242" width="2208" src="../resources/splash/ios/iphone6plus_lan.png" />
+	</platform>
+
+	<!-- Android settings are untested and broken. -->
+	<platform name="android">
+		<icon gap:qualifier="ldpi" src="www/resources/icon/36.png" />
+		<icon gap:qualifier="mdpi" src="www/resources/icon/48.png" />
+		<icon gap:qualifier="hdpi" src="www/resources/icon/72.png" />
+		<icon gap:qualifier="xhdpi" src="www/resources/icon/96.png" />
+
+		<gap:splash gap:qualifier="port-ldpi" src="www/resources/startup/android/LDPI_por.9.png" />
+		<gap:splash gap:qualifier="land-ldpi" src="www/resources/startup/android/LDPI_lan.9.png" />
+
+		<gap:splash gap:qualifier="port-mdpi" src="www/resources/startup/android/MDPI_por.9.png" />
+		<gap:splash gap:qualifier="land-mdpi" src="www/resources/startup/android/MDPI_lan.9.png" />
+
+		<gap:splash gap:qualifier="port-hdpi" src="www/resources/startup/android/HDPI_por.9.png" />
+		<gap:splash gap:qualifier="land-hdpi" src="www/resources/startup/android/HDPI_lan.9.png" />
+
+		<gap:splash gap:qualifier="port-xhdpi" src="www/resources/startup/android/XHDPIpor.9.png" />
+		<gap:splash gap:qualifier="land-xhdpi" src="www/resources/startup/android/XHDPIlan.9.png" />
+	</platform>
+
+</widget>

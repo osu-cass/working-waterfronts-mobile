@@ -5,7 +5,7 @@ Ext.define('WorkingWaterfronts.util.Link', {
 		link="daddr="+lat+","+lng;
 		if(navigator.userAgent.match(/(Android)/)){
 			navigator.app.loadUrl("https://maps.google.com/?"+link, {openExternal: true});
-		}else if(navigator.userAgent.match(/(ios)/)){
+		}else if(navigator.userAgent.match(/(AppleWebKit)/)){
 			window.open("maps:"+link);
 		}else{
 			window.open("https://maps.google.com/?"+link);
