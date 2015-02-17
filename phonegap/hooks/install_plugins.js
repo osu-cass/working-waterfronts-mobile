@@ -6,14 +6,9 @@
 var sys		= require('sys');
 var exec	= require('child_process').exec;
 
-var pluginlist = [
-    'org.apache.cordova.geolocation'
-];
+exec('phonegap restore plugins --experimental',
+	function (error, stdout) {
+		sys.puts(stdout);
+	}
+);
 
-pluginlist.forEach(function(plug) {
-    exec('cordova plugin add ' + plug,
-    	function (error, stdout) {
-    		sys.puts(stdout);
-		}
-	);
-});
