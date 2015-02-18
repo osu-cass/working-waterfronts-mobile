@@ -1,7 +1,20 @@
 {
     "builds": {
+
         "web": {"default": true},
-        "native": {
+
+        "android": {
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    "platform": "android",
+                    "id": "edu.oregonstate.cass.WorkingWaterfrontsMobile",
+                    "name": "WorkingWaterfrontsMobile"
+                }
+            }
+        },
+
+        "ios": {
             "packager": "phonegap",
             "phonegap" : {
                 "config": {
@@ -11,6 +24,7 @@
                 }
             }
         }
+
     },
 
     /**
@@ -121,7 +135,9 @@
      * Extra resources to be copied along when build
      */
     "resources": [
-        "resources/images"
+        "resources/images",
+        "resources/icons",
+        "resources/splash"
     ],
 
     /**

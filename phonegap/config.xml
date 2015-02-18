@@ -87,22 +87,24 @@
 
 	<!-- Android settings are untested and broken. -->
 	<platform name="android">
-		<icon gap:qualifier="ldpi" src="www/resources/icon/36.png" />
-		<icon gap:qualifier="mdpi" src="www/resources/icon/48.png" />
-		<icon gap:qualifier="hdpi" src="www/resources/icon/72.png" />
-		<icon gap:qualifier="xhdpi" src="www/resources/icon/96.png" />
+		<icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36" />
+		<icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48" />
+		<icon gap:qualifier="hdpi" src="../resources/icons/72.png" width="72" height="72" />
+		<icon gap:qualifier="xhdpi" src="../resources/icons/96.png" width="96" height="96" />
+		<icon gap:qualifier="xxhdpi" src="../resources/icons/114.png" width="114" height="114" />
+		<icon gap:qualifier="xxxhdpi" src="../resources/icons/144.png" width="144" height="144" />
 
-		<gap:splash gap:qualifier="port-ldpi" src="www/resources/startup/android/LDPI_por.9.png" />
-		<gap:splash gap:qualifier="land-ldpi" src="www/resources/startup/android/LDPI_lan.9.png" />
+		<gap:splash density="port-ldpi" src="../resources/splash/android/LDPI_por.9.png" />
+		<gap:splash density="land-ldpi" src="../resources/splash/android/LDPI_lan.9.png" />
 
-		<gap:splash gap:qualifier="port-mdpi" src="www/resources/startup/android/MDPI_por.9.png" />
-		<gap:splash gap:qualifier="land-mdpi" src="www/resources/startup/android/MDPI_lan.9.png" />
+		<gap:splash density="port-mdpi" src="../resources/splash/android/MDPI_por.9.png" />
+		<gap:splash density="land-mdpi" src="../resources/splash/android/MDPI_lan.9.png" />
 
-		<gap:splash gap:qualifier="port-hdpi" src="www/resources/startup/android/HDPI_por.9.png" />
-		<gap:splash gap:qualifier="land-hdpi" src="www/resources/startup/android/HDPI_lan.9.png" />
+		<gap:splash density="port-hdpi" src="../resources/splash/android/HDPI_por.9.png" />
+		<gap:splash density="land-hdpi" src="../resources/splash/android/HDPI_lan.9.png" />
 
-		<gap:splash gap:qualifier="port-xhdpi" src="www/resources/startup/android/XHDPIpor.9.png" />
-		<gap:splash gap:qualifier="land-xhdpi" src="www/resources/startup/android/XHDPIlan.9.png" />
+		<gap:splash density="port-xhdpi" src="../resources/splash/android/XHDPIpor.9.png" />
+		<gap:splash density="land-xhdpi" src="../resources/splash/android/XHDPIlan.9.png" />
 	</platform>
 
 </widget>
