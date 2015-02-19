@@ -85,7 +85,6 @@
 		<splash height="1242" width="2208" src="../resources/splash/ios/iphone6plus_lan.png" />
 	</platform>
 
-	<!-- Android settings are untested and broken. -->
 	<platform name="android">
 		<icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36" />
 		<icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48" />
@@ -94,17 +93,20 @@
 		<icon gap:qualifier="xxhdpi" src="../resources/icons/114.png" width="114" height="114" />
 		<icon gap:qualifier="xxxhdpi" src="../resources/icons/144.png" width="144" height="144" />
 
-		<gap:splash density="port-ldpi" src="../resources/splash/android/LDPI_por.9.png" />
-		<gap:splash density="land-ldpi" src="../resources/splash/android/LDPI_lan.9.png" />
+		<splash density="port-ldpi" src="../resources/splash/android/LDPI_por.9.png" />
+		<splash density="land-ldpi" src="../resources/splash/android/LDPI_lan.9.png" />
 
-		<gap:splash density="port-mdpi" src="../resources/splash/android/MDPI_por.9.png" />
-		<gap:splash density="land-mdpi" src="../resources/splash/android/MDPI_lan.9.png" />
+		<splash density="port-mdpi" src="../resources/splash/android/MDPI_por.9.png" />
+		<splash density="land-mdpi" src="../resources/splash/android/MDPI_lan.9.png" />
 
-		<gap:splash density="port-hdpi" src="../resources/splash/android/HDPI_por.9.png" />
-		<gap:splash density="land-hdpi" src="../resources/splash/android/HDPI_lan.9.png" />
+		<splash density="port-hdpi" src="../resources/splash/android/HDPI_por.9.png" />
+		<splash density="land-hdpi" src="../resources/splash/android/HDPI_lan.9.png" />
 
-		<gap:splash density="port-xhdpi" src="../resources/splash/android/XHDPIpor.9.png" />
-		<gap:splash density="land-xhdpi" src="../resources/splash/android/XHDPIlan.9.png" />
+		<splash density="port-xhdpi" src="../resources/splash/android/XHDPIpor.9.png" />
+		<splash density="land-xhdpi" src="../resources/splash/android/XHDPIlan.9.png" />
 	</platform>
+
+        <preference name="SplashScreen" value="screen" />
+        <preference name="SplashScreenDelay" value="3000" />
 
 </widget>
