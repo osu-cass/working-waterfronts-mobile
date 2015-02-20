@@ -75,6 +75,8 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 	launch: function () {
 		var ctrl = this;
+		Ext.StoreManager.lookup('PointsOfInterest')
+			.on('load', ctrl.onAny, ctrl);
 		ctrl.onAny();
 	},
 

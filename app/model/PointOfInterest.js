@@ -22,36 +22,32 @@ Ext.define('WorkingWaterfronts.model.PointOfInterest', {
 			{ name: 'phone',		type: 'string' },
 			{ name: 'website',		type: 'string' },
 
-			{ name: 'hazards',		type: 'auto' },
 			{ name: 'categories',	type: 'auto' },
+			{ name: 'hazards',		type: 'auto' },
 			{ name: 'images',		type: 'auto' },
 			{ name: 'videos',		type: 'auto' },
 
 			{ name: 'email',		type: 'string' },
-			{ name: 'email',		type: 'string' },
-			{ name: 'email',		type: 'string' },
+			{ name: 'created',		type: 'datetime' },
+			{ name: 'modified',		type: 'datetime' },
 			{ name: 'ext',			type: 'auto' },
 		],
 		hasMany: [
 			{
-				associationKey	: 'hazards',
-				model			: 'WorkingWaterfronts.model.POIHazard',
-				name			: 'hazards'
+				associationKey	: 'categories',
+				model			: 'WorkingWaterfronts.model.POICategory'
 			},
 			{
-				associationKey	: 'categories',
-				model			: 'WorkingWaterfronts.model.POICategory',
-				name			: 'categories'
+				associationKey	: 'hazards',
+				model			: 'WorkingWaterfronts.model.POIHazard'
 			},
 			{
 				associationKey	: 'images',
-				model			: 'WorkingWaterfronts.model.POIImage',
-				name			: 'images'
+				model			: 'WorkingWaterfronts.model.POIImage'
 			},
 			{
 				associationKey	: 'videos',
-				model			: 'WorkingWaterfronts.model.POIVideo',
-				name			: 'videos'
+				model			: 'WorkingWaterfronts.model.POIVideo'
 			}
 		]
 	}

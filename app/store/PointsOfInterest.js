@@ -12,7 +12,7 @@ Ext.define('WorkingWaterfronts.store.PointsOfInterest', {
 			startParam: false,
 			reader: {
 				type: 'json',
-				rootProperty: 'pois'
+				rootProperty: 'pointsofinterest'
 			}
 		}
 	}

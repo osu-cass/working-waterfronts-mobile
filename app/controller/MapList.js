@@ -5,7 +5,6 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 			homeView			: 'HomeView',
 			listView			: 'MapListView',
 			poiView				: 'PointOfInterestView',
-			poiViewInfo			: 'PointOfInterestView #infoText',
 			homeButton			: 'MapListView #homeButton',
 			poisList			: 'MapListView #poisList',
 			mapList				: 'MapListView #maplist'
@@ -87,7 +86,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 		var ctrl = this;
 		var transition = ctrl.getView().transitions.forward;
 		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
-		ctrl.getPoiViewInfo().setData(store.getAt(id).data);
+		ctrl.getPoiView().populate(store.getAt(id).data);
 		Ext.Viewport.animateActiveItem(ctrl.getPoiView(), transition);
 	},
 
