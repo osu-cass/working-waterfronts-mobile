@@ -65,10 +65,21 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 		var tpl = new Ext.XTemplate(
 			'<b>Name:</b> {name}' +
 			'</br>' +
-			'<b>Description:</b> {description}' +
+			'<b>Alternate Name:</b> {alt_name}' +
+			'</br>' +
+			'<b>Description:</b></br>' +
+			'{description}</br>' +
+			'<hr/>' +
+			'<b>History:</b></br>' +
+			'{history}</br>' +
+			'<b>Facts:</b></br>' +
+			'{facts}</br>' +
+			'<b>Address:</b> ' +
+			'<br/>{street}' +
+			'<br/>{city}' +
+			'<br/>{state}' +
+			'<br/>{zip}' +
 			'<br/>' +
-
-
 			'<hr/>' +
 			'<b>{categories.length} Categories</b>' +
 			'<ul>' +
