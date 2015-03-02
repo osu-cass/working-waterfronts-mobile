@@ -28,6 +28,11 @@ Ext.define('WorkingWaterfronts.util.Link', {
 			id = id.substring(0, ampersandPosition);
 		}
 		return id;
+	},
+
+	getYoutubeImageFromLink: function (link) {
+		var id = this.getYoutubeIdFromLink(link);
+		return 'http://img.youtube.com/vi/' + id + '/0.jpg';
 	}
 
 });

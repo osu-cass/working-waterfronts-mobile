@@ -81,7 +81,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 			'<br/>{zip}' +
 			'<br/>' +
 			'<hr/>' +
-			'<b>{categories.length} Categories</b>' +
+			'<p style="text-align:center;"><b>{categories.length} Categories</b></p>' +
 			'<ul>' +
 				'<tpl for="categories">' +
 					'<li>{category}</li>' +
@@ -90,10 +90,11 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 
 
 			'<hr/>' +
-			'<b>{hazards.length} Hazards</b>' +
+			'<p style="text-align:center;"><b>{hazards.length} Hazards</b></p>' +
 			'<ul>' +
 				'<tpl for="hazards">' +
 					'<li>' +
+						'<hr/>' +
 						'<b>{name}</b>' +
 						'<p>{description}</p>' +
 					'</li>' +
@@ -102,27 +103,29 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 
 
 			'<hr/>' +
-			'<b>{images.length} Images</b>' +
+			'<p style="text-align:center;"><b>{images.length} Images</b></p>' +
 			'<ul>' +
 				'<tpl for="images">' +
 					'<li>' +
-						'<p>{name}</p>' +
+						'<hr/>' +
+						'<b>{name}</b><br/>' +
+						'"{caption}"' +
 						'<img src="' + apiHost + '{link}" style="width:100%" />' +
-						'<p>{caption}</p>' +
 					'</li>' +
 				'</tpl>' +
 			'</ul>' +
 
 
 			'<hr/>' +
-			'<b>{videos.length} Videos</b>' +
+			'<p style="text-align:center;"><b>{videos.length} Videos</b></p>' +
 			'<ul>' +
 				'<tpl for="videos">' +
 					'<li>' +
-						'{caption}' +
+						'<hr/>' +
+						'<b>{name}</b></br>' +
+						'"{caption}"' +
 						'<a onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')">' +
-							// video image
-							'Open' +
+							'<img alt="video" src="{[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]}" width="100%">' +
 						'</a>' +
 					'</li>' +
 				'</tpl>' +
