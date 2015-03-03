@@ -34,6 +34,11 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			},
 			{
 				xtype: 'fieldset',
+				itemId: 'homePageGPSMessage',
+				html: '<div style="text-align:center">Unable to locate you. :(</div>'
+			},
+			{
+				xtype: 'fieldset',
 				itemId: 'homePageGPSOptions',
 				items: [{
 					xtype: 'togglefield',

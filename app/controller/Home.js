@@ -34,18 +34,20 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 	onSetUseLocation: function (toggleValue) {
 		var homeCtrl = this;
 		if (toggleValue) {
-			// scope allows callback to use 'this' to get Home controller
-			Ext.device.Geolocation.watchPosition({
-			    frequency	: 60000,
-			    callback	: function (position) {
-					WorkingWaterfronts.util.Search.options.position = position;
-					homeCtrl.onAny();
-				},
-			    failure		: function () {
-					WorkingWaterfronts.util.Messages.showLocationError();
-					homeCtrl.getUseLocationToggle().setValue(0);
-				}
-			});
+			navigator.geolocation.getCurrentPosition(function (position) {
+
+				WorkingWaterfronts.util.Search.options.position = position;
+				homeCtrl.onAny();
+
+			}, function (PositionError) {
+
+				console.log("PositionError: " + PositionError);
+				homeCtrl.getUseLocationToggle().setValue(0);
+
+			}, {/* Optional geo options. */});
+
+			// start local timeout check
+
 		} else {
 			// toggle off == stop geolocation and clear position
 			WorkingWaterfronts.util.Search.options.position = null;
