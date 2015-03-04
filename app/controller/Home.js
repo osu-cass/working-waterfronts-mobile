@@ -16,6 +16,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 			locationSelect		: 'HomeView #selectlocation',
 			goButton			: 'HomeView #goButton',
 			searchSummaryTpl	: 'HomeView #searchSummaryTpl',
+			gpsMessage			: 'HomeView #homePageGPSMessage',
 			mapList				: 'MapListView #maplist'
 		},
 		control: {
@@ -33,20 +34,29 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 	onSetUseLocation: function (toggleValue) {
 		var homeCtrl = this;
+		var calledBack = false;
 		if (toggleValue) {
 			navigator.geolocation.getCurrentPosition(function (position) {
 
 				WorkingWaterfronts.util.Search.options.position = position;
+				homeCtrl.getGpsMessage().hide();
 				homeCtrl.onAny();
+				calledBack = true;
 
 			}, function (PositionError) {
 
 				console.log("PositionError: " + PositionError);
 				homeCtrl.getUseLocationToggle().setValue(0);
+				homeCtrl.getGpsMessage().hide();
+				calledBack = true;
 
 			}, {/* Optional geo options. */});
 
-			// start local timeout check
+			setTimeout(function () {
+				if (!WorkingWaterfronts.util.Search.options.position && !calledBack) {
+					homeCtrl.getGpsMessage().show();
+				}
+			}, 6000);
 
 		} else {
 			// toggle off == stop geolocation and clear position
