@@ -70,12 +70,21 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 			'{history}</br>' +
 			'<b>Facts:</b></br>' +
 			'{facts}</br>' +
+
 			'<b>Address:</b> ' +
 			'<br/>{street}' +
 			'<br/>{city}' +
 			'<br/>{state}' +
 			'<br/>{zip}' +
 			'<br/>' +
+
+			'<b>Contact:</b> ' +
+			'<br/>{contact_name}' +
+			'<br/>{email}' +
+			'<br/>{phone}' +
+			'<br/><a href="{website}" target="_blank">Website</a>' +
+			'<br/>' +
+
 			'<hr/>' +
 			'<p style="text-align:center;"><b>{categories.length} Categories</b></p>' +
 			'<ul>' +
