@@ -39,7 +39,7 @@ Ext.define('WorkingWaterfronts.util.Search', {
 
 			// If location is set, filter on that instead.
 			if (singleton.canFilterByLocation()) {
-				return loc.name === poi.get('city');
+				return loc.name.toLowerCase() === poi.get('city').toLowerCase();
 			}
 
 			// Otherwise, include everything.

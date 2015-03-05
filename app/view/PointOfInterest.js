@@ -58,10 +58,6 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 	populate: function (poi) {
 		var view = this;
 
-		var Link = WorkingWaterfronts.util.Link;
-
-		var apiHost = 'http://working-waterfronts-staging.osuosl.org';
-
 		var tpl = new Ext.XTemplate(
 			'<b>Name:</b> {name}' +
 			'</br>' +
@@ -110,7 +106,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 						'<hr/>' +
 						'<b>{name}</b><br/>' +
 						'"{caption}"' +
-						'<img src="' + apiHost + '{link}" style="width:100%" />' +
+						'<img src="' + Ext.getStore('PointsOfInterest').hostUrl + '{link}" style="width:100%" />' +
 					'</li>' +
 				'</tpl>' +
 			'</ul>' +
