@@ -27,12 +27,12 @@ Ext.define('WorkingWaterfronts.util.Search', {
 
 			// If position and distance are set, filter on those.
 			if (singleton.canFilterByDistance()) {
-				var φ1		= pos.coords.latitude;
-				var λ1		= pos.coords.longitude;
-				var φ2		= poi.get('lat');
-				var λ2		= poi.get('lng');
+				var lat1		= pos.coords.latitude;
+				var lng1		= pos.coords.longitude;
+				var lat2		= poi.get('lat');
+				var lng2		= poi.get('lng');
 				var dMax	= Geo.standardizeDistance(dist);
-				var dCurr	= Geo.getDistance(φ1,λ1,φ2,λ2);
+				var dCurr	= Geo.getDistance(lat1,lng1,lat2,lng2);
 				var isNear	= dMax - dCurr >= 0;
 				return isNear;
 			}
