@@ -27,15 +27,39 @@ Ext.application({
 	controllers	: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
 
 	launch: function() {
+
+		var Home, List;
 		var errorCtrl = this.getController('ErrorLoading');
 
-		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Home'));
+		Ext.Viewport.add(Home = Ext.create('WorkingWaterfronts.view.Home'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.ErrorLoading'));
-		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.MapList'));
+		Ext.Viewport.add(List = Ext.create('WorkingWaterfronts.view.MapList'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.PointOfInterest'));
 
 		// Add error handlers to stores.
 		Ext.getStore('PointsOfInterest').on('load', errorCtrl.onStoreLoad, errorCtrl);
+
+		function onBackKeyDown (e) {
+			e.preventDefault();
+			var backAnimation = {type:'slide',direction:'right'};
+			switch (Ext.Viewport.getActiveItem().xtype) {
+				case WorkingWaterfronts.view.Home.xtype:
+				case WorkingWaterfronts.view.ErrorLoading.xtype:
+					navigator.app.exitApp();
+					break;
+				case WorkingWaterfronts.view.MapList.xtype:
+					Ext.Viewport.animateActiveItem(Home, backAnimation);
+					break;
+				case WorkingWaterfronts.view.PointOfInterest.xtype:
+					Ext.Viewport.animateActiveItem(List, backAnimation);
+					break;
+			}
+		}
+
+		if (Ext.os.is('Android')) {
+			document.addEventListener('backButton', Ext.bind(onBackKeyDown, this), false);
+		}
+
 	}
 
 });
