@@ -18,5 +18,5 @@
 	"trailing": true,
 	"sub": true,
 	"maxlen": 80,
-	"predef": ["Ext","WorkingWaterfronts","google"]
+	"predef": ["Ext","WorkingWaterfronts","google","window","navigator"]
 }

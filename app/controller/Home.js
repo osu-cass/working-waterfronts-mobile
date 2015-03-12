@@ -16,6 +16,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 			locationSelect		: 'HomeView #selectlocation',
 			goButton			: 'HomeView #goButton',
 			searchSummaryTpl	: 'HomeView #searchSummaryTpl',
+			gpsMessage			: 'HomeView #homePageGPSMessage',
 			mapList				: 'MapListView #maplist'
 		},
 		control: {
@@ -33,19 +34,30 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 	onSetUseLocation: function (toggleValue) {
 		var homeCtrl = this;
+		var calledBack = false;
 		if (toggleValue) {
-			// scope allows callback to use 'this' to get Home controller
-			Ext.device.Geolocation.watchPosition({
-			    frequency	: 60000,
-			    callback	: function (position) {
-					WorkingWaterfronts.util.Search.options.position = position;
-					homeCtrl.onAny();
-				},
-			    failure		: function () {
-					WorkingWaterfronts.util.Messages.showLocationError();
-					homeCtrl.getUseLocationToggle().setValue(0);
+			navigator.geolocation.getCurrentPosition(function (position) {
+
+				WorkingWaterfronts.util.Search.options.position = position;
+				homeCtrl.getGpsMessage().hide();
+				homeCtrl.onAny();
+				calledBack = true;
+
+			}, function (PositionError) {
+
+				console.log("PositionError: " + PositionError);
+				homeCtrl.getUseLocationToggle().setValue(0);
+				homeCtrl.getGpsMessage().hide();
+				calledBack = true;
+
+			}, {/* Optional geo options. */});
+
+			setTimeout(function () {
+				if (!WorkingWaterfronts.util.Search.options.position && !calledBack) {
+					homeCtrl.getGpsMessage().show();
 				}
-			});
+			}, 6000);
+
 		} else {
 			// toggle off == stop geolocation and clear position
 			WorkingWaterfronts.util.Search.options.position = null;
@@ -69,18 +81,20 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 	init: function () {
 		var Search = WorkingWaterfronts.util.Search;
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 		Search.applyFilterToStore(store);
 	},
 
 	launch: function () {
 		var ctrl = this;
+		Ext.StoreManager.lookup('PointsOfInterest')
+			.on('load', ctrl.onAny, ctrl);
 		ctrl.onAny();
 	},
 
 	onAny: function () {
 		var homeCtrl = this;
-		var store = Ext.data.StoreManager.lookup('PointOfInterest');
+		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 		var Search = WorkingWaterfronts.util.Search;
 
 		// Forcibly inject options over to the singleton.

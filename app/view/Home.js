@@ -18,19 +18,29 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			},
 			{
 				xtype: 'fieldset',
-				itemId: 'searchSummaryTpl',
-				data: {
-					total		: '...',
-					city		: '...',
-					distance	: '...',
-					tpls: {
-						everywhere	: '<div class="searchTotal">There are {total} places to see on the Oregon coast.</div>',
-						city		: '<div class="searchTotal">There are {total} places to see in {city}.</div>',
-						nearby		: '<div class="searchTotal">There are {total} places to see within {distance} miles.</div>',
-						nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
+				items: [{
+						itemId: 'searchSummaryTpl',
+						data: {
+							total		: '...',
+							city		: '...',
+							distance	: '...',
+							tpls: {
+								everywhere	: '<div class="searchTotal">There are {total} places to see on the Oregon coast.</div>',
+								city		: '<div class="searchTotal">There are {total} places to see in {city}.</div>',
+								nearby		: '<div class="searchTotal">There are {total} places to see within {distance} miles.</div>',
+								nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
+							}
+						},
+						tpl: '<div class="searchTotal">Please wait...</div>'
+					},
+					{
+						itemId: 'homePageGPSMessage',
+						showAnimation: { type: 'slide', direction: 'down' },
+						hideAnimation: { type: 'slideOut', direction: 'up' },
+						hidden: true,
+						html: '<hr/><div style="text-align:center">Unable to locate you. :(</div>'
 					}
-				},
-				tpl: '<div class="searchTotal">Please wait...</div>'
+				]
 			},
 			{
 				xtype: 'fieldset',

@@ -37,7 +37,7 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 				loadingText	: 'Please wait...',
 				emptyText	: 'Nothing matched your search.',
 				itemTpl		: '{name}',
-				store		: 'PointOfInterest',
+				store		: 'PointsOfInterest',
 				xtype		: 'list',
 				itemId		: 'poisList',
 				id			: 'poisList'

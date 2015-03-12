@@ -21,16 +21,21 @@ Ext.Loader.setConfig({
 
 Ext.application({
 	name		: 'WorkingWaterfronts',
-	models		: ['Locations', 'PointsOfInterest'],
-	stores		: ['Location', 'Distance', 'PointOfInterest'],
-	views		: ['Home', 'MapList', 'PointOfInterest'],
-	controllers	: ['Home', 'MapList', 'PointOfInterest'],
+	models		: ['Locations', 'PointOfInterest'],
+	stores		: ['Location', 'Distance', 'PointsOfInterest'],
+	views		: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
+	controllers	: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
 
 	launch: function() {
+		var errorCtrl = this.getController('ErrorLoading');
+
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.Home'));
+		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.ErrorLoading'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.MapList'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.PointOfInterest'));
-		// todo: add detail for point view
+
+		// Add error handlers to stores.
+		Ext.getStore('PointsOfInterest').on('load', errorCtrl.onStoreLoad, errorCtrl);
 	}
 
 });
