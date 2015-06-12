@@ -20,3 +20,5 @@ bootstrap.json
 *.sublime-workspace
 
 .DS_Store
+
+.sencha_backup
