@@ -66,6 +66,7 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			{
 				xtype: 'fieldset',
 				itemId: 'homePageOtherOptions',
+				hidden: true,
 				items: [{
 					xtype: 'selectfield',
 					itemId: 'selectlocation',
