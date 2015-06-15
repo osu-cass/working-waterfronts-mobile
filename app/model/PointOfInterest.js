@@ -3,7 +3,7 @@ Ext.define('WorkingWaterfronts.model.PointOfInterest', {
 	config: {
 		fields: [
 			{ name: 'name',			type: 'string' },
-			{ name: 'alt-name',		type: 'string' },
+			{ name: 'alt_name',		type: 'string' },
 			{ name: 'summary',		type: 'string' },
 
 			{ name: 'lat',			type: 'number' },
@@ -30,7 +30,7 @@ Ext.define('WorkingWaterfronts.model.PointOfInterest', {
 			{ name: 'email',		type: 'string' },
 			{ name: 'created',		type: 'datetime' },
 			{ name: 'modified',		type: 'datetime' },
-			{ name: 'ext',			type: 'auto' },
+			{ name: 'ext',			type: 'auto' }
 		],
 		hasMany: [
 			{

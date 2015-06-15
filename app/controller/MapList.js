@@ -147,7 +147,8 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 				lat		: poiRecord.get('lat'),
 				lng		: poiRecord.get('lng'),
 				id		: i,
-				text	: poiRecord.get('name'),
+				title	: poiRecord.get('name'),
+				text	: '',
 				click	: getClickFunction(poiRecord),
 				close	: commonCloseFunction
 			};

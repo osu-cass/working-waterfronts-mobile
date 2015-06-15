@@ -3,7 +3,9 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	requires: ['Ext.Map'],
 	xtype: 'SeaGrantMap',
 	config: {
-		layout: 'fit',
+		layout: {
+			type: 'fit'
+		},
 		items: [
 			{
 				xtype: 'map',
@@ -48,6 +50,11 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		]
 	},
 
+	initialize: function () {
+		var that = this;
+		that.callParent(arguments);
+	},
+
 	map: function () { return this.down('map').getMap(); },
 
 	centerToBounds: function (bounds) {
@@ -61,11 +68,13 @@ Ext.define('WorkingWaterfronts.view.Map', {
 
 		/* global setTimeout */
 		setTimeout(function () {
+			// Resize causes the map to redraw, fixing the "blank" map error.
+			google.maps.event.trigger(gMap, 'resize');
 			gMap.fitBounds(bounds);
 			gMap.panToBounds(bounds);
 			if(gMap.getZoom() > 15) { gMap.setZoom(15); }
 			if(gMap.getZoom() < 6) { gMap.setZoom(6); }
-		}, 500);
+		}, 1);
 	},
 
 	center: function () {
@@ -80,7 +89,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	currentInfoWindow: null,
 	markers: [],
 
-	addPoint: function (point, id, text, onClick, onClose) {
+	addPoint: function (point, id, title, text, onClick, onClose) {
 		var view	= this;
 		var gMap	= view.map();
 		onClick		= onClick || function () {};
@@ -99,12 +108,15 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		index, or id, to use when calling the event. This allows the
 		controller to know which item in the list to select.
 		 */
-		var html = '<button onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' +
-				id + '\')">' + text + '</button>';
+
+		var html = '';
+		html += '<h1>' + title + '</h1>';
+		html += '<p>' + text + '</p>';
+		html += '<a href="javascript:void(0);" onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open</a>';
 
 		var marker	= new google.maps.Marker({
 			map				: gMap,
-			animation		: null,
+			animation		: google.maps.Animation.DROP,
 			// opacity		: opnum,
 			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
 			icon			: 'resources/images/mapdots/red.png',
@@ -141,11 +153,12 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			var lat		= customArray[k].lat;
 			var lng		= customArray[k].lng;
 			var id		= customArray[k].id;
+			var title	= customArray[k].title;
 			var text	= customArray[k].text;
 			var click	= customArray[k].click;
 			var close	= customArray[k].close;
 			var point	= new google.maps.LatLng(lat, lng);
-			view.addPoint(point, id, text, click, close);
+			view.addPoint(point, id, title, text, click, close);
 		}
 	}
 
