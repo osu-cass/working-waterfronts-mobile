@@ -18,49 +18,32 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			},
 			{
 				xtype: 'fieldset',
-				items: [{
-						itemId: 'searchSummaryTpl',
-						data: {
-							total		: '...',
-							city		: '...',
-							distance	: '...',
-							tpls: {
-								everywhere	: '<div class="searchTotal">There are {total} places to see on the Oregon coast.</div>',
-								city		: '<div class="searchTotal">There are {total} places to see in {city}.</div>',
-								nearby		: '<div class="searchTotal">There are {total} places to see within {distance} miles.</div>',
-								nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
-							}
-						},
-						tpl: '<div class="searchTotal">Please wait...</div>'
-					},
-					{
-						itemId: 'homePageGPSMessage',
-						showAnimation: { type: 'slide', direction: 'down' },
-						hideAnimation: { type: 'slideOut', direction: 'up' },
-						hidden: true,
-						html: '<hr/><div style="text-align:center">Unable to locate you. :(</div>'
-					}
-				]
-			},
-			{
-				xtype: 'fieldset',
 				itemId: 'homePageGPSOptions',
 				items: [{
+					xtype: 'label',
+					html: '<div class="helloLabel">Let\'s find some places to visit:</div>'
+				},{
 					xtype: 'togglefield',
 					name: 'userlocation',
-					label: 'Use Current Locaton',
+					label: 'Use my current locaton',
 					labelWrap: true,
 					itemId: 'userlocation'
-				},
-				{
+				},{
 					xtype: 'selectfield',
 					itemId: 'selectdistance',
-					label: 'Range',
+					label: 'Search within',
 					labelWrap: true,
 					disabled: true,
 					displayField: 'distance',
 					store: 'Distance',
 					valueField: 'id'
+				},{
+					itemId: 'homePageGPSMessage',
+					xtype: 'label',
+					showAnimation: { type: 'slide', direction: 'down' },
+					hideAnimation: { type: 'slideOut', direction: 'up' },
+					hidden: true,
+					html: '<div class="locateError">Unable to locate you!</div>'
 				}]
 			},
 			{
@@ -79,12 +62,30 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			},
 			{
 				xtype: 'fieldset',
-				items: [{
-					xtype: 'button',
-					ui: 'action',
-					text: 'Go',
-					itemId: 'goButton'
-				}]
+				items: [
+					{
+						itemId: 'searchSummaryTpl',
+						data: {
+							total		: '...',
+							city		: '...',
+							distance	: '...',
+							tpls: {
+								everywhere	: '<div class="searchTotal">There are {total} places to visit on the Oregon coast.</div>',
+								city		: '<div class="searchTotal">There are {total} places to visit in {city}.</div>',
+								nearby		: '<div class="searchTotal">There are {total} places to visit within {distance} miles.</div>',
+								nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
+							}
+						},
+						tpl: '<div class="searchTotal">Please wait...</div>'
+					},
+					{
+						xtype: 'button',
+						ui: 'action',
+						text: 'Find Locations',
+						itemId: 'goButton',
+						id: 'goBtn'
+					}
+				]
 			}
 		],
 		listeners: [

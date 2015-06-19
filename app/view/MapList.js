@@ -28,19 +28,21 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 				itemId: 'maplist'
 			},
 			{
-				config: {
-					scrollable: {
-						direction: 'vertical',
-						directionLock: true
-					}
-				},
+					xtype	: 'label',
+					html	: '<div>Choose a location:</div>',
+					id		: 'listLabel'
+			},
+			{
 				loadingText	: 'Please wait...',
 				emptyText	: 'Nothing matched your search.',
 				itemTpl		: '{name}',
 				store		: 'PointsOfInterest',
 				xtype		: 'list',
+				ui			: 'normal',
+				pinHeaders	: false,
 				itemId		: 'poisList',
-				id			: 'poisList'
+				id			: 'poisList',
+				onItemDisclosure: true
 			}
 		]
 	},

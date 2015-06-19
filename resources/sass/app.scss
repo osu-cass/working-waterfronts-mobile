@@ -5,14 +5,17 @@
 @import 'sencha-touch/default/all';
 
 #poisList {
-	height: 50%;
-	top: 50%;
+	height: 30%;
+	top: 70%;
+	font-size: 0.8em;
 }
 
 // MAP STYLE
 #ext-SeaGrantMap-1 {
-	height: 50%;
+	height: 64%;
+	border: 1px solid #eee;
 }
+
 
 
 // Text styling
@@ -26,7 +29,50 @@ div.gm-style-iw{
 // @include icon('user');
 
 // Home View Styles
-div.searchTotal {
-	text-align: center;
+
+$label-bg-color: rgba(0,50,255,0.1);
+$warning-bg-color: rgba(255,50,50,0.2);
+
+div.helloLabel {
+	font-style: italic;
+	padding: 0.5em;
+	background-color: $label-bg-color;
 }
 
+div.searchTotal {
+	text-align: center;
+	padding: 0.5em 1em;
+	background-color: $label-bg-color;
+}
+
+div.locateError {
+	text-align: center;
+	padding: 0.5em;
+	background-color: $warning-bg-color;
+}
+
+@mixin border-top-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+     -moz-border-top-left-radius: $radius;
+      -ms-border-top-left-radius: $radius;
+          border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+     -moz-border-top-right-radius: $radius;
+      -ms-border-top-right-radius: $radius;
+          border-top-right-radius: $radius;
+}
+
+#goBtn {
+	height: 125%;
+	@include border-top-radius(0);
+}
+
+
+#listLabel {
+	font-style: italic;
+	font-size: 0.8em;
+	padding: 0.5em;
+	background-color: $label-bg-color;
+	top: 64%;
+	height: 6%;
+}

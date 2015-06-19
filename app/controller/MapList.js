@@ -16,6 +16,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 			poisList: {
 				itemsingletap	: 'onListSingleTap',
 				itemdoubletap	: 'onListDoubleTap',
+				disclose		: 'onListDisclosure',
 				refresh			: 'onListRefresh'
 			}
 		}
@@ -59,34 +60,37 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 	// Simply makes the Seagrantmap open a different InfoWindow.
 	onListSingleTap: function (list, index) {
 		var ctrl = this;
-		var indexOld = ctrl.lastTappedIndex;
-		if (indexOld === index) {
-			ctrl.onListDoubleTap();
-		} else {
-			var markers = this.getMapList().markers;
-			google.maps.event.trigger(markers[index], 'click');
-		}
-		ctrl.lastTappedIndex = index;
+		// Deprecated Code:
+		// List disclosure event took the place of this:
+		/*
+			var indexOld = ctrl.lastTappedIndex;
+			if (indexOld === index) {
+				ctrl.onListDoubleTap();
+			} else {
+				var markers = ctrl.getMapList().markers;
+				google.maps.event.trigger(markers[index], 'click');
+			}
+			ctrl.lastTappedIndex = index;
+		*/
+		var markers = ctrl.getMapList().markers;
+		google.maps.event.trigger(markers[index], 'click');
 	},
 
-	// Calls onMapButton, first looking up the selected POI's store index.
-	onListDoubleTap: function () {
+	onListDoubleTap: function (list, index) {
 		var ctrl = this;
-		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
-		var currentSelection = ctrl.getPoisList().getSelection();
-		if (currentSelection && currentSelection.length) {
-			var index = store.indexOf(currentSelection[0]);
-			ctrl.onMapButton(index);
-		}
+		ctrl.onMapButton(index);
 	},
 
-	// Called when a user clicks on the buttons embedded in the infowindows.
-	// Or when a user double taps a list item.
-	onMapButton: function (id) {
+	onListDisclosure: function (list, record, target, index, event, eOpts) {
+		var ctrl = this;
+		ctrl.onMapButton(index);
+	},
+
+	onMapButton: function (index) {
 		var ctrl = this;
 		var transition = ctrl.getView().transitions.forward;
 		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
-		ctrl.getPoiView().populate(store.getAt(id).data);
+		ctrl.getPoiView().populate(store.getAt(index).data);
 		Ext.Viewport.animateActiveItem(ctrl.getPoiView(), transition);
 	},
 
