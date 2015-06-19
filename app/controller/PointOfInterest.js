@@ -13,7 +13,7 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 			homeButton			: 'PointOfInterestView #homeButton',
 			listButton			: 'PointOfInterestView #listButton',
 			navigateButton		: 'PointOfInterestView #navigateButton',
-			categoryList		: 'PointOfInterestView #categoryList',
+			categoryList		: 'PointOfInterestView #categoryList'
 		},
 		control: {
 			homeButton: {
