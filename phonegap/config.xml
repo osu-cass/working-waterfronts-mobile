@@ -8,10 +8,7 @@
 		Oregon Sea Grant, Oregon State Univerity
 	</author>
     <content src="index.html" />
-    <access origin="*" />
-    <feature name="Geolocation">
-        <param name="id" value="org.apache.cordova.geolocation" />
-    </feature>
+    <access origin="*" subdomains="true" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
@@ -25,9 +22,8 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="10" />
     <preference name="android-installLocation" value="auto" />
-    <hook src="hooks/install_plugins.js" type="after_platform_add" />
     <hook src="hooks/overwrite_ios_view.js" type="after_build" />
     <platform name="ios">
         <icon height="60" src="../resources/icons/64.png" width="60" />
@@ -61,6 +57,7 @@
         <splash height="1242" src="../resources/splash/ios/iphone6plus_lan.png" width="2208" />
     </platform>
     <platform name="android">
+        <allow-navigation href="*" />
         <icon gap:qualifier="ldpi" height="36" src="../resources/icons/36.png" width="36" />
         <icon gap:qualifier="mdpi" height="48" src="../resources/icons/48.png" width="48" />
         <icon gap:qualifier="hdpi" height="72" src="../resources/icons/72.png" width="72" />
@@ -78,6 +75,12 @@
     </platform>
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <plugin name="org.apache.cordova.geolocation" spec="^0.3.12" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
     <engine name="ios" spec="^3.8.0" />
-    <engine name="android" spec="^4.0.0" />
+    <engine name="android" spec="^4.0.2" />
 </widget>

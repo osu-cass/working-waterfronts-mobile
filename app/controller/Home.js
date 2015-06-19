@@ -36,24 +36,26 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		var homeCtrl = this;
 		var calledBack = false;
 		if (toggleValue) {
-			navigator.geolocation.getCurrentPosition(function (position) {
-
-				WorkingWaterfronts.util.Search.options.position = position;
-				homeCtrl.getGpsMessage().hide();
-				homeCtrl.onAny();
-				calledBack = true;
-
-			}, function (PositionError) {
-
-				console.log("PositionError: " + PositionError);
-				homeCtrl.getUseLocationToggle().setValue(0);
-				homeCtrl.getGpsMessage().hide();
-				calledBack = true;
-
-			}, {/* Optional geo options. */});
+			//navigator.geolocation.getCurrentPosition(function (position) {
+			Ext.device.Geolocation.getCurrentPosition({
+				success: function (position) {
+					WorkingWaterfronts.util.Search.options.position = position;
+					homeCtrl.getGpsMessage().hide();
+					homeCtrl.onAny();
+					calledBack = true;
+				},
+				failure: function (PositionError) {
+					console.log("PositionError: " + PositionError);
+					homeCtrl.getUseLocationToggle().setValue(0);
+					homeCtrl.getGpsMessage().show();
+					calledBack = true;
+				}
+			});
 
 			setTimeout(function () {
 				if (!WorkingWaterfronts.util.Search.options.position && !calledBack) {
+					console.error("Geo never called back.");
+					homeCtrl.getUseLocationToggle().setValue(0);
 					homeCtrl.getGpsMessage().show();
 				}
 			}, 6000);
@@ -61,7 +63,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		} else {
 			// toggle off == stop geolocation and clear position
 			WorkingWaterfronts.util.Search.options.position = null;
-			Ext.device.Geolocation.clearWatch();
+			//Ext.device.Geolocation.clearWatch();
 			homeCtrl.onAny();
 		}
 
