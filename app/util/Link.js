@@ -22,10 +22,15 @@ Ext.define('WorkingWaterfronts.util.Link', {
 	},
 
 	getYoutubeIdFromLink: function (link) {
-		var id = link.split('v=')[1];
-		var ampersandPosition = id.indexOf('&');
-		if (ampersandPosition !== -1) {
-			id = id.substring(0, ampersandPosition);
+		var id = '';
+		if (link.indexOf('youtu.be') > -1) {
+			id = link.split('/')[3];
+		} else {
+			id = link.split('v=')[1];
+			var ampersandPosition = id.indexOf('&');
+			if (ampersandPosition !== -1) {
+				id = id.substring(0, ampersandPosition);
+			}
 		}
 		return id;
 	},
