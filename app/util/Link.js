@@ -3,22 +3,20 @@ Ext.define('WorkingWaterfronts.util.Link', {
 
 	openNavigation: function(lat, lng) {
 		var data = 'daddr=' + lat + ',' + lng;
-		this.openLink('https://maps.google.com/?' + data, 'maps:' + data);
+		if (window.device.platform === 'Android') {
+			this.openLink('https://maps.google.com/?' + data);
+		} else {
+			this.openLink('maps:' + data);
+		}
 	},
 
 	openVideo: function (id) {
 		this.openLink('https://www.youtube.com/watch?v=' + id);
 	},
 
-	openLink: function (androidLink, iOSLink) {
-		if (!iOSLink) iOSLink = androidLink;
-		if (navigator.userAgent.match(/(Android)/)) {
-			navigator.app.loadUrl(androidLink, {openExternal: true});
-		} else if (navigator.userAgent.match(/(AppleWebKit)/)) {
-			window.open(iOSLink);
-		} else {
-			window.open(androidLink);
-		}
+	openLink: function (link) {
+		// Requires inAppBrowser plugin!
+		window.open(link, '_system');
 	},
 
 	getYoutubeIdFromLink: function (link) {

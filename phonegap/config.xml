@@ -8,7 +8,10 @@
 		Oregon Sea Grant, Oregon State Univerity
 	</author>
     <content src="index.html" />
-    <access origin="*" subdomains="true" />
+    <access origin="*.googleapis.com" />
+    <access origin="*.gstatic.com" />
+    <access origin="*.osuosl.org" />
+    <access origin="img.youtube.com" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
@@ -75,12 +78,10 @@
     </platform>
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-    <feature name="Geolocation">
-        <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
-        <param name="ios-package" value="CDVLocation" />
-    </feature>
     <plugin name="org.apache.cordova.geolocation" spec="^0.3.12" />
     <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
+    <plugin name="org.apache.cordova.inappbrowser" spec="^0.6.0" />
+    <plugin name="org.apache.cordova.device" spec="^0.3.0" />
     <engine name="ios" spec="^3.8.0" />
     <engine name="android" spec="^4.0.2" />
 </widget>
