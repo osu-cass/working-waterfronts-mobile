@@ -16,7 +16,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
+						iconCls: 'search',
 						itemId: 'homeButton'
 					},
 					{
@@ -82,7 +82,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 			'<br/>{contact_name}' +
 			'<br/>{email}' +
 			'<br/>{phone}' +
-			'<br/><a href="{website}" target="_blank">Website</a>' +
+			'<br/><a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{website}\')">Website</a>' +
 			'<br/>' +
 
 			'<hr/>' +
@@ -129,7 +129,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 						'<hr/>' +
 						'<b>{name}</b></br>' +
 						'"{caption}"' +
-						'<a onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')">' +
+						'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')">' +
 							'<img alt="video" src="{[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]}" width="100%">' +
 						'</a>' +
 					'</li>' +

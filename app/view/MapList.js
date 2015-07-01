@@ -18,7 +18,7 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
+						iconCls: 'search',
 						itemId: 'homeButton'
 					}
 				]
