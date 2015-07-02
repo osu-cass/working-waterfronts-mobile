@@ -62,11 +62,17 @@ div.locateError {
           border-top-right-radius: $radius;
 }
 
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
 #goBtn {
 	height: 3em;
 	@include border-top-radius(0);
 }
-
 
 #listLabel {
 	font-style: italic;
@@ -76,3 +82,22 @@ div.locateError {
 	top: 64%;
 	height: 6%;
 }
+
+#poiFieldImages img,
+#poiFieldVideos img {
+	@include border-radius(8px);
+	width: 96%;
+	margin: 0.5em 2%;
+}
+
+#poiFieldVideos div.video:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 120px;
+    z-index: 100;
+    background: transparent url(/resources/images/YouTube-icon-full_color.png) no-repeat center;
+    pointer-events: none;
+}
+

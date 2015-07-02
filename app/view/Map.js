@@ -112,7 +112,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		var html = '';
 		html += '<h1>' + title + '</h1>';
 		html += '<p>' + text + '</p>';
-		html += '<a href="javascript:void(0);" onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open</a>';
+		html += '<a href="javascript:void(0);" onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open details...</a>';
 
 		var marker	= new google.maps.Marker({
 			map				: gMap,

@@ -3,10 +3,10 @@ Ext.define('WorkingWaterfronts.util.Link', {
 
 	openNavigation: function(lat, lng) {
 		var data = 'daddr=' + lat + ',' + lng;
-		if (window.device.platform === 'Android') {
-			this.openLink('https://maps.google.com/?' + data);
-		} else {
+		if (window.device && window.device.platform === 'iOS') {
 			this.openLink('maps:' + data);
+		} else {
+			this.openLink('https://maps.google.com/?' + data);
 		}
 	},
 
@@ -15,7 +15,7 @@ Ext.define('WorkingWaterfronts.util.Link', {
 	},
 
 	openLink: function (link) {
-		// Requires inAppBrowser plugin!
+		// Requires inAppBrowser plugin to work correctly on mobile devices.
 		window.open(link, '_system');
 	},
 
