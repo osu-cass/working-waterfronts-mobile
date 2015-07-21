@@ -8,11 +8,12 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 	],
 	xtype: 'MapListView',
 	config: {
-		layout: 'fit',
+		layout: 'vbox',
 		items: [
 			{
 				xtype: 'toolbar',
 				itemId: 'listPageToolbar',
+				title: 'Waterfronts Tour',
 				docked: 'top',
 				items: [
 					{
@@ -24,21 +25,23 @@ Ext.define('WorkingWaterfronts.view.MapList', {
 				]
 			},
 			{
+				flex: 0.7,
 				xtype: 'SeaGrantMap',
 				itemId: 'maplist'
 			},
 			{
-					xtype	: 'label',
-					html	: '<div>Choose a location:</div>',
-					id		: 'listLabel'
+					xtype	: 'toolbar',
+					title	: 'Choose a location:'
 			},
 			{
+				flex		: 0.3,
 				loadingText	: 'Please wait...',
 				emptyText	: 'Nothing matched your search.',
 				itemTpl		: '{name}',
 				store		: 'PointsOfInterest',
 				xtype		: 'list',
 				ui			: 'normal',
+				deferEmptyText: false,
 				pinHeaders	: false,
 				itemId		: 'poisList',
 				id			: 'poisList',

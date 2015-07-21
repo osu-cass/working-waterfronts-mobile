@@ -22,7 +22,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'arrow_left',
+						iconCls: 'maps',
 						itemId: 'listButton'
 					}
 				]
@@ -33,8 +33,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 					xtype	: 'label',
 					itemId	: 'poiFieldTitle',
 					styleHtmlContent: true,
-					tpl:	'<h3>{name}</h3>' +
-							'<p>{description}</p>'
+					tpl:	'{description}'
 				}]
 			},
 			{
@@ -48,7 +47,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 					xtype	: 'label',
 					itemId	: 'poiFieldHistory',
 					styleHtmlContent: true,
-					tpl:	'<p>{history}</p>'
+					tpl:	'{history}'
 				}]
 			},
 			{
@@ -62,27 +61,41 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 			},
 			{
 				xtype: 'fieldset',
+				itemId: 'poiFieldLocation',
+				items: [{
+					xtype	: 'label',
+					styleHtmlContent: true,
+					tpl:	'{location_description}'
+				}]
+			},
+			{
+				xtype: 'fieldset',
 				items: [{
 					xtype	: 'label',
 					itemId	: 'poiFieldContact',
+					styleHtmlContent: true,
+					tpl		: '{contact_name}'
+				}]
+			},
+			{
+				xtype: 'fieldset',
+				itemId	: 'poiFieldVideos',
+				id		: 'poiFieldVideos',
+				items: [{
+					xtype	: 'label',
 					styleHtmlContent: true
 				}]
 			},
 			{
-				xtype: 'fieldset',
-				items: [{
-					xtype	: 'label',
-					itemId	: 'poiFieldVideos',
-					id		: 'poiFieldVideos'
-				}]
-			},
-			{
-				xtype: 'fieldset',
+				xtype: 'toolbar',
 				docked: 'bottom',
+				layout:{ pack: 'center' },
 				items: [{
+					width: '80%',
+					style: {'font-size':'1.2em'},
 					xtype: 'button',
 					ui: 'action',
-					text: 'Navigate Me',
+					text: 'Open in Maps',
 					itemId: 'navigateButton'
 				}]
 			}
@@ -110,6 +123,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 				'<tpl for="images">' +
 					'<li style="list-style-type: none;">' +
 						'<img src="' + Ext.getStore('PointsOfInterest').hostUrl + '{link}"/>' +
+						'<p>{caption}</p>' +
 						'<br/>' +
 					'</li>' +
 				'</tpl>' +
@@ -122,6 +136,14 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 
 		view.down('#poiFieldFacts').setData(poi);
 
+		if (poi.location_description) {
+			view.down('#poiFieldLocation').down('label').setData(poi);
+			view.down('#poiFieldLocation').show();
+		} else {
+			view.down('#poiFieldLocation').hide();
+		}
+
+		/*
 		var contactTpl = new Ext.XTemplate(
 			'<h6>Contact Info</h6>' +
 			'<p>' +
@@ -145,22 +167,30 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 				'</tpl><br/>' +
 			'</p>'
 		);
+		*/
 
-		view.down('#poiFieldContact').setTpl(contactTpl).setData(poi);
+		view.down('#poiFieldContact').setData(poi);
 
-		var videosTpl = new Ext.XTemplate(
-			'<ul>' +
-				'<tpl for="videos">' +
-					'<li style="list-style-type: none;">' +
-						'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')"><div class="video">' +
-							'<img alt="video" src="{[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]}">' +
-						'</div></a>' +
-					'</li>' +
-				'</tpl>' +
-			'</ul>'
-		);
 
-		view.down('#poiFieldVideos').setTpl(videosTpl).setData(poi);
+		if (poi.videos && poi.videos.length) {
+			var videosTpl = new Ext.XTemplate(
+				'<ul>' +
+					'<tpl for="videos">' +
+						'<li style="list-style-type: none;">' +
+							'<a href="{link}" target="_blank"><div class="video" style="background-image:url({[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]})">' +
+								'<img alt="video" src="resources/images/play.png">' +
+							'</div></a>' +
+							'<p>{caption}</p>' +
+						'</li>' +
+					'</tpl>' +
+				'</ul>'
+			);
+			view.down('#poiFieldVideos').down('label').setTpl(videosTpl).setData(poi);
+			view.down('#poiFieldVideos').show();
+		} else {
+			view.down('#poiFieldVideos').hide();
+		}
+
 	}
 
 });

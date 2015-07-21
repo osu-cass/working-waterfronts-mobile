@@ -50,7 +50,12 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 		var Link = WorkingWaterfronts.util.Link;
 		// The Title data will always be set.
 		var poi = ctrl.getPoiFieldTitle().getData();
-		Link.openNavigation(poi.lat, poi.lng);
+
+		if (poi.street) {
+			Link.openAddressNavigation(poi.street, poi.city, poi.state, poi.zip);
+		} else {
+			Link.openNavigation(poi.lat, poi.lng);
+		}
 	}
 
 });

@@ -31,6 +31,12 @@ Ext.application({
 		var Home, List;
 		var errorCtrl = this.getController('ErrorLoading');
 
+		setTimeout(function () {
+			if (navigator.splashscreen) {
+				navigator.splashscreen.hide();
+			}
+		}, 1000);
+
 		Ext.Viewport.add(Home = Ext.create('WorkingWaterfronts.view.Home'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.ErrorLoading'));
 		Ext.Viewport.add(List = Ext.create('WorkingWaterfronts.view.MapList'));

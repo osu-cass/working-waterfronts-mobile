@@ -5,6 +5,7 @@ Ext.define('WorkingWaterfronts.controller.MapList', {
 			homeView			: 'HomeView',
 			listView			: 'MapListView',
 			poiView				: 'PointOfInterestView',
+			poiLocation			: 'PointOfInterestView #poiFieldLocation',
 			homeButton			: 'MapListView #homeButton',
 			poisList			: 'MapListView #poisList',
 			mapList				: 'MapListView #maplist'

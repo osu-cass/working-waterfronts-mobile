@@ -12,7 +12,7 @@ Ext.define('WorkingWaterfronts.view.Home', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'Oregon\'s Working Waterfronts',
+				title: 'Working Waterfronts',
 				itemId: 'homePageToolbar',
 				docked: 'top'
 			},

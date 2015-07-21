@@ -4,19 +4,6 @@
 @import 'sencha-touch/default';
 @import 'sencha-touch/default/all';
 
-#poisList {
-	height: 30%;
-	top: 70%;
-	font-size: 0.8em;
-}
-
-// MAP STYLE
-#ext-SeaGrantMap-1 {
-	height: 64%;
-	border: 1px solid #eee;
-}
-
-
 
 // Text styling
 div.gm-style-iw{
@@ -78,9 +65,14 @@ div.locateError {
 	font-style: italic;
 	font-size: 0.8em;
 	padding: 0.5em;
-	background-color: $label-bg-color;
-	top: 64%;
-	height: 6%;
+	color: #eeeeee;
+	background-color: rgba(0,107,182,1);
+	text-align: center;
+}
+
+#poiFieldTitle {
+	font-family: serif;
+	border-bottom: 1px solid rgb(255,165,0);
 }
 
 #poiFieldImages img,
@@ -90,14 +82,8 @@ div.locateError {
 	margin: 0.5em 2%;
 }
 
-#poiFieldVideos div.video:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 150px;
-    height: 120px;
-    z-index: 100;
-    background: transparent url(/resources/images/YouTube-icon-full_color.png) no-repeat center;
-    pointer-events: none;
+#poiFieldVideos .video {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%;
 }
-

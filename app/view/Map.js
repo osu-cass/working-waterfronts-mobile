@@ -34,6 +34,13 @@ Ext.define('WorkingWaterfronts.view.Map', {
 							featureType: 'poi',
 							elementType: 'labels',
 							stylers: [
+								{ visibility: 'on' }
+							]
+						},
+						{
+							featureType: 'poi.business',
+							elementType: 'labels',
+							stylers: [
 								{ visibility: 'off' }
 							]
 						},
