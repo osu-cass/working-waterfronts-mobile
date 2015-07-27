@@ -15,8 +15,10 @@
 	"folders":
 	[
 		{
-			"follow_symlinks": true,
 			"path": "."
+		},
+		{
+			"path": "/Users/robmac/Code/ocm2"
 		}
 	]
 }

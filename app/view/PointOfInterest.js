@@ -177,7 +177,8 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 				'<ul>' +
 					'<tpl for="videos">' +
 						'<li style="list-style-type: none;">' +
-							'<a href="{link}" target="_blank"><div class="video" style="background-image:url({[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]})">' +
+							'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')">' +
+								'<div class="video" style="background-image:url({[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]})">' +
 								'<img alt="video" src="resources/images/play.png">' +
 							'</div></a>' +
 							'<p>{caption}</p>' +
