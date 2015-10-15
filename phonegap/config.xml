@@ -12,8 +12,8 @@
     <access origin="*.gstatic.com" />
     <access origin="*.osuosl.org" />
     <access origin="img.youtube.com" />
-	<allow-intent href="http://*/*" />
-	<allow-intent href="https://*/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
@@ -80,11 +80,12 @@
         <splash density="port-xhdpi" src="../resources/splash/android/XHDPIpor.9.png" />
         <splash density="land-xhdpi" src="../resources/splash/android/XHDPIlan.9.png" />
     </platform>
-    <engine name="ios" spec="^3.8.0" />
     <engine name="android" spec="^4.0.2" />
-    <plugin name="org.apache.cordova.device" spec="^0.3.0" />
-    <plugin name="org.apache.cordova.geolocation" spec="^0.3.12" />
-    <plugin name="org.apache.cordova.inappbrowser" spec="^0.6.0" />
+    <engine name="ios" spec="~3.9.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
+    <plugin name="org.apache.cordova.geolocation" spec="^0.3.12" />
+    <plugin name="org.apache.cordova.device" spec="^0.3.0" />
     <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
+    <plugin name="org.apache.cordova.inappbrowser" spec="^0.6.0" />
+    <plugin name="cordova-ios-application-queries-schemes" spec="~0.0.1" />
 </widget>
