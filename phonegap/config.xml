@@ -27,7 +27,6 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="10" />
     <preference name="android-installLocation" value="auto" />
-    <hook src="hooks/overwrite_ios_view.js" type="after_build" />
     <platform name="ios">
         <preference name="FadeSplashScreenDuration" value="1" />
         <preference name="ShowSplashScreenSpinner" value="false" />
@@ -81,11 +80,11 @@
         <splash density="land-xhdpi" src="../resources/splash/android/XHDPIlan.9.png" />
     </platform>
     <engine name="android" spec="^4.0.2" />
-    <engine name="ios" spec="~3.9.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
     <plugin name="org.apache.cordova.geolocation" spec="^0.3.12" />
     <plugin name="org.apache.cordova.device" spec="^0.3.0" />
     <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
     <plugin name="org.apache.cordova.inappbrowser" spec="^0.6.0" />
     <plugin name="cordova-ios-application-queries-schemes" spec="~0.0.1" />
+    <engine name="ios" spec="~3.9.2" />
 </widget>
