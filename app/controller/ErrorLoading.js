@@ -4,13 +4,7 @@ Ext.define('WorkingWaterfronts.controller.ErrorLoading', {
 	config: {
 		refs: {
 			homeView			: 'HomeView',
-			errorView			: 'ErrorLoadingView',
-			reload				: 'ErrorLoadingView #reloadButton'
-		},
-		control: {
-			reload: {
-				tap				: 'onReloadTap'
-			}
+			errorView			: 'ErrorLoadingView'
 		}
 	},
 
@@ -18,47 +12,16 @@ Ext.define('WorkingWaterfronts.controller.ErrorLoading', {
 		UI Callback (Event) Functions
 	------------------------------------------------------------------------ */
 
-	onReloadTap: function () {
-
-	},
-
-	hasErrorState: function () {
-		// Get counts of remote stores.
-		var c1 = Ext.getStore('PointsOfInterest').getCount();
-		return !c1;
-	},
-
 	onStoreLoad: function (records, operation, success) {
 		var ctrl = this;
 		var transition;
 
-		// Test for failure or for empty stores.
-		if (!success || ctrl.hasErrorState()) {
+		// There is only one store, so, whatever. Do this directly.
+		if (!success) {
 
 			if (Ext.Viewport.getActiveItem() !== ctrl.getErrorView()) {
-
 				transition = ctrl.getHomeView().transitions.back;
 				Ext.Viewport.animateActiveItem(ctrl.getErrorView(), transition);
-
-				var loader = setInterval(function () {
-
-					if (!ctrl.hasErrorState()) {
-						clearInterval(loader);
-					} else {
-						console.log('Loading stores again...');
-						Ext.getStore('PointsOfInterest').load();
-					}
-
-				}, 3000); // 3 second intervals
-			}
-
-		} else {
-
-			if (Ext.Viewport.getActiveItem() !== ctrl.getHomeView()) {
-
-				transition = ctrl.getErrorView().transitions.home;
-				Ext.Viewport.animateActiveItem(ctrl.getHomeView(), transition);
-
 			}
 
 		}
