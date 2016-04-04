@@ -20,7 +20,8 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-	name		: 'WorkingWaterfronts',
+    name		: 'WorkingWaterfronts',
+    requires            : ['WorkingWaterfronts.util.API'],
 	models		: ['PointOfInterest'],
 	stores		: ['Distance', 'PointsOfInterest'],
 	views		: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],

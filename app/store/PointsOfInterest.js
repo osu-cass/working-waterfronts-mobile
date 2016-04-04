@@ -1,15 +1,12 @@
-var hostUrl = 'http://working-waterfronts-api.osuosl.org';
-
 Ext.define('WorkingWaterfronts.store.PointsOfInterest', {
-	extend: 'Ext.data.Store',
-	hostUrl: hostUrl,
+    extend: 'Ext.data.Store',
+    require: ['WorkingWaterfronts.util.API'],
 	config: {
-		hostUrl: hostUrl,
 		model: 'WorkingWaterfronts.model.PointOfInterest',
 		autoLoad: true,
 		proxy: {
 			type: 'ajax',
-			url: hostUrl + '/1/pois',
+			url: WorkingWaterfronts.util.API.url + '/1/pois',
 			noCache: false,
 			pageParam: false,
 			limitParam: false,

@@ -10,7 +10,7 @@
     <content src="index.html" />
     <access origin="*.googleapis.com" />
     <access origin="*.gstatic.com" />
-    <access origin="*.osuosl.org" />
+    <access origin="*.osgexhibits.com" />
     <access origin="img.youtube.com" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

@@ -3,7 +3,8 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 	xtype		: 'PointOfInterestView',
 	requires	: [
 		'Ext.dataview.List',
-		'WorkingWaterfronts.util.Link'
+	    'WorkingWaterfronts.util.Link',
+	    'WorkingWaterfronts.util.API'
 	],
 	config		: {
 		scrollable: true,
@@ -122,7 +123,7 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 			'<ul>' +
 				'<tpl for="images">' +
 					'<li style="list-style-type: none;">' +
-						'<img src="' + Ext.getStore('PointsOfInterest').hostUrl + '{link}"/>' +
+						'<img src="' + WorkingWaterfronts.util.API.url + '{link}"/>' +
 						'<p>{caption}</p>' +
 						'<br/>' +
 					'</li>' +
