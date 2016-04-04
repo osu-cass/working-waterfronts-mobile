@@ -21,8 +21,8 @@ Ext.Loader.setConfig({
 
 Ext.application({
 	name		: 'WorkingWaterfronts',
-	models		: ['Locations', 'PointOfInterest'],
-	stores		: ['Location', 'Distance', 'PointsOfInterest'],
+	models		: ['PointOfInterest'],
+	stores		: ['Distance', 'PointsOfInterest'],
 	views		: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
 	controllers	: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
 

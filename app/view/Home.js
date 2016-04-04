@@ -48,30 +48,14 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			},
 			{
 				xtype: 'fieldset',
-				itemId: 'homePageOtherOptions',
-				hidden: true,
-				items: [{
-					xtype: 'selectfield',
-					itemId: 'selectlocation',
-					label: 'Location',
-					labelWrap: true,
-					displayField: 'name',
-					store: 'Location',
-					valueField: 'location'
-				}]
-			},
-			{
-				xtype: 'fieldset',
 				items: [
 					{
 						itemId: 'searchSummaryTpl',
 						data: {
 							total		: '...',
-							city		: '...',
 							distance	: '...',
 							tpls: {
 								everywhere	: '<div class="searchTotal">There are {total} places to visit on the Oregon coast.</div>',
-								city		: '<div class="searchTotal">There are {total} places to visit in {city}.</div>',
 								nearby		: '<div class="searchTotal">There are {total} places to visit within {distance} miles.</div>',
 								nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
 							}
@@ -98,11 +82,6 @@ Ext.define('WorkingWaterfronts.view.Home', {
 				delegate	: '#selectdistance',
 				event		: 'change',
 				fn			: 'onSelectDistance'
-			},
-			{
-				delegate	: '#selectlocation',
-				event		: 'change',
-				fn			: 'onSelectLocation'
 			},
 			{
 				delegate	: '#goButton',
@@ -132,10 +111,6 @@ Ext.define('WorkingWaterfronts.view.Home', {
 	},
 
 	onSelectDistance: function (select, newVal, oldVal, eOpts) {
-		this.fireEvent('onAny');
-	},
-
-	onSelectLocation: function (select, newVal, oldVal, eOpts) {
 		this.fireEvent('onAny');
 	},
 
