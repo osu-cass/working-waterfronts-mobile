@@ -116,10 +116,28 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		controller to know which item in the list to select.
 		 */
 
+	    // buttonStyle allows the map marker's embedded navigation button
+	    // to appear as a link w/o exiting the app context as a normal
+	    // link does throughout the rest of the application.
+	    var buttonStyle = '';
+	    buttonStyle += 'style="';
+	    buttonStyle += 'display:inline-block;';
+	    buttonStyle += 'position:relative;';
+	    buttonStyle += 'background:none;';
+	    buttonStyle += 'font:inherit;';
+	    buttonStyle += 'margin:0;';
+	    buttonStyle += 'border:0;';
+	    buttonStyle += 'padding:0;';
+	    buttonStyle += 'outline:none;';
+	    buttonStyle += 'outline-offset:0;';
+	    buttonStyle += 'color:#0000EE;';
+	    buttonStyle += 'text-decoration:underline;';
+	    buttonStyle += '"';
+	    
 		var html = '';
 		html += '<h1>' + title + '</h1>';
 		html += '<p>' + text + '</p>';
-		html += '<a href="javascript:void(0);" onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open details...</a>';
+		html += '<button ' + buttonStyle + ' onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open details...</button>';
 
 		var marker	= new google.maps.Marker({
 			map				: gMap,
@@ -165,7 +183,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			var click	= customArray[k].click;
 			var close	= customArray[k].close;
 			var point	= new google.maps.LatLng(lat, lng);
-			view.addPoint(point, id, title, text, click, close);
+		    view.addPoint(point, id, title, text, click, close);
 		}
 	}
 
