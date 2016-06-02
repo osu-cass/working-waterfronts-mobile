@@ -13,7 +13,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 			listView			: 'MapListView',
 			useLocationToggle	: 'HomeView #userlocation',
 			distanceSelect		: 'HomeView #selectdistance',
-			locationSelect		: 'HomeView #selectlocation',
 			goButton			: 'HomeView #goButton',
 			searchSummaryTpl	: 'HomeView #searchSummaryTpl',
 			gpsMessage			: 'HomeView #homePageGPSMessage',
@@ -36,24 +35,26 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		var homeCtrl = this;
 		var calledBack = false;
 		if (toggleValue) {
-			navigator.geolocation.getCurrentPosition(function (position) {
-
-				WorkingWaterfronts.util.Search.options.position = position;
-				homeCtrl.getGpsMessage().hide();
-				homeCtrl.onAny();
-				calledBack = true;
-
-			}, function (PositionError) {
-
-				console.log("PositionError: " + PositionError);
-				homeCtrl.getUseLocationToggle().setValue(0);
-				homeCtrl.getGpsMessage().hide();
-				calledBack = true;
-
-			}, {/* Optional geo options. */});
+			//navigator.geolocation.getCurrentPosition(function (position) {
+			Ext.device.Geolocation.getCurrentPosition({
+				success: function (position) {
+					WorkingWaterfronts.util.Search.options.position = position;
+					homeCtrl.getGpsMessage().hide();
+					homeCtrl.onAny();
+					calledBack = true;
+				},
+				failure: function (PositionError) {
+					console.log("PositionError: " + PositionError);
+					homeCtrl.getUseLocationToggle().setValue(0);
+					homeCtrl.getGpsMessage().show();
+					calledBack = true;
+				}
+			});
 
 			setTimeout(function () {
 				if (!WorkingWaterfronts.util.Search.options.position && !calledBack) {
+					console.error("Geo never called back.");
+					homeCtrl.getUseLocationToggle().setValue(0);
 					homeCtrl.getGpsMessage().show();
 				}
 			}, 6000);
@@ -61,7 +62,7 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		} else {
 			// toggle off == stop geolocation and clear position
 			WorkingWaterfronts.util.Search.options.position = null;
-			Ext.device.Geolocation.clearWatch();
+			//Ext.device.Geolocation.clearWatch();
 			homeCtrl.onAny();
 		}
 
@@ -98,7 +99,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		var Search = WorkingWaterfronts.util.Search;
 
 		// Forcibly inject options over to the singleton.
-		Search.options.location = homeCtrl.getLocationSelect().getRecord().data;
 		Search.options.distance = homeCtrl.getDistanceSelect().getRecord().data;
 
 		// Filter again with the existing filter function, see init()
@@ -106,10 +106,8 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 
 		// Update the select fields to match
 		if (Search.options.position) {
-			homeCtrl.getLocationSelect().disable();
 			homeCtrl.getDistanceSelect().enable();
 		} else {
-			homeCtrl.getLocationSelect().enable();
 			homeCtrl.getDistanceSelect().disable();
 		}
 
@@ -117,7 +115,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		var data = homeCtrl.getSearchSummaryTpl().getData();
 		var tpl = data.tpls.nowhere;
 		data.total		= store.getCount();
-		data.city		= Search.options.location.name;
 		data.distance	= Search.options.distance.value;
 		if (store.getCount() === 0) {
 			// If no places, always say this.
@@ -125,9 +122,6 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		} else if (Search.canFilterByDistance()) {
 			// Distance filtering has preference
 			tpl = data.tpls.nearby;
-		} else if (Search.canFilterByLocation()) {
-			// Location filtering is a fallback
-			tpl = data.tpls.city;
 		} else {
 			// In the event of no filtering
 			tpl = data.tpls.everywhere;

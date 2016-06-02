@@ -18,72 +18,58 @@ Ext.define('WorkingWaterfronts.view.Home', {
 			},
 			{
 				xtype: 'fieldset',
+				itemId: 'homePageGPSOptions',
 				items: [{
+					xtype: 'label',
+					html: '<div class="helloLabel">Let\'s find some places to visit:</div>'
+				},{
+					xtype: 'togglefield',
+					name: 'userlocation',
+					label: 'Use my current locaton',
+					labelWrap: true,
+					itemId: 'userlocation'
+				},{
+					xtype: 'selectfield',
+					itemId: 'selectdistance',
+					label: 'Search within',
+					labelWrap: true,
+					disabled: true,
+					displayField: 'distance',
+					store: 'Distance',
+					valueField: 'id'
+				},{
+					itemId: 'homePageGPSMessage',
+					xtype: 'label',
+					showAnimation: { type: 'slide', direction: 'down' },
+					hideAnimation: { type: 'slideOut', direction: 'up' },
+					hidden: true,
+					html: '<div class="locateError">Unable to locate you!</div>'
+				}]
+			},
+			{
+				xtype: 'fieldset',
+				items: [
+					{
 						itemId: 'searchSummaryTpl',
 						data: {
 							total		: '...',
-							city		: '...',
 							distance	: '...',
 							tpls: {
-								everywhere	: '<div class="searchTotal">There are {total} places to see on the Oregon coast.</div>',
-								city		: '<div class="searchTotal">There are {total} places to see in {city}.</div>',
-								nearby		: '<div class="searchTotal">There are {total} places to see within {distance} miles.</div>',
+								everywhere	: '<div class="searchTotal">There are {total} places to visit on the Oregon coast.</div>',
+								nearby		: '<div class="searchTotal">There are {total} places to visit within {distance} miles.</div>',
 								nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
 							}
 						},
 						tpl: '<div class="searchTotal">Please wait...</div>'
 					},
 					{
-						itemId: 'homePageGPSMessage',
-						showAnimation: { type: 'slide', direction: 'down' },
-						hideAnimation: { type: 'slideOut', direction: 'up' },
-						hidden: true,
-						html: '<hr/><div style="text-align:center">Unable to locate you. :(</div>'
+						xtype: 'button',
+						ui: 'action',
+						text: 'Find Locations',
+						itemId: 'goButton',
+						id: 'goBtn'
 					}
 				]
-			},
-			{
-				xtype: 'fieldset',
-				itemId: 'homePageGPSOptions',
-				items: [{
-					xtype: 'togglefield',
-					name: 'userlocation',
-					label: 'Use Current Locaton',
-					labelWrap: true,
-					itemId: 'userlocation'
-				},
-				{
-					xtype: 'selectfield',
-					itemId: 'selectdistance',
-					label: 'Range',
-					labelWrap: true,
-					disabled: true,
-					displayField: 'distance',
-					store: 'Distance',
-					valueField: 'id'
-				}]
-			},
-			{
-				xtype: 'fieldset',
-				itemId: 'homePageOtherOptions',
-				items: [{
-					xtype: 'selectfield',
-					itemId: 'selectlocation',
-					label: 'Location',
-					labelWrap: true,
-					displayField: 'name',
-					store: 'Location',
-					valueField: 'location'
-				}]
-			},
-			{
-				xtype: 'fieldset',
-				items: [{
-					xtype: 'button',
-					ui: 'action',
-					text: 'Go',
-					itemId: 'goButton'
-				}]
 			}
 		],
 		listeners: [
@@ -96,11 +82,6 @@ Ext.define('WorkingWaterfronts.view.Home', {
 				delegate	: '#selectdistance',
 				event		: 'change',
 				fn			: 'onSelectDistance'
-			},
-			{
-				delegate	: '#selectlocation',
-				event		: 'change',
-				fn			: 'onSelectLocation'
 			},
 			{
 				delegate	: '#goButton',
@@ -130,10 +111,6 @@ Ext.define('WorkingWaterfronts.view.Home', {
 	},
 
 	onSelectDistance: function (select, newVal, oldVal, eOpts) {
-		this.fireEvent('onAny');
-	},
-
-	onSelectLocation: function (select, newVal, oldVal, eOpts) {
 		this.fireEvent('onAny');
 	},
 

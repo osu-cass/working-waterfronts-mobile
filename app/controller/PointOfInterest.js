@@ -9,11 +9,11 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 			homeView			: 'HomeView',
 			listView			: 'MapListView',
 			poiView				: 'PointOfInterestView',
-			poiViewInfo			: 'PointOfInterestView #infoText',
+			poiFieldTitle		: 'PointOfInterestView #poiFieldTitle',
 			homeButton			: 'PointOfInterestView #homeButton',
 			listButton			: 'PointOfInterestView #listButton',
 			navigateButton		: 'PointOfInterestView #navigateButton',
-			categoryList		: 'PointOfInterestView #categoryList',
+			categoryList		: 'PointOfInterestView #categoryList'
 		},
 		control: {
 			homeButton: {
@@ -48,8 +48,14 @@ Ext.define('WorkingWaterfronts.controller.PointOfInterest', {
 	onGoNavigate: function () {
 		var ctrl = this;
 		var Link = WorkingWaterfronts.util.Link;
-		var poi = ctrl.getPoiViewInfo().getData();
-		Link.openNavigation(poi.lat, poi.lng);
+		// The Title data will always be set.
+		var poi = ctrl.getPoiFieldTitle().getData();
+
+		if (poi.street) {
+			Link.openAddressNavigation(poi.street, poi.city, poi.state, poi.zip);
+		} else {
+			Link.openNavigation(poi.lat, poi.lng);
+		}
 	}
 
 });

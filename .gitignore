@@ -1,5 +1,6 @@
 ### External Dependencies ###
 node_modules/**
+keystores/**
 
 ### Compiled Files ###
 build/
@@ -20,3 +21,5 @@ bootstrap.json
 *.sublime-workspace
 
 .DS_Store
+
+.sencha_backup

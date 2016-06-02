@@ -3,13 +3,15 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	requires: ['Ext.Map'],
 	xtype: 'SeaGrantMap',
 	config: {
-		layout: 'fit',
+		layout: {
+			type: 'fit'
+		},
 		items: [
 			{
 				xtype: 'map',
 				mapOptions: {
-					center: new google.maps.LatLng(43, -123),
-					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					center: window.google ? new google.maps.LatLng(43, -123) : null,
+					mapTypeId: window.google ? google.maps.MapTypeId.ROADMAP : null,
 					zoom: 13,
 					// The point of this piece is so that the
 					// points of interest are removed from the map.
@@ -32,6 +34,13 @@ Ext.define('WorkingWaterfronts.view.Map', {
 							featureType: 'poi',
 							elementType: 'labels',
 							stylers: [
+								{ visibility: 'on' }
+							]
+						},
+						{
+							featureType: 'poi.business',
+							elementType: 'labels',
+							stylers: [
 								{ visibility: 'off' }
 							]
 						},
@@ -48,6 +57,11 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		]
 	},
 
+	initialize: function () {
+		var that = this;
+		that.callParent(arguments);
+	},
+
 	map: function () { return this.down('map').getMap(); },
 
 	centerToBounds: function (bounds) {
@@ -61,11 +75,13 @@ Ext.define('WorkingWaterfronts.view.Map', {
 
 		/* global setTimeout */
 		setTimeout(function () {
+			// Resize causes the map to redraw, fixing the "blank" map error.
+			google.maps.event.trigger(gMap, 'resize');
 			gMap.fitBounds(bounds);
 			gMap.panToBounds(bounds);
 			if(gMap.getZoom() > 15) { gMap.setZoom(15); }
 			if(gMap.getZoom() < 6) { gMap.setZoom(6); }
-		}, 500);
+		}, 1);
 	},
 
 	center: function () {
@@ -80,7 +96,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	currentInfoWindow: null,
 	markers: [],
 
-	addPoint: function (point, id, text, onClick, onClose) {
+	addPoint: function (point, id, title, text, onClick, onClose) {
 		var view	= this;
 		var gMap	= view.map();
 		onClick		= onClick || function () {};
@@ -99,12 +115,33 @@ Ext.define('WorkingWaterfronts.view.Map', {
 		index, or id, to use when calling the event. This allows the
 		controller to know which item in the list to select.
 		 */
-		var html = '<button onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' +
-				id + '\')">' + text + '</button>';
+
+	    // buttonStyle allows the map marker's embedded navigation button
+	    // to appear as a link w/o exiting the app context as a normal
+	    // link does throughout the rest of the application.
+	    var buttonStyle = '';
+	    buttonStyle += 'style="';
+	    buttonStyle += 'display:inline-block;';
+	    buttonStyle += 'position:relative;';
+	    buttonStyle += 'background:none;';
+	    buttonStyle += 'font:inherit;';
+	    buttonStyle += 'margin:0;';
+	    buttonStyle += 'border:0;';
+	    buttonStyle += 'padding:0;';
+	    buttonStyle += 'outline:none;';
+	    buttonStyle += 'outline-offset:0;';
+	    buttonStyle += 'color:#0000EE;';
+	    buttonStyle += 'text-decoration:underline;';
+	    buttonStyle += '"';
+	    
+		var html = '';
+		html += '<h1>' + title + '</h1>';
+		html += '<p>' + text + '</p>';
+		html += '<button ' + buttonStyle + ' onclick="Ext.Viewport.fireEvent(\'mapButton\',\'' + id + '\')">Open details...</button>';
 
 		var marker	= new google.maps.Marker({
 			map				: gMap,
-			animation		: null,
+			animation		: google.maps.Animation.DROP,
 			// opacity		: opnum,
 			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
 			icon			: 'resources/images/mapdots/red.png',
@@ -141,11 +178,12 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			var lat		= customArray[k].lat;
 			var lng		= customArray[k].lng;
 			var id		= customArray[k].id;
+			var title	= customArray[k].title;
 			var text	= customArray[k].text;
 			var click	= customArray[k].click;
 			var close	= customArray[k].close;
 			var point	= new google.maps.LatLng(lat, lng);
-			view.addPoint(point, id, text, click, close);
+		    view.addPoint(point, id, title, text, click, close);
 		}
 	}
 

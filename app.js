@@ -11,7 +11,7 @@
 */
 
 Ext.Loader.setConfig({
-	enabled:true,
+	enabled: true,
 	disableCaching: false,
 	paths: {
 		Ext: './touch/src',
@@ -20,9 +20,10 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-	name		: 'WorkingWaterfronts',
-	models		: ['Locations', 'PointOfInterest'],
-	stores		: ['Location', 'Distance', 'PointsOfInterest'],
+    name		: 'WorkingWaterfronts',
+    requires            : ['WorkingWaterfronts.util.API'],
+	models		: ['PointOfInterest'],
+	stores		: ['Distance', 'PointsOfInterest'],
 	views		: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
 	controllers	: ['Home', 'MapList', 'PointOfInterest', 'ErrorLoading'],
 
@@ -33,6 +34,7 @@ Ext.application({
 
 		Ext.Viewport.add(Home = Ext.create('WorkingWaterfronts.view.Home'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.ErrorLoading'));
+		if (!window.google) errorCtrl.onStoreLoad(null, null, false);
 		Ext.Viewport.add(List = Ext.create('WorkingWaterfronts.view.MapList'));
 		Ext.Viewport.add(Ext.create('WorkingWaterfronts.view.PointOfInterest'));
 
@@ -56,10 +58,25 @@ Ext.application({
 			}
 		}
 
+		// This is a hacky solution to a problem:
+		// Cordova cannot handle inline hrefs to external pages.
+		// This forces links to open with JS instead.
+		Ext.Viewport.element.dom.addEventListener('click', function (e) {
+			if (e.target.tagName.toLowerCase() !== 'a') { return; }
+			var url = e.target.getAttribute('href');
+			e.preventDefault();
+			WorkingWaterfronts.util.Link.openLink(url);
+		}, false);
+
 		if (Ext.os.is('Android')) {
 			document.addEventListener('backButton', Ext.bind(onBackKeyDown, this), false);
 		}
 
+		setTimeout(function () {
+			if (navigator.splashscreen) {
+				navigator.splashscreen.hide();
+			}
+		}, 1000);
 	}
 
 });

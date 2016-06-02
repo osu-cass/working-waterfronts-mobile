@@ -4,16 +4,6 @@
 @import 'sencha-touch/default';
 @import 'sencha-touch/default/all';
 
-#poisList {
-	height: 50%;
-	top: 50%;
-}
-
-// MAP STYLE
-#ext-SeaGrantMap-1 {
-	height: 50%;
-}
-
 
 // Text styling
 div.gm-style-iw{
@@ -26,7 +16,74 @@ div.gm-style-iw{
 // @include icon('user');
 
 // Home View Styles
+
+$label-bg-color: rgba(0,50,255,0.1);
+$warning-bg-color: rgba(255,50,50,0.2);
+
+div.helloLabel {
+	font-style: italic;
+	padding: 0.5em;
+	background-color: $label-bg-color;
+}
+
 div.searchTotal {
+	text-align: center;
+	padding: 0.5em 1em;
+	background-color: $label-bg-color;
+}
+
+div.locateError {
+	text-align: center;
+	padding: 0.5em;
+	background-color: $warning-bg-color;
+}
+
+@mixin border-top-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+     -moz-border-top-left-radius: $radius;
+      -ms-border-top-left-radius: $radius;
+          border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+     -moz-border-top-right-radius: $radius;
+      -ms-border-top-right-radius: $radius;
+          border-top-right-radius: $radius;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+#goBtn {
+	height: 3em;
+	@include border-top-radius(0);
+}
+
+#listLabel {
+	font-style: italic;
+	font-size: 0.8em;
+	padding: 0.5em;
+	color: #eeeeee;
+	background-color: rgba(0,107,182,1);
 	text-align: center;
 }
 
+#poiFieldTitle {
+	font-family: serif;
+	border-bottom: 1px solid rgb(255,165,0);
+}
+
+#poiFieldImages img,
+#poiFieldVideos img {
+	@include border-radius(8px);
+	width: 96%;
+	margin: 0.5em 2%;
+}
+
+#poiFieldVideos .video {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%;
+}

@@ -3,7 +3,8 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 	xtype		: 'PointOfInterestView',
 	requires	: [
 		'Ext.dataview.List',
-		'WorkingWaterfronts.util.Link'
+	    'WorkingWaterfronts.util.Link',
+	    'WorkingWaterfronts.util.API'
 	],
 	config		: {
 		scrollable: true,
@@ -16,28 +17,86 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'home',
+						iconCls: 'search',
 						itemId: 'homeButton'
 					},
 					{
 						xtype: 'button',
 						ui: 'action',
-						iconCls: 'arrow_left',
+						iconCls: 'maps',
 						itemId: 'listButton'
 					}
 				]
 			},
 			{
-				xtype: 'label',
-				itemId: 'infoText'
+				xtype: 'fieldset',
+				items: [{
+					xtype	: 'label',
+					itemId	: 'poiFieldTitle',
+					styleHtmlContent: true,
+					tpl:	'{description}'
+				}]
+			},
+			{
+				xtype	: 'fieldset',
+				itemId	: 'poiFieldImages',
+				id		: 'poiFieldImages'
 			},
 			{
 				xtype: 'fieldset',
-				docked: 'bottom',
 				items: [{
+					xtype	: 'label',
+					itemId	: 'poiFieldHistory',
+					styleHtmlContent: true,
+					tpl:	'{history}'
+				}]
+			},
+			{
+				xtype: 'fieldset',
+				items: [{
+					xtype	: 'label',
+					itemId	: 'poiFieldFacts',
+					styleHtmlContent: true,
+					tpl:	'{facts}'
+				}]
+			},
+			{
+				xtype: 'fieldset',
+				itemId: 'poiFieldLocation',
+				items: [{
+					xtype	: 'label',
+					styleHtmlContent: true,
+					tpl:	'{location_description}'
+				}]
+			},
+			{
+				xtype: 'fieldset',
+				items: [{
+					xtype	: 'label',
+					itemId	: 'poiFieldContact',
+					styleHtmlContent: true,
+					tpl		: '{contact_name}'
+				}]
+			},
+			{
+				xtype: 'fieldset',
+				itemId	: 'poiFieldVideos',
+				id		: 'poiFieldVideos',
+				items: [{
+					xtype	: 'label',
+					styleHtmlContent: true
+				}]
+			},
+			{
+				xtype: 'toolbar',
+				docked: 'bottom',
+				layout:{ pack: 'center' },
+				items: [{
+					width: '80%',
+					style: {'font-size':'1.2em'},
 					xtype: 'button',
 					ui: 'action',
-					text: 'Navigate Me',
+					text: 'Open in Maps',
 					itemId: 'navigateButton'
 				}]
 			}
@@ -58,87 +117,82 @@ Ext.define('WorkingWaterfronts.view.PointOfInterest', {
 	populate: function (poi) {
 		var view = this;
 
-		var tpl = new Ext.XTemplate(
-			'<b>Name:</b> {name}' +
-			'</br>' +
-			'<b>Alternate Name:</b> {alt_name}' +
-			'</br>' +
-			'<b>Description:</b></br>' +
-			'{description}</br>' +
-			'<hr/>' +
-			'<b>History:</b></br>' +
-			'{history}</br>' +
-			'<b>Facts:</b></br>' +
-			'{facts}</br>' +
+		view.down('#poiFieldTitle').setData(poi);
 
-			'<b>Address:</b> ' +
-			'<br/>{street}' +
-			'<br/>{city}' +
-			'<br/>{state}' +
-			'<br/>{zip}' +
-			'<br/>' +
-
-			'<b>Contact:</b> ' +
-			'<br/>{contact_name}' +
-			'<br/>{email}' +
-			'<br/>{phone}' +
-			'<br/><a href="{website}" target="_blank">Website</a>' +
-			'<br/>' +
-
-			'<hr/>' +
-			'<p style="text-align:center;"><b>{categories.length} Categories</b></p>' +
-			'<ul>' +
-				'<tpl for="categories">' +
-					'<li>{category}</li>' +
-				'</tpl>' +
-			'</ul>' +
-
-
-			'<hr/>' +
-			'<p style="text-align:center;"><b>{hazards.length} Hazards</b></p>' +
-			'<ul>' +
-				'<tpl for="hazards">' +
-					'<li>' +
-						'<hr/>' +
-						'<b>{name}</b>' +
-						'<p>{description}</p>' +
-					'</li>' +
-				'</tpl>' +
-			'</ul>' +
-
-
-			'<hr/>' +
-			'<p style="text-align:center;"><b>{images.length} Images</b></p>' +
+		var imagesTpl = new Ext.XTemplate(
 			'<ul>' +
 				'<tpl for="images">' +
-					'<li>' +
-						'<hr/>' +
-						'<b>{name}</b><br/>' +
-						'"{caption}"' +
-						'<img src="' + Ext.getStore('PointsOfInterest').hostUrl + '{link}" style="width:100%" />' +
-					'</li>' +
-				'</tpl>' +
-			'</ul>' +
-
-
-			'<hr/>' +
-			'<p style="text-align:center;"><b>{videos.length} Videos</b></p>' +
-			'<ul>' +
-				'<tpl for="videos">' +
-					'<li>' +
-						'<hr/>' +
-						'<b>{name}</b></br>' +
-						'"{caption}"' +
-						'<a onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')">' +
-							'<img alt="video" src="{[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]}" width="100%">' +
-						'</a>' +
+					'<li style="list-style-type: none;">' +
+						'<img src="' + WorkingWaterfronts.util.API.url + '{link}"/>' +
+						'<p>{caption}</p>' +
+						'<br/>' +
 					'</li>' +
 				'</tpl>' +
 			'</ul>'
 		);
 
-		view.down('#infoText').setTpl(tpl);
-		view.down('#infoText').setData(poi);
+		view.down('#poiFieldImages').setTpl(imagesTpl).setData(poi);
+
+		view.down('#poiFieldHistory').setData(poi);
+
+		view.down('#poiFieldFacts').setData(poi);
+
+		if (poi.location_description) {
+			view.down('#poiFieldLocation').down('label').setData(poi);
+			view.down('#poiFieldLocation').show();
+		} else {
+			view.down('#poiFieldLocation').hide();
+		}
+
+		/*
+		var contactTpl = new Ext.XTemplate(
+			'<h6>Contact Info</h6>' +
+			'<p>' +
+				'{contact_name}<br/>' +
+				'<tpl if="email">' +
+					'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{email}\')">{email}</a>' +
+				'</tpl><tpl if="!email">' +
+					'No email address.' +
+				'</tpl><br/>' +
+
+				'<tpl if="phone">' +
+					'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{phone}\')">{phone}</a>' +
+				'</tpl><tpl if="!phone">' +
+					'No phone number.' +
+				'</tpl><br/>' +
+
+				'<tpl if="website">' +
+					'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{website}\')">Website</a>' +
+				'</tpl><tpl if="!website">' +
+					'No website.' +
+				'</tpl><br/>' +
+			'</p>'
+		);
+		*/
+
+		view.down('#poiFieldContact').setData(poi);
+
+
+		if (poi.videos && poi.videos.length) {
+			var videosTpl = new Ext.XTemplate(
+				'<ul>' +
+					'<tpl for="videos">' +
+						'<li style="list-style-type: none;">' +
+							'<a href="#" onclick="WorkingWaterfronts.util.Link.openLink(\'{link}\')">' +
+								'<div class="video" style="background-image:url({[WorkingWaterfronts.util.Link.getYoutubeImageFromLink(values.link)]})">' +
+								'<img alt="video" src="resources/images/play.png">' +
+							'</div></a>' +
+							'<p>{caption}</p>' +
+						'</li>' +
+					'</tpl>' +
+				'</ul>'
+			);
+			view.down('#poiFieldVideos').down('label').setTpl(videosTpl).setData(poi);
+			view.down('#poiFieldVideos').show();
+		} else {
+			view.down('#poiFieldVideos').hide();
+		}
+
 	}
 
 });
