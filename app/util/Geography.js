@@ -34,13 +34,13 @@ Ext.define('WorkingWaterfronts.util.Geography', {
 	getDistance: function (lat1, lng1, lat2, lng2) {
 		var geo	= WorkingWaterfronts.util.Geography;
 		var R	= geo.Reference.Earth['average radius'];
-		var φ1	= geo.degreesToRadians(lat1);
-		var φ2	= geo.degreesToRadians(lat2);
-		var Δφ	= geo.degreesToRadians(lat2-lat1); // φ is latitude
-		var Δλ	= geo.degreesToRadians(lng2-lng1); // λ is longitude
-		var a	= Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-					Math.cos(φ1) * Math.cos(φ2) *
-					Math.sin(Δλ/2) * Math.sin(Δλ/2);
+		var inlat1	= geo.degreesToRadians(lat1);
+		var inlat2	= geo.degreesToRadians(lat2);
+		var latdif	= geo.degreesToRadians(lat2-lat1); // φ is latitude
+		var lngdif	= geo.degreesToRadians(lng2-lng1); // λ is longitude
+		var a	= Math.sin(latdif/2) * Math.sin(latdif/2) +
+					Math.cos(inlat1) * Math.cos(inlat2) *
+					Math.sin(lngdif/2) * Math.sin(lngdif/2);
 		var c	= 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		var d	= R * c;
 		return d;
