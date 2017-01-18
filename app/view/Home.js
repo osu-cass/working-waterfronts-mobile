@@ -1,187 +1,120 @@
-// Ext.define('SeaGrant_Proto.view.Home', {
-// 	extend: 'Ext.Panel',
-// 	requires: ['Ext.form.FieldSet', 'Ext.form.Panel', 'Ext.TabPanel', 'Ext.dataview.List', 'Ext.MessageBox', 'SeaGrant_Proto.view.Map'],
-// 	xtype: 'Home',
-// 	alias: 'widget.home',
-// 	config: {
-// 		// layout: {
-// 		// 	type: 'fit'
-// 		// },
-// 		items: [
-// 			{
-// 				xtype: 'toolbar',
-// 				title: 'Whats Fresh?',
-// 				docked: 'top'
-// 			},
-// 			{
-// 				xtype: 'selectfield',			
-// 				itemId: 'Country',
-// 				label: 'Location',
-// 				labelWrap: true,
-// 				displayField: 'name',
-// 				store: 'Countries',
-// 				valueField: 'id'
-// 			},
-// 			{
-// 				xtype: 'selectfield',			
-// 				itemId: 'id',
-// 				label: 'Product',
-// 				labelWrap: true,
-// 				displayField: 'id',
-// 				store: 'Countries',
-// 				valueField: 'id'
-// 			}		
-// 		],
-// 		listeners: [
-// 			{
-// 				delegate: '#Country',
-// 				event: 'change',
-// 				fn: 'onCountryChange'
-// 			},
-// 			{
-// 				delegate: '#State',
-// 				event: 'change',
-// 				fn: 'onStateChange'
-// 			}
-// 		]
-// 	},
-// 	onHomeListDisclose: function(list, record, target, index, evt, options){
-// 		console.log('viewListItemCommand');
-// 		console.log("list index");
-// 		console.log(index);
-// 		this.fireEvent("viewListItemCommand", this, record, index);
-// 	},
-// 	onSubmitButtonTap: function(){
-// 		console.log('onSubmitButtonTap');
-// 		Ext.Msg.alert('Sorting future list data');
-// 		this.fireEvent("onSubmitButtonTap");
-// 	}
-// }); 
-
-Ext.define('SeaGrant_Proto.view.Home', {
-	extend: 'Ext.form.Panel',
-	require: ['Ext.field.Toggle', 'Ext.form.FieldSet', 'Ext.field.Select'],
-    fullscreen: true,
-    xtype: 'Home',
-	alias: 'widget.home',
+Ext.define('WorkingWaterfronts.view.Home', {
+	extend: 'Ext.Panel',
+	require: [
+		'Ext.field.Toggle',
+		'Ext.form.FieldSet',
+		'Ext.field.Select'
+	],
+	xtype: 'HomeView',
+	//alias: 'widget.home',
+	//fullscreen: true,
 	config: {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'Whats Fresh?',
+				title: 'Working Waterfronts',
 				itemId: 'homePageToolbar',
 				docked: 'top'
 			},
 			{
-				xtype: 'togglefield',
-				name: 'userlocation',
-				label: 'Use Current Locaton',
-				itemId: 'userlocation'
+				xtype: 'fieldset',
+				itemId: 'homePageGPSOptions',
+				items: [{
+					xtype: 'label',
+					html: '<div class="helloLabel">Let\'s find some places to visit:</div>'
+				},{
+					xtype: 'togglefield',
+					name: 'userlocation',
+					label: 'Use my current locaton',
+					labelWrap: true,
+					itemId: 'userlocation'
+				},{
+					xtype: 'selectfield',
+					itemId: 'selectdistance',
+					label: 'Search within',
+					labelWrap: true,
+					disabled: true,
+					displayField: 'distance',
+					store: 'Distance',
+					valueField: 'id'
+				},{
+					itemId: 'homePageGPSMessage',
+					xtype: 'label',
+					showAnimation: { type: 'slide', direction: 'down' },
+					hideAnimation: { type: 'slideOut', direction: 'up' },
+					hidden: true,
+					html: '<div class="locateError">Unable to locate you!</div>'
+				}]
 			},
-	        {
-	            xtype: 'fieldset',
-	            items: [
-	                {
-						xtype: 'selectfield',			
-						itemId: 'selectlocation',
-						label: 'Location',
-						labelWrap: true,
-						displayField: 'title',
-						store: 'Info',
-						// valueField: 'id'
-					},				
-	                {
-						xtype: 'selectfield',			
-						itemId: 'selectproduct',
-						label: 'Product',
-						labelWrap: true,
-						displayField: 'products',
-						store: 'Info',
-						// valueField: 'title'
-					}					
-	            ]	                  
-	        },
-	        {
-	        	title: 'SortBy Two:',
-	        	items: [
-        	        {
-        	        	xtype: 'checkboxfield',
-	        			label: 'Vendors',
-	        			name: 'vendors',
-	        			inputValue: '1',
-	        			itemId: 'vendor'
-	        		},
-	        		{
-	        			xtype: 'checkboxfield',
-	        			label: 'Products',
-	        			name: 'products',
-	        			inputValue: '2',
-	        			itemId: 'product'
-	        		}
-		        ]
-	        },
-	        {
-				xtype: 'button',
-				ui: 'action',
-				text: 'Go',
-				itemId: 'goButton'
+			{
+				xtype: 'fieldset',
+				items: [
+					{
+						itemId: 'searchSummaryTpl',
+						data: {
+							total		: '...',
+							distance	: '...',
+							tpls: {
+								everywhere	: '<div class="searchTotal">There are {total} places to visit on the Oregon coast.</div>',
+								nearby		: '<div class="searchTotal">There are {total} places to visit within {distance} miles.</div>',
+								nowhere		: '<div class="searchTotal">There are no places matching your search.</div>'
+							}
+						},
+						tpl: '<div class="searchTotal">Please wait...</div>'
+					},
+					{
+						xtype: 'button',
+						ui: 'action',
+						text: 'Find Locations',
+						itemId: 'goButton',
+						id: 'goBtn'
+					}
+				]
 			}
-	    ],
-	    listeners: [
+		],
+		listeners: [
 			{
-				delegate: '#goButton',
-				event: 'tap',
-				fn: 'onGoButtonTap'
+				delegate	: '#userlocation',
+				event		: 'change',
+				fn			: 'onSetUseLocation'
 			},
 			{
-				delegate: '#userlocation',
-				event: 'tap',
-				fn: 'onUseLocaion'
+				delegate	: '#selectdistance',
+				event		: 'change',
+				fn			: 'onSelectDistance'
 			},
 			{
-				delegate: '#selectlocation',
-				event: 'change',
-				fn: 'onSelectLocation'
-			},
-			{
-				delegate: '#selectproduct',
-				event: 'change',
-				fn: 'onSelectProduct'
-			},
-			{
-				delegate: '#vendor',
-				event: 'tap',
-				fn: 'onVendorSelect'
-			},
-			{
-				delegate: '#product',
-				event: 'tap',
-				fn: 'onProductSelect'
+				delegate	: '#goButton',
+				event		: 'tap',
+				fn			: 'onGoButtonTap'
 			}
-		]	      
+		]
 	},
-	onUseLocaion: function(){
-		console.log('setUseLocation');
-		this.fireEvent('setUseLocation', this, record);
+
+	// These are not used by Sencha, but manually in the controller.
+	transitions: {
+		'back': {
+			type		: 'slide',
+			direction	: 'right'
+		},
+		'forward': {
+			type		: 'slide',
+			direction	: 'left'
+		}
 	},
-	onSelectLocation: function(){
-		console.log('chosenLocation');
-		this.fireEvent('chosenLocation', this, record);
+
+	/* jshint unused:false */
+
+	onSetUseLocation: function (toggle, newVal, oldVal, eOpts) {
+		// triggers controller event with 1 or 0
+		this.fireEvent('setUseLocation', newVal);
 	},
-	onSelectProduct: function(){
-		console.log('chosenProduct');
-		this.fireEvent('chosenProduct', this, record);
+
+	onSelectDistance: function (select, newVal, oldVal, eOpts) {
+		this.fireEvent('onAny');
 	},
-	onVendorSelect: function(){
-		console.log('sortByVendorCommand');
-		this.fireEvent('sortByVendorCommand', this, record);
-	},
-	onProductSelect: function(){
-		console.log('sortByProductCommand');
-		this.fireEvent('sortByProductCommand', this, record);
-	},
-	onGoButtonTap: function(list, record, target, index, evt, options){
-		console.log('viewGoCommand');
-		this.fireEvent('viewGoCommand', this, record);
+
+	onGoButtonTap: function () {
+		this.fireEvent('viewGoCommand');
 	}
 });

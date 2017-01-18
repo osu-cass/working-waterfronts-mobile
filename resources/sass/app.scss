@@ -4,33 +4,86 @@
 @import 'sencha-touch/default';
 @import 'sencha-touch/default/all';
 
-// Custom code goes here..
 
-
-
-#ext-SeaGrantMap-2{
-	height: 40%;
+// Text styling
+div.gm-style-iw{
+	min-height: 20px;
+	padding: 2px;
+//	color: white;
 }
-
-#ext-list-1{
-	height: 60%;
-	top: 40%;
-}	
-
-
-#ext-element-49{
-	background-color: #00FF00;
-}
-#ext-element-40{
-	background-color: red;
-}
-#ext-input-4{
-	background-color: #990099;
-}
-#ext-input-5{
-	background-color: #33CC00;
-}
-
 
 // Examples of using the icon mixin:
 // @include icon('user');
+
+// Home View Styles
+
+$label-bg-color: rgba(0,50,255,0.1);
+$warning-bg-color: rgba(255,50,50,0.2);
+
+div.helloLabel {
+	font-style: italic;
+	padding: 0.5em;
+	background-color: $label-bg-color;
+}
+
+div.searchTotal {
+	text-align: center;
+	padding: 0.5em 1em;
+	background-color: $label-bg-color;
+}
+
+div.locateError {
+	text-align: center;
+	padding: 0.5em;
+	background-color: $warning-bg-color;
+}
+
+@mixin border-top-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+     -moz-border-top-left-radius: $radius;
+      -ms-border-top-left-radius: $radius;
+          border-top-left-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+     -moz-border-top-right-radius: $radius;
+      -ms-border-top-right-radius: $radius;
+          border-top-right-radius: $radius;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+#goBtn {
+	height: 3em;
+	@include border-top-radius(0);
+}
+
+#listLabel {
+	font-style: italic;
+	font-size: 0.8em;
+	padding: 0.5em;
+	color: #eeeeee;
+	background-color: rgba(0,107,182,1);
+	text-align: center;
+}
+
+#poiFieldTitle {
+	font-family: serif;
+	border-bottom: 1px solid rgb(255,165,0);
+}
+
+#poiFieldImages img,
+#poiFieldVideos img {
+	@include border-radius(8px);
+	width: 96%;
+	margin: 0.5em 2%;
+}
+
+#poiFieldVideos .video {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100%;
+}

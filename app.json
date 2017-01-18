@@ -1,13 +1,46 @@
 {
+    "builds": {
+
+        "web": {"default": true},
+
+        "android": {
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    "platform": "android",
+                    "id": "edu.oregonstate.cass.WorkingWaterfrontsMobile",
+                    "name": "WorkingWaterfrontsMobile"
+                }
+            }
+        },
+
+        "ios": {
+            "packager": "phonegap",
+            "phonegap" : {
+                "config": {
+                    "platform": "ios",
+                    "id": "edu.oregonstate.cass.WorkingWaterfrontsMobile",
+                    "name": "WorkingWaterfrontsMobile"
+                }
+            }
+        }
+
+    },
+
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "SeaGrant_Proto",
+    "name": "WorkingWaterfrontsMobile",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file
      */
     "indexHtmlPath": "index.html",
+
+    /**
+     * The Sencha Framework for this application: "ext" or "touch".
+     */
+    "framework": "touch",
 
     /**
      * The absolute URL to this application in development environment, i.e: the URL to run this application
@@ -32,17 +65,13 @@
      *                                      //  - "delta" to enable over-the-air delta update for this file
      *                                      //  - "full" means full update will be made when this file changes
      *          "x-bootstrap": true         // (Optional)
-     *                                      // Indicates a development mode only dependency.  
+     *                                      // Indicates a development mode only dependency.
      *                                      // These files will not be copied into the build directory or referenced
      *                                      // in the generate app.json manifest for the micro loader.
      *
      *      }
      */
     "js": [
-		{
-			"path": "phonegap.js",
-			"remote": true
-		},
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
@@ -50,6 +79,10 @@
         {
             "path": "bootstrap.js",
             "x-bootstrap": true
+        },
+        {
+            "path": "https://maps.googleapis.com/maps/api/js",
+            "remote": true
         },
         {
             "path": "app.js",
@@ -107,10 +140,9 @@
      * Extra resources to be copied along when build
      */
     "resources": [
-		"config.xml",
         "resources/images",
         "resources/icons",
-        "resources/startup"
+        "resources/splash"
     ],
 
     /**
@@ -131,10 +163,30 @@
      */
     "requires": [
     ],
+    
+    /**
+     * Controls for localStorage caching
+     *   "cache": {
+     *       // This property controls whether localStorage caching of this manifest file is on or off.
+     *       // if disabled no deltas will be generated during a build and full updates will be disabled
+     *       "enable": false,
+     *
+     *       // This property allows for global toggle of deltas.
+     *       // If set to a string the value will be used as the path to where deltas will be generated relative to you build.
+     *       // If set to a Truthy Value the default path ok "deltas" will be used
+     *       // If set to a Falsey value or if this property is not present deltas will be disabled and not generated.
+     *       //
+     *       "deltas": "deltas"
+     *   }
+     */
+    "cache": {
+        "enable": true,
+        "deltas": "deltas"
+    },
 
     /**
      * Uniquely generated id for this application, used as prefix for localStorage keys.
      * Normally you should never change this value.
      */
-    "id": "3b3e9719-1a91-4856-96c5-a469f46b243f"
+    "id": "7a022823-bada-4f53-a5d5-82a89c1c5c70"
 }
