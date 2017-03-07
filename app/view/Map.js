@@ -133,7 +133,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 	    buttonStyle += 'color:#0000EE;';
 	    buttonStyle += 'text-decoration:underline;';
 	    buttonStyle += '"';
-	    
+
 		var html = '';
 		html += '<h1>' + title + '</h1>';
 		html += '<p>' + text + '</p>';
@@ -144,7 +144,7 @@ Ext.define('WorkingWaterfronts.view.Map', {
 			animation		: google.maps.Animation.DROP,
 			// opacity		: opnum,
 			// zIndex		: google.maps.Marker.MAX_ZINDEX + 1,
-			icon			: 'resources/images/mapdots/red.png',
+			icon			: 'resources/images/pins/red.png',
 			position		: point,
 			clickable		: true,
 			info			: new google.maps.InfoWindow({

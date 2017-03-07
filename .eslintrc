@@ -1,0 +1,22 @@
+env:
+  browser: true
+
+globals:
+  Ext: true
+  WorkingWaterfronts: true
+  google: true
+  ga: true
+
+extends:
+  - eslint:recommended
+  - standard
+
+rules:
+  semi:
+    - warn
+    - always
+  comma-dangle:
+    - warn
+    - never
+  no-console:
+    - off

@@ -1,7 +1,7 @@
 Ext.define('WorkingWaterfronts.util.API', {
 
-    singleton: true,
+  singleton: true,
 
-    url: 'http://watershead.osgexhibits.com'
+  url: 'http://watershead.osgexhibits.com'
 
 });
