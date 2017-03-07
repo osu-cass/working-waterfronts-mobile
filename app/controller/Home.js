@@ -27,6 +27,11 @@ Ext.define('WorkingWaterfronts.controller.Home', {
 		}
 	},
 
+  /** Called only by Back.js when returning to Home from another screen. */
+  load: function () {
+    ga.trackView('Home');
+  },
+
 	/* ------------------------------------------------------------------------
 		UI Callback (Event) Functions
 	------------------------------------------------------------------------ */

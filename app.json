@@ -76,7 +76,8 @@
 
     "resources": [
         "resources/images",
-        "resources/images/pins"
+        "resources/images/pins",
+        "resources/startup"
     ],
 
     "ignore": [
