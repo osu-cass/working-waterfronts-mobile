@@ -1,177 +1,185 @@
 Ext.define('WorkingWaterfronts.controller.MapList', {
-	extend: 'Ext.app.Controller',
-	config: {
-		refs: {
-			homeView			: 'HomeView',
-			listView			: 'MapListView',
-			poiView				: 'PointOfInterestView',
-			poiLocation			: 'PointOfInterestView #poiFieldLocation',
-			homeButton			: 'MapListView #homeButton',
-			poisList			: 'MapListView #poisList',
-			mapList				: 'MapListView #maplist'
-		},
-		control: {
-			homeButton: {
-				tap				: 'onGoHome'
-			},
-			poisList: {
-				itemsingletap	: 'onListSingleTap',
-				itemdoubletap	: 'onListDoubleTap',
-				disclose		: 'onListDisclosure',
-				refresh			: 'onListRefresh'
-			}
-		}
-	},
+  extend: 'Ext.app.Controller',
+  config: {
+    refs: {
+      homeView: 'HomeView',
+      listView: 'MapListView',
+      poiView: 'PointOfInterestView',
+      poiLocation: 'PointOfInterestView #poiFieldLocation',
+      homeButton: 'MapListView #homeButton',
+      poisList: 'MapListView #poisList',
+      mapList: 'MapListView #maplist'
+    },
+    control: {
+      homeButton: {
+        tap: 'onGoHome'
+      },
+      poisList: {
+        itemsingletap: 'onListSingleTap',
+        itemdoubletap: 'onListDoubleTap',
+        disclose: 'onListDisclosure',
+        refresh: 'onListRefresh'
+      }
+    }
+  },
 
-	/* ------------------------------------------------------------------------
-		Startup/Configuration
-	------------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------------
+    Startup/Configuration
+  ------------------------------------------------------------------------ */
 
-	// Necessary to link the global event fired by buttons embedded in
-	// the map's marker InfoWindows. Ext.Viewport.fireEvent() is the
-	// counter-part that enables this sort of event handling.
-	// "mapButton" is a constant string given in view/Map.js
-	launch: function () {
-		var ctrl = this;
-		Ext.Viewport.on('mapButton', ctrl.onMapButton, ctrl);
-	},
+  // Necessary to link the global event fired by buttons embedded in
+  // the map's marker InfoWindows. Ext.Viewport.fireEvent() is the
+  // counter-part that enables this sort of event handling.
+  // "mapButton" is a constant string given in view/Map.js
+  launch: function () {
+    var ctrl = this;
+    Ext.Viewport.on('mapButton', ctrl.onMapButton, ctrl);
+  },
 
-	/* ------------------------------------------------------------------------
-		Startup/Configuration
-	------------------------------------------------------------------------ */
+  load: function () {
+    var ctrl = this;
+    Ext.Viewport.on('mapButton', ctrl.onMapButton, ctrl);
+    ga.trackView('MapList');
+  },
 
-	// Returns this controller's matching view.
-	getView: function () {
-		var ctrl = this;
-		return ctrl.getListView();
-	},
+  /* ------------------------------------------------------------------------
+    Startup/Configuration
+  ------------------------------------------------------------------------ */
 
-	/* ------------------------------------------------------------------------
-		UI Event Callbacks
-	------------------------------------------------------------------------ */
+  // Returns this controller's matching view.
+  getView: function () {
+    var ctrl = this;
+    return ctrl.getListView();
+  },
 
-	onGoHome: function () {
-		var ctrl = this;
-		var transition = ctrl.getView().transitions.back;
-		Ext.Viewport.animateActiveItem(ctrl.getHomeView(), transition);
-	},
+  /* ------------------------------------------------------------------------
+    UI Event Callbacks
+  ------------------------------------------------------------------------ */
 
-	lastTappedIndex: -1,
+  onGoHome: function () {
+    var ctrl = this;
+    var transition = ctrl.getView().transitions.back;
+    Ext.Viewport.animateActiveItem(ctrl.getHomeView(), transition);
+    ctrl.getApplication().getController('Home').load();
+  },
 
-	// Simply makes the Seagrantmap open a different InfoWindow.
-	onListSingleTap: function (list, index) {
-		var ctrl = this;
-		// Deprecated Code:
-		// List disclosure event took the place of this:
-		/*
-			var indexOld = ctrl.lastTappedIndex;
-			if (indexOld === index) {
-				ctrl.onListDoubleTap();
-			} else {
-				var markers = ctrl.getMapList().markers;
-				google.maps.event.trigger(markers[index], 'click');
-			}
-			ctrl.lastTappedIndex = index;
-		*/
-		var markers = ctrl.getMapList().markers;
-		google.maps.event.trigger(markers[index], 'click');
-	},
+  lastTappedIndex: -1,
 
-	onListDoubleTap: function (list, index) {
-		var ctrl = this;
-		ctrl.onMapButton(index);
-	},
+  // Simply makes the Seagrantmap open a different InfoWindow.
+  onListSingleTap: function (list, index) {
+    var ctrl = this;
+    // Deprecated Code:
+    // List disclosure event took the place of this:
+    /*
+      var indexOld = ctrl.lastTappedIndex;
+      if (indexOld === index) {
+        ctrl.onListDoubleTap();
+      } else {
+        var markers = ctrl.getMapList().markers;
+        google.maps.event.trigger(markers[index], 'click');
+      }
+      ctrl.lastTappedIndex = index;
+    */
+    var markers = ctrl.getMapList().markers;
+    google.maps.event.trigger(markers[index], 'click');
+  },
 
-	onListDisclosure: function (list, record, target, index, event, eOpts) {
-		var ctrl = this;
-		ctrl.onMapButton(index);
-	},
+  onListDoubleTap: function (list, index) {
+    var ctrl = this;
+    ctrl.onMapButton(index);
+  },
 
-	onMapButton: function (index) {
-		var ctrl = this;
-		var transition = ctrl.getView().transitions.forward;
-		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
-		ctrl.getPoiView().populate(store.getAt(index).data);
-		Ext.Viewport.animateActiveItem(ctrl.getPoiView(), transition);
-	},
+  onListDisclosure: function (list, record, target, index, event, eOpts) {
+    var ctrl = this;
+    ctrl.onMapButton(index);
+  },
 
-	/* ------------------------------------------------------------------------
-		Map Marker Controller (automated callback)
-	------------------------------------------------------------------------ */
+  onMapButton: function (index) {
+    var ctrl = this;
+    var transition = ctrl.getView().transitions.forward;
+    var store = Ext.data.StoreManager.lookup('PointsOfInterest');
+    var data = store.getAt(index).data;
+    ctrl.getPoiView().populate(data);
+    Ext.Viewport.animateActiveItem(ctrl.getPoiView(), transition);
+    ctrl.getApplication().getController('PointOfInterest').load(data.name);
+  },
 
-	/**
-	 * This function is attached to the list, but is called each time the
-	 * related store (PointOfInterest) filters or updates.
-	 *
-	 * See view/MapList.js for the store binding in the list.
-	 *
-	 * This causes markers to be updated and redrawn each time, keeping the
-	 * map up-to-date with the filtered store at all times.
-	 */
-	onListRefresh: function () {
-		var ctrl = this;
-		var seagrantmap = this.getMapList();
-		var store = Ext.data.StoreManager.lookup('PointsOfInterest');
+  /* ------------------------------------------------------------------------
+    Map Marker Controller (automated callback)
+  ------------------------------------------------------------------------ */
 
-		// By setting this, the onTap event handler won't accidentally
-		// think the user clicked twice on a list item and open details.
-		ctrl.lastTappedIndex = -1;
+  /**
+   * This function is attached to the list, but is called each time the
+   * related store (PointOfInterest) filters or updates.
+   *
+   * See view/MapList.js for the store binding in the list.
+   *
+   * This causes markers to be updated and redrawn each time, keeping the
+   * map up-to-date with the filtered store at all times.
+   */
+  onListRefresh: function () {
+    var ctrl = this;
+    var seagrantmap = this.getMapList();
+    var store = Ext.data.StoreManager.lookup('PointsOfInterest');
 
-		// addPointsAndCenter requires this to work
-		// see: view/Map.js
-		var customMarkerArray = [];
+    // By setting this, the onTap event handler won't accidentally
+    // think the user clicked twice on a list item and open details.
+    ctrl.lastTappedIndex = -1;
 
-		// Save the current selection to reselect it once updated.
-		var currentSelection = ctrl.getPoisList().getSelection();
+    // addPointsAndCenter requires this to work
+    // see: view/Map.js
+    var customMarkerArray = [];
 
-		// Build a custom click function for each marker.
-		// YOU CANNOT CREATE FUNCTIONS WITHIN A LOOP'S SCOPE.
-		// It selects the matching item in the list.
-		// Needed for the loop below.
-		function getClickFunction (record) {
-			return function () {
-				ctrl.getPoisList().select(record);
-			};
-		}
+    // Save the current selection to reselect it once updated.
+    var currentSelection = ctrl.getPoisList().getSelection();
 
-		// All marker info windows will deselect the list when closed.
-		// Needed for the loop below.
-		function commonCloseFunction () {
-			ctrl.getPoisList().deselectAll();
-			// By setting this, the onTap event handler won't accidentally
-			// think the user clicked twice on a list item and open details.
-			ctrl.lastTappedIndex = -1;
-		}
+    // Build a custom click function for each marker.
+    // YOU CANNOT CREATE FUNCTIONS WITHIN A LOOP'S SCOPE.
+    // It selects the matching item in the list.
+    // Needed for the loop below.
+    function getClickFunction (record) {
+      return function () {
+        ctrl.getPoisList().select(record);
+      };
+    }
 
-		// This converts the store items into an array
-		// expected by view/Map.js addPoints() method.
-		// See that file and method.
-		for (var i = 0; i < store.getCount(); i++) {
-			var poiRecord = store.getAt(i);
-			var markerData = {
-				lat		: poiRecord.get('lat'),
-				lng		: poiRecord.get('lng'),
-				id		: i,
-				title	: poiRecord.get('name'),
-				text	: '',
-				click	: getClickFunction(poiRecord),
-				close	: commonCloseFunction
-			};
-			customMarkerArray.push(markerData);
-		}
+    // All marker info windows will deselect the list when closed.
+    // Needed for the loop below.
+    function commonCloseFunction () {
+      ctrl.getPoisList().deselectAll();
+      // By setting this, the onTap event handler won't accidentally
+      // think the user clicked twice on a list item and open details.
+      ctrl.lastTappedIndex = -1;
+    }
 
-		// This will remove existing markers, and add new ones.
-		// It does NOT zoom or pan the map at all.
-		seagrantmap.addPoints(customMarkerArray);
+    // This converts the store items into an array
+    // expected by view/Map.js addPoints() method.
+    // See that file and method.
+    for (var i = 0; i < store.getCount(); i++) {
+      var poiRecord = store.getAt(i);
+      var markerData = {
+        lat: poiRecord.get('lat'),
+        lng: poiRecord.get('lng'),
+        id: i,
+        title: poiRecord.get('name'),
+        text: '',
+        click: getClickFunction(poiRecord),
+        close: commonCloseFunction
+      };
+      customMarkerArray.push(markerData);
+    }
 
-		// Apply the saved selection, if applicable
-		if (currentSelection && currentSelection.length) {
-			var index = store.indexOf(currentSelection[0]);
-			if (index < 0) return;
-			ctrl.getPoisList().select(currentSelection[0]);
-			ctrl.onListSingleTap(ctrl.getPoisList(), index);
-		}
+    // This will remove existing markers, and add new ones.
+    // It does NOT zoom or pan the map at all.
+    seagrantmap.addPoints(customMarkerArray);
 
-	}
+    // Apply the saved selection, if applicable
+    if (currentSelection && currentSelection.length) {
+      var index = store.indexOf(currentSelection[0]);
+      if (index < 0) return;
+      ctrl.getPoisList().select(currentSelection[0]);
+      ctrl.onListSingleTap(ctrl.getPoisList(), index);
+    }
+  }
 
 });

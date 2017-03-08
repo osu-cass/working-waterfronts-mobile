@@ -6,6 +6,7 @@ globals:
   WorkingWaterfronts: true
   google: true
   ga: true
+  cordova: true
 
 extends:
   - eslint:recommended

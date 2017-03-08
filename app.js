@@ -69,6 +69,7 @@ Ext.application({
       var url = e.target.getAttribute('href');
       e.preventDefault();
       WorkingWaterfronts.util.Link.openLink(url);
+      ga.trackEvent('Open Link', url);
     }, false);
 
     if (Ext.os.is('Android')) {
