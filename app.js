@@ -77,19 +77,19 @@ Ext.application({
     }
 
     setTimeout(function () {
-      if (navigator.splashscreen) {
+      try {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-
         // Splashscreen auto-hide is disabled
         navigator.splashscreen.hide();
-
         // Google Analytics: Working Waterfronts Beta
-        if (typeof ga === 'undefined') errorCtrl.onStoreLoad(null, null, false);
         ga.startTrackerWithId('UA-92638695-3');
-
+        // Send initial load event
         _this.getController('Home').load();
+      } catch (err) {
+        console.error(err);
+        errorCtrl.onStoreLoad(null, null, false);
       }
-    }, 1000);
+    }, 2000);
   }
 });

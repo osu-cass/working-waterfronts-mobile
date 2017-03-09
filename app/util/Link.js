@@ -49,11 +49,11 @@ Ext.define('WorkingWaterfronts.util.Link', {
 
   getYoutubeImageFromLink: function (link) {
     var id = this.getYoutubeIdFromLink(link);
-    return 'http://img.youtube.com/vi/' + id + '/0.jpg';
+    return 'https://img.youtube.com/vi/' + id + '/0.jpg';
   },
 
   getGoogleMapImageFromRecord: function (record) {
-    return 'http://maps.googleapis.com/maps/api/staticmap?center=' +
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=' +
             record.get('lat') + ',' + record.get('lng') +
             '&zoom=14&size=200x200&maptype=roadmap&markers=color:blue%7Clabel:%7C' +
             record.get('lat') + ',' + record.get('lng');
