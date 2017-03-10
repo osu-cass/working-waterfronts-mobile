@@ -25,6 +25,7 @@
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
     <preference name="Orientation" value="portrait" />
     <platform name="ios">
+        <hook src="hooks/cordova-icon.sh" type="after_prepare" />
         <preference name="BackupWebStorage" value="local" />
         <preference name="TopActivityIndicator" value="black" />
         <preference name="target-device" value="universal" />
@@ -44,6 +45,8 @@
         <splash height="1242" src="../resources/startup/ios/iphone6plus_lan.png" width="2208" />
     </platform>
     <platform name="android">
+        <hook src="hooks/cordova-icon.sh" type="after_prepare" />
+        <hook src="hooks/android-copy-res.sh" type="after_prepare" />
         <preference name="android-minSdkVersion" value="14" />
         <preference name="android-installLocation" value="auto" />
         <splash density="land-ldpi" src="../resources/startup/android/LDPI_lan.9.png" />
@@ -68,7 +71,7 @@
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <engine name="ios" spec="~4.3.1" />
     <plugin name="cordova-plugin-whitelist" platform="android" spec="~1.3.1" />
+    <engine name="ios" spec="~4.3.1" />
     <engine name="android" spec="~6.0.0" />
 </widget>
