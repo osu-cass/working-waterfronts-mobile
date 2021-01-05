@@ -2,6 +2,8 @@
 
 An [Oregon Sea Grant](http://seagrant.oregonstate.edu/) mobile app for exploring visitor-friendly work sites along the Oregon coast.
 
+IMPORTANT: This repository is no longer under development and has been archived.
+
 ## Environment Configuration
 
 This list isn't comprehensive currently.
